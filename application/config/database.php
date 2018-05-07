@@ -75,10 +75,14 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
+	//'hostname' => 'mysql.hostinger.com',
 	'hostname' => 'localhost',
 	'username' => 'root',
+	//'username' => 'u161978978_root',
 	'password' => '',
+	//'password' => '123456',
 	'database' => 'lawyer_portal',
+	//'database' => 'u161978978_law',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

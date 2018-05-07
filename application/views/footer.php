@@ -30,6 +30,7 @@
         </footer>
 		
         <script src="<?php echo  base_url('/assets/js/jquery.min.js');?>"></script>
+        <script src="<?php echo  base_url('/assets/js/moment.js');?>"></script>
 		<script src="<?php echo  base_url('/assets/js/jquery-migrate.min.js');?>"></script>
 		
 		<script src="<?php echo  base_url('/assets/bootstrap/js/bootstrap.min.js');?>"></script>

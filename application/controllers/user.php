@@ -68,7 +68,13 @@ Class User extends CI_Controller {
 		
 		
 	}
-
+	//
+	public function createLawyerSchedule() {
+	
+		$this->load->view('create-lawyer-schedule');
+		
+		
+	}
 	
 }
 ?>

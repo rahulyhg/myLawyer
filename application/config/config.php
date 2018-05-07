@@ -24,6 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost/CodeIgniter-avanthi/';
+//$config['base_url'] = 'http://myprivatelawyer.hol.es/';
 
 /*
 |--------------------------------------------------------------------------
