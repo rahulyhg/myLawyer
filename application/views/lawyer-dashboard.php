@@ -1,3 +1,18 @@
+<?php
+
+if (!($this->session->userdata('lawyer_detail'))) {
+   
+    redirect('/user/login');
+}
+else{
+ $lawyer_detail = $this->session->userdata('lawyer_detail'); 
+ print_r($lawyer_detail);
+}
+
+
+?>
+
+
 <!-- lawyer profile and resouce link -->
 <?php $this->load->view('header'); ?>
 <?php $this->load->view('top-navigation'); ?>
@@ -10,7 +25,13 @@
         	<!--  -->
           <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title">Avanthi Perera</h3>
+              <h3 class="panel-title">
+              <?php 
+              echo $lawyer_detail['fname'] .' '. $lawyer_detail['lname'];
+              ?>
+              
+              
+              </h3>
             </div>
             <div class="panel-body">
               <div class="row">
@@ -21,25 +42,44 @@
                     <tbody>
                       <tr>
                         <td>Email Address:</td>
-                        <td>avanthi@gmail.com</td>
+                        <td>
+                        <?php 
+                        $lawyer_detail['email']
+                        ?>
+                        </td>
+
                       </tr>
                       <tr>
                         <td>Provicial Area</td>
-                        <td>Western</td>
+                        <td><?php 
+                        $lawyer_detail['provincial-area']
+                        ?></td>
                       </tr>
                       <tr>
                         <td>Admitted Bar</td>
-                        <td>colombo</td>
+                        <td><?php 
+                        $lawyer_detail['admitted-bar']
+                        ?></td>
+                      </tr>
+                      <tr>
+                        <td>Specialty</td>
+                        <td><?php 
+                        $lawyer_detail['specialty']
+                        ?></td>
                       </tr>
                    
                          <tr>
                              <tr>
                         <td>Available Location</td>
-                        <td>128,colombo-10</td>
+                        <td><?php 
+                        $lawyer_detail['location']
+                        ?></td>
                       </tr>
                         <tr>
                         <td>Register Date</td>
-                        <td>02 January 2018</td>
+                        <td><?php 
+                        $lawyer_detail['register-date']
+                        ?></td>
                       </tr>
                       
                            

@@ -85,7 +85,7 @@
         echo "</div>";
         echo "</td>";
         echo "<td>";
-        echo form_submit('submit', 'Create', "class='btn btn-success btn-md' style='margin-left:10px;'");
+        echo form_submit('submit', 'Create my schedule', "class='btn btn-success btn-md' style='margin-left:10px;'");
         echo "</td>";
         echo form_close();
       echo "</tr>";
@@ -168,7 +168,7 @@
         echo "</div>";
         echo "</td>";
         echo "<td>";
-        echo form_submit('submit', 'Create', "class='btn btn-success btn-md' style='margin-left:10px;'");
+        echo form_submit('submit', 'Create my schedule', "class='btn btn-success btn-md' style='margin-left:10px;'");
         echo "</td>";
         echo form_close();
       echo "</tr>";
