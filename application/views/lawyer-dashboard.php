@@ -6,7 +6,7 @@ if (!($this->session->userdata('lawyer_detail'))) {
 }
 else{
  $lawyer_detail = $this->session->userdata('lawyer_detail'); 
- print_r($lawyer_detail);
+ 
 }
 
 
@@ -44,7 +44,7 @@ else{
                         <td>Email Address:</td>
                         <td>
                         <?php 
-                        $lawyer_detail['email']
+                        echo $lawyer_detail['email']
                         ?>
                         </td>
 
@@ -52,19 +52,19 @@ else{
                       <tr>
                         <td>Provicial Area</td>
                         <td><?php 
-                        $lawyer_detail['provincial-area']
+                        echo $lawyer_detail['provincial-area']
                         ?></td>
                       </tr>
                       <tr>
                         <td>Admitted Bar</td>
                         <td><?php 
-                        $lawyer_detail['admitted-bar']
+                        echo $lawyer_detail['admitted-bar']
                         ?></td>
                       </tr>
                       <tr>
                         <td>Specialty</td>
                         <td><?php 
-                        $lawyer_detail['specialty']
+                        echo $lawyer_detail['specialty']
                         ?></td>
                       </tr>
                    
@@ -72,13 +72,13 @@ else{
                              <tr>
                         <td>Available Location</td>
                         <td><?php 
-                        $lawyer_detail['location']
+                        echo $lawyer_detail['location']
                         ?></td>
                       </tr>
                         <tr>
                         <td>Register Date</td>
                         <td><?php 
-                        $lawyer_detail['register-date']
+                        echo $lawyer_detail['register-date']
                         ?></td>
                       </tr>
                       

@@ -1,5 +1,17 @@
 <!-- this page will use to create schedule for comming 7 days -->
+<?php
 
+if (!($this->session->userdata('lawyer_detail'))) {
+   
+    redirect('/user/login');
+}
+else{
+ //$lawyer_detail = $this->session->userdata('lawyer_detail'); 
+ //print_r($lawyer_detail);
+}
+
+
+?>
 <?php $this->load->view('header'); ?>
 <?php $this->load->view('top-navigation'); ?>
 
@@ -7,6 +19,7 @@
     <div class="row">
     <div class="col-md-offset-2 col-md-8 ">
     <?php
+    print_r($upcomming_scheduled);
     echo "<table class='table table-striped'>";
     echo "<tbody>";
 

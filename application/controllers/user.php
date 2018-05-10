@@ -176,7 +176,32 @@ Class User extends CI_Controller {
 	//
 	public function createLawyerSchedule() {
 	
-		$this->load->view('create-lawyer-schedule');
+		$lawyer_detail = $this->session->userdata('lawyer_detail'); 
+		//print_r($lawyer_detail);
+		$search_date = array();
+		$current_date = Date('Y-m-d');
+		$tomorrow_date = date('Y-m-d', strtotime($current_date . ' +1 day'));
+		$search_date[] = date('Y-m-d', strtotime($current_date . ' +1 day'));
+
+		for($i=1;$i<7;$i++){
+			$search_date[] = date('Y-m-d', strtotime($tomorrow_date . ' +1 day'));
+			$tomorrow_date = date('Y-m-d', strtotime($tomorrow_date . ' +1 day'));
+
+		} 
+		//print_r($search_date);
+
+		$result = $this->user_model->show_upcomming_scheudle($search_date,$lawyer_detail['user_id']);
+		if($result == FALSE){
+			
+			$data['upcomming_scheduled'] = 'empty';
+			$this->load->view('create-lawyer-schedule',$data);
+		}
+		else{
+			
+			$data['upcomming_scheduled'] = $result;
+			$this->load->view('create-lawyer-schedule',$data);
+		}
+		
 		
 		
 	}
