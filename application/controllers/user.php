@@ -182,7 +182,9 @@ Class User extends CI_Controller {
 		$current_date = Date('Y-m-d');
 		$tomorrow_date = date('Y-m-d', strtotime($current_date . ' +1 day'));
 		$search_date[] = date('Y-m-d', strtotime($current_date . ' +1 day'));
-
+		
+		//$schedule_time =array("5",5,"5");
+		
 		for($i=1;$i<7;$i++){
 			$search_date[] = date('Y-m-d', strtotime($tomorrow_date . ' +1 day'));
 			$tomorrow_date = date('Y-m-d', strtotime($tomorrow_date . ' +1 day'));
@@ -194,10 +196,73 @@ Class User extends CI_Controller {
 		if($result == FALSE){
 			
 			$data['upcomming_scheduled'] = 'empty';
-			$this->load->view('create-lawyer-schedule',$data);
+			$this->load->view('2018-05-12',$data);
 		}
 		else{
+			$finalize_dates = array();
+			print_r($search_date);
+			//print_r($result);
+
+
+
+
+
+
 			
+		foreach($result as $db_data){
+			$schedule_time = array(0=>'06:00:00',1=>'06:30:00',2=>'07:00:00',3=>'07:30:00',4=>'08:00:00'
+							,5=>'08:30:00',6=>'09:00:00',7=>'09:30:00',8=>'10:00:00',9=>'10:30:00',10=>'11:00:00'
+							,11=>'11:30:00',12=>'12:00:00',13=>'12:30:00',14=>'13:00:00',15=>'13:30:00'
+							,16=>'14:00:00',17=>'14:30:00',18=>'15:00:00',19=>'15:30:00',20=>'16:00:00',21=>'16:30:00'
+							,22=>'17:00:00',23=>'17:30:00',24=>'18:00:00',25=>'18:30:00',26=>'19:00:00',27=>'19:30:00'
+							,28=>'20:00:00',29=>'20:30:00',30=>'21:00:00',31=>'21:30:00',32=>'22:00:00',33=>'22:30:00'
+							,34=>'23:00:00'
+						);
+			//echo $db_data->schedule_date;
+			echo $key_date = array_search($db_data->schedule_date,$search_date);
+			echo "<br>";
+
+			if($key_date >= 0){
+				//$finalize_dates[$db_data->schedule_date];
+					$key_time = array_search($db_data->schedule_time,$schedule_time);
+					if($key_time>=0){
+						$time =  $schedule_time[$key_time];
+						$finalize_dates[$db_data->schedule_date][$time]= array();
+						$finalize_dates[$db_data->schedule_date][$time] = $db_data;
+						//remove index for time array
+						unset($schedule_time[$key_time]);
+						echo "<br>";
+
+					}
+			}
+			// //loop in search data array to check if there are future dates
+			// foreach($search_date as $index=>$future_date){
+			// 	if($future_date == $db_data->schedule_date){
+			// 		echo "found record" . $future_date .'<br>';
+
+			// 	}
+			// 	else{
+			// 		echo "not fount" . $future_date . '<br>';
+					
+			// 		$finalize_dates[$future_date] = array();
+			// 		// foreach($schedule_time as $time_index=>$time){
+			// 		// 	//$search_date[$index][$time_index] = $time;
+						
+			// 		// 	$finalize_dates[$index][$time_index] = $time;
+			// 		// 	//print_r($time);
+
+						
+			// 		// }
+					
+
+			// 	}
+			// }
+			// //print_r($db_data);
+			// //print_r($finalize_dates);
+
+		}
+			
+			print_r($finalize_dates);
 			$data['upcomming_scheduled'] = $result;
 			$this->load->view('create-lawyer-schedule',$data);
 		}
