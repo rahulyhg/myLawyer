@@ -136,7 +136,7 @@ Class User extends CI_Controller {
 					
 					$this->session->set_userdata('lawyer_detail', $lawyer_session_data);
 					
-					print_r($_SESSION);
+					//print_r($_SESSION);
 					redirect('/user/lawyerDashBoard');
 					//$this->load->view('dashboard');
 				}
@@ -174,8 +174,12 @@ Class User extends CI_Controller {
 		
 	}
 	//
-	public function createLawyerSchedule() {
-	
+	public function showLawyerSchedule() {
+		$success = $this->session->flashdata('success_message_display');
+		$error = $this->session->flashdata('error_message_display');
+		if(!empty($error)){
+			$data['error_message_display'] = $error;
+		}
 		$lawyer_detail = $this->session->userdata('lawyer_detail'); 
 		//print_r($lawyer_detail);
 		$search_date = array();
@@ -200,7 +204,7 @@ Class User extends CI_Controller {
 		}
 		else{
 			$finalize_dates = array();
-			print_r($search_date);
+			//print_r($search_date);
 			//print_r($result);
 
 
@@ -219,8 +223,8 @@ Class User extends CI_Controller {
 							,34=>'23:00:00'
 						);
 			//echo $db_data->schedule_date;
-			echo $key_date = array_search($db_data->schedule_date,$search_date);
-			echo "<br>";
+			$key_date = array_search($db_data->schedule_date,$search_date);
+			
 
 			if($key_date >= 0){
 				//$finalize_dates[$db_data->schedule_date];
@@ -230,8 +234,8 @@ Class User extends CI_Controller {
 						$finalize_dates[$db_data->schedule_date][$time]= array();
 						$finalize_dates[$db_data->schedule_date][$time] = $db_data;
 						//remove index for time array
-						unset($schedule_time[$key_time]);
-						echo "<br>";
+						//unset($schedule_time[$key_time]);
+						//echo "<br>";
 
 					}
 			}
@@ -262,13 +266,58 @@ Class User extends CI_Controller {
 
 		}
 			
-			print_r($finalize_dates);
-			$data['upcomming_scheduled'] = $result;
+			//print_r($finalize_dates);
+			$data['upcomming_scheduled'] = $search_date;
+			$data['result_in_db'] = $finalize_dates;
+
 			$this->load->view('create-lawyer-schedule',$data);
 		}
 		
 		
 		
+	}
+
+	public function createLawyerSchedule(){
+		$schedule_time = array(0=>'06:00:00',1=>'06:30:00',2=>'07:00:00',3=>'07:30:00',4=>'08:00:00'
+							,5=>'08:30:00',6=>'09:00:00',7=>'09:30:00',8=>'10:00:00',9=>'10:30:00',10=>'11:00:00'
+							,11=>'11:30:00',12=>'12:00:00',13=>'12:30:00',14=>'13:00:00',15=>'13:30:00'
+							,16=>'14:00:00',17=>'14:30:00',18=>'15:00:00',19=>'15:30:00',20=>'16:00:00',21=>'16:30:00'
+							,22=>'17:00:00',23=>'17:30:00',24=>'18:00:00',25=>'18:30:00',26=>'19:00:00',27=>'19:30:00'
+							,28=>'20:00:00',29=>'20:30:00',30=>'21:00:00',31=>'21:30:00',32=>'22:00:00',33=>'22:30:00'
+							,34=>'23:00:00'
+						);
+		$data = array(
+			'email' => $this->input->post('email'),
+			'password' => sha1($this->input->post('password'))
+			);
+			foreach($schedule_time as $time){
+				if(array_key_exists($time,$_POST)){
+					
+					//print_r ($this->session->lawyer_detail['user_id']);
+					$data = array(
+						'user_id' => $this->session->lawyer_detail['user_id'],
+						'schedule_date' => $this->input->post($time),
+						'day' => date('l',strtotime($this->input->post($time))),
+						'schedule_time' => $time,
+						'schedule_status' => 'available',
+						'client_id' => 0,
+						'schedule_add_date' =>  date("Y-m-d"),
+						'updated_date' =>  date("Y-m-d"),
+
+					);
+					$result = $this->user_model->create_lawyer_schedule($data);
+					if($result == FALSE){
+						$this->session->set_flashdata('error_message_display','Error or processing your request. Please try again');
+						redirect('/user/showLawyerSchedule');
+					}
+					
+					//print_r($data);
+				}
+			}
+				$this->session->set_flashdata('success_message_display','Request Updated Sucessfully');
+				redirect('/user/showLawyerSchedule');
+			
+		//print_r($_POST);
 	}
 	
 }

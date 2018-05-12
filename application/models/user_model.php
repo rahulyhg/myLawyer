@@ -105,6 +105,29 @@ public function read_user_information($email,$userType) {
             return false;
         }
     }
+    /**
+     * insert lawyer scheduel dates to the the db
+     */
+    public function create_lawyer_schedule($data){
+        $condition = "schedule_date =" . "'" . $data['schedule_date'] . "' AND " . "schedule_time =" . "'" . $data['schedule_time'] . "'";
+            $this->db->select('*');
+            $this->db->from('tbl_lawyer_schedule');
+            $this->db->where($condition);
+            $this->db->limit(1);
+            $query = $this->db->get();
+            echo $query->num_rows();
+            if ($query->num_rows() == 1) {
+                echo  false;
+            } 
+            else {
+                $this->db->insert('tbl_lawyer_schedule', $data);
+            
+                if ($this->db->affected_rows() > 0) {
+                    return true;
+                }
+                //return false;
+            }
+    }
     
 }
 

@@ -23,7 +23,7 @@ else{
     
       <div class="col-md-6">
         	<!--  -->
-          <div class="panel panel-info">
+          <div class="panel panel-warning">
             <div class="panel-heading">
               <h3 class="panel-title">
               <?php 
@@ -172,7 +172,7 @@ else{
   <div class="row">
   <div class="col-md-12">
       <!--  -->
-      <div class="panel panel-danger">
+      <div class="panel panel-warning">
             <div class="panel-heading">
               <h3 class="panel-title">Your Booking Schedule</h3>
             </div>
