@@ -37,69 +37,148 @@ else{
     <h2>Aready Added</h2>
         <div>
         <?php 
-             
-            foreach($result_in_db as $date => $all_time){
-                echo "<div class='card'>";
-                    echo "<div class='card-header' role='tab' id='headingOne'>";
-                    echo "<h5 class='mb-0'>";
-                    echo "<a data-toggle='collapse' data-parent='#accordion' href='#".$date."' aria-expanded='true' aria-controls='collapseOne'>";
-                        echo $date;
-                    echo "</a>";
-                    echo "</h5>";
-                echo "</div>";
-                echo "<div id='".$date."' class='collapse' role='tabpanel' aria-labelledby='headingOne'>";
-                echo "<div class='card-block'>";
-                
-                echo "<table class='table table-striped'>";
-                echo "<tbody>";
-             echo "<tr class='warning'>";
-                    echo "<td>Time</td><td>Day</td><td>Status</td><td>Added date</td>";
-             echo "</tr>";
-                foreach($all_time as $time=>$db_data){
-                    
-             
-            echo "<tr>";
-                    echo "<td>";
-                        echo $time;
-                    echo "</td>";
-                    echo "<td>";
-                        echo $db_data->day;
-                    echo "</td>";
-                    echo "<td>";
-                        echo $db_data->schedule_status;
-                    echo "</td>";
-                    echo "<td>";
-                        echo $db_data->schedule_add_date;
-                    echo "</td>";
-                    
-            echo "</tr>";
-             
-                   
-            echo "</tbody>";        
-                }
-                echo "</table>"; 
-              echo "</div>";
-                echo "</div>";
-            echo "</div>";
-            }
-             
+             //print_r($result_in_db);
+             /**
+              * if lawyer adding first time schedule 
+              */
+             if($result_in_db == 'empty'){
+                echo "<h2>New to add</h2>";
+                $schedule_time = array(0=>'06:00:00',1=>'06:30:00',2=>'07:00:00',3=>'07:30:00',4=>'08:00:00'
+                ,5=>'08:30:00',6=>'09:00:00',7=>'09:30:00',8=>'10:00:00',9=>'10:30:00',10=>'11:00:00'
+                ,11=>'11:30:00',12=>'12:00:00',13=>'12:30:00',14=>'13:00:00',15=>'13:30:00'
+                ,16=>'14:00:00',17=>'14:30:00',18=>'15:00:00',19=>'15:30:00',20=>'16:00:00',21=>'16:30:00'
+                ,22=>'17:00:00',23=>'17:30:00',24=>'18:00:00',25=>'18:30:00',26=>'19:00:00',27=>'19:30:00'
+                ,28=>'20:00:00',29=>'20:30:00',30=>'21:00:00',31=>'21:30:00',32=>'22:00:00',33=>'22:30:00'
+                ,34=>'23:00:00'
+                );
 
-             
-             
-        ?>
-       <h2>New to add</h2>
-       <?php
-       $schedule_time = array(0=>'06:00:00',1=>'06:30:00',2=>'07:00:00',3=>'07:30:00',4=>'08:00:00'
-							,5=>'08:30:00',6=>'09:00:00',7=>'09:30:00',8=>'10:00:00',9=>'10:30:00',10=>'11:00:00'
-							,11=>'11:30:00',12=>'12:00:00',13=>'12:30:00',14=>'13:00:00',15=>'13:30:00'
-							,16=>'14:00:00',17=>'14:30:00',18=>'15:00:00',19=>'15:30:00',20=>'16:00:00',21=>'16:30:00'
-							,22=>'17:00:00',23=>'17:30:00',24=>'18:00:00',25=>'18:30:00',26=>'19:00:00',27=>'19:30:00'
-							,28=>'20:00:00',29=>'20:30:00',30=>'21:00:00',31=>'21:30:00',32=>'22:00:00',33=>'22:30:00'
-							,34=>'23:00:00'
-                        );
-        ?>
-       <?php
-       foreach($upcomming_scheduled as $date){
+                foreach($upcomming_scheduled as $date){
+                    echo "<h3>" . $date . '</h3>';
+                    echo form_open('user/createLawyerSchedule'); 
+                    echo "<table class='table table-striped table-bordered'>";
+                    echo "<thead>";
+                        echo "<tr>";
+                            echo "<td>Slot Time</td><td>Approve</td>";
+                            echo "<td>Slot Time</td><td>Approve</td>";
+                            echo "<td>Slot Time</td><td>Approve</td>";
+                            echo "<td>Slot Time</td><td>Approve</td>";
+                        echo "</tr>";
+                    echo "</thead>";
+                    echo "<tbody>";
+
+                    $i=1;
+                    foreach($schedule_time as $time){
+    
+    
+                       
+                            
+                            if($i == 1){
+                               
+                                echo "<tr>";
+    
+                            }
+                            if(($i%5)==0){
+                                echo "</tr>";
+                                echo "<tr>";
+                                $i=1;
+                            }
+                                
+                                echo "<td>";
+                                echo date('h:i:s a', strtotime($time));
+                                echo "</td>";
+                                echo "<td>";
+                                    //echo "<input type='checkbox' name='" . $date . "' value='" . $time . "'>";
+                                    echo form_checkbox($time, $date, FALSE);
+                                    echo "Approve";
+                                echo "</td>";
+                                
+                                $i++;
+                           
+                            //echo $date . $time . " not in database<br>";
+                        
+                    }
+    
+                    echo "<tr><td>";
+                        echo form_submit('submit', 'Update schedule', "class='btn btn-success btn-md btn-block'");    
+                        echo "</td></td>";
+                        echo "</tbody>";
+                        echo "</table>";
+                        echo form_close();
+
+
+
+
+
+
+
+
+                }
+
+               
+
+
+
+
+
+
+             }
+             else{
+                foreach($result_in_db as $date => $all_time){
+                    echo "<div class='card'>";
+                        echo "<div class='card-header' role='tab' id='headingOne'>";
+                        echo "<h5 class='mb-0'>";
+                        echo "<a data-toggle='collapse' data-parent='#accordion' href='#".$date."' aria-expanded='true' aria-controls='collapseOne'>";
+                            echo $date;
+                        echo "</a>";
+                        echo "</h5>";
+                    echo "</div>";
+                    echo "<div id='".$date."' class='collapse' role='tabpanel' aria-labelledby='headingOne'>";
+                    echo "<div class='card-block'>";
+                    
+                    echo "<table class='table table-striped'>";
+                    echo "<tbody>";
+                 echo "<tr class='warning'>";
+                        echo "<td>Time</td><td>Day</td><td>Status</td><td>Added date</td>";
+                 echo "</tr>";
+                    foreach($all_time as $time=>$db_data){
+                        
+                 
+                echo "<tr>";
+                        echo "<td>";
+                            
+                            echo date('h:i:s a', strtotime($time));
+                        echo "</td>";
+                        echo "<td>";
+                            echo $db_data->day;
+                        echo "</td>";
+                        echo "<td>";
+                            echo $db_data->schedule_status;
+                        echo "</td>";
+                        echo "<td>";
+                            echo $db_data->schedule_add_date;
+                        echo "</td>";
+                        
+                echo "</tr>";
+                 
+                       
+                      
+                    }
+                    echo "</tbody>"; 
+                    echo "</table>"; 
+                  echo "</div>";
+                    echo "</div>";
+                echo "</div>";
+                }
+                echo "<h2>New to add</h2>";
+                $schedule_time = array(0=>'06:00:00',1=>'06:30:00',2=>'07:00:00',3=>'07:30:00',4=>'08:00:00'
+                ,5=>'08:30:00',6=>'09:00:00',7=>'09:30:00',8=>'10:00:00',9=>'10:30:00',10=>'11:00:00'
+                ,11=>'11:30:00',12=>'12:00:00',13=>'12:30:00',14=>'13:00:00',15=>'13:30:00'
+                ,16=>'14:00:00',17=>'14:30:00',18=>'15:00:00',19=>'15:30:00',20=>'16:00:00',21=>'16:30:00'
+                ,22=>'17:00:00',23=>'17:30:00',24=>'18:00:00',25=>'18:30:00',26=>'19:00:00',27=>'19:30:00'
+                ,28=>'20:00:00',29=>'20:30:00',30=>'21:00:00',31=>'21:30:00',32=>'22:00:00',33=>'22:30:00'
+                ,34=>'23:00:00'
+                );
+                foreach($upcomming_scheduled as $date){
         
               
                     if(array_key_exists($date, $result_in_db)){
@@ -209,8 +288,23 @@ else{
                         echo "</table>";
                         
                         echo form_close();
-            }
-       }
+                     }
+                 }
+
+
+             }
+           
+             
+
+             
+             
+        ?>
+       
+       <?php
+      
+        ?>
+       <?php
+       
        
        ?>
 

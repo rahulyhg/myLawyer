@@ -181,6 +181,12 @@ else{
  
 
                 <div class=" col-md-12 col-lg-12 "> 
+                <?php 
+                  print_r($result_unique_dates);
+                  echo "<hr>";
+                  print_r($result_all_scheules);
+
+                ?>
                   <!--  -->
                   <div id="accordion" role="tablist" aria-multiselectable="true">
   <div class="card">

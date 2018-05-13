@@ -161,8 +161,36 @@ Class User extends CI_Controller {
 
 	// Show lawyer profle and dashboard page
 	public function lawyerDashBoard() {
-	
-		$this->load->view('lawyer-dashboard');
+		$lawyer_detail = $this->session->userdata('lawyer_detail'); 
+		//print_r($lawyer_detail);
+		$search_date = array();
+		$current_date = Date('Y-m-d');
+		$tomorrow_date = date('Y-m-d', strtotime($current_date . ' +1 day'));
+		$search_date[] = date('Y-m-d', strtotime($current_date . ' +1 day'));
+		
+		//$schedule_time =array("5",5,"5");
+		
+		for($i=1;$i<7;$i++){
+			$search_date[] = date('Y-m-d', strtotime($tomorrow_date . ' +1 day'));
+			$tomorrow_date = date('Y-m-d', strtotime($tomorrow_date . ' +1 day'));
+
+		} 
+		//print_r($search_date);
+
+		$result_unique_dates = $this->user_model->show_upcomming_schedule_dates_dashboard($search_date,$lawyer_detail['user_id']);
+		$result_all_scheules = $this->user_model->show_upcomming_schedule($search_date,$lawyer_detail['user_id']);
+		//print_r($result);
+		if($result_unique_dates == FALSE AND $result_all_scheules == FALSE){
+			$data['result_unique_dates'] = 'empty';
+			$data['result_all_scheules'] = 'empty';
+		}
+		else{
+			$data['result_unique_dates'] = $result_unique_dates;
+			$data['result_all_scheules'] = $result_all_scheules;
+		}
+		
+
+		$this->load->view('lawyer-dashboard',$data);
 		
 		
 	}
@@ -177,6 +205,9 @@ Class User extends CI_Controller {
 	public function showLawyerSchedule() {
 		$success = $this->session->flashdata('success_message_display');
 		$error = $this->session->flashdata('error_message_display');
+		if(!empty($success)){
+			$data['success_message_display'] = $success;
+		}
 		if(!empty($error)){
 			$data['error_message_display'] = $error;
 		}
@@ -196,11 +227,14 @@ Class User extends CI_Controller {
 		} 
 		//print_r($search_date);
 
-		$result = $this->user_model->show_upcomming_scheudle($search_date,$lawyer_detail['user_id']);
+		$result = $this->user_model->show_upcomming_schedule($search_date,$lawyer_detail['user_id']);
 		if($result == FALSE){
 			
-			$data['upcomming_scheduled'] = 'empty';
-			$this->load->view('2018-05-12',$data);
+			$data['upcomming_scheduled'] = $search_date;
+			$data['result_in_db'] = 'empty';
+
+			$this->load->view('create-lawyer-schedule',$data);
+			//$this->load->view('2018-05-12',$data);
 		}
 		else{
 			$finalize_dates = array();
@@ -306,6 +340,7 @@ Class User extends CI_Controller {
 
 					);
 					$result = $this->user_model->create_lawyer_schedule($data);
+					//print_r($data);
 					if($result == FALSE){
 						$this->session->set_flashdata('error_message_display','Error or processing your request. Please try again');
 						redirect('/user/showLawyerSchedule');

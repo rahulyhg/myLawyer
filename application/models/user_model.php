@@ -86,13 +86,74 @@ public function read_user_information($email,$userType) {
 
     }
 
-    public function show_upcomming_scheudle($search_date,$user_id){
+/**
+ * return unique upcomming dates avaiable in db
+ */
+    public function show_upcomming_schedule_dates_dashboard($search_date,$user_id){
+        
+        $condition = "user_id =" . "'" . $user_id . "' AND (".  "schedule_date =" . "'" . $search_date[0] . "' OR schedule_date = " . "'" . $search_date[1] . "' OR schedule_date =" . "'" . $search_date[2] . "' OR schedule_date =" ."'" . $search_date[3] . "' OR schedule_date =" . "'" . $search_date[4] . "' OR schedule_date =" . "'" . $search_date[5] . "' OR schedule_date =" . "'" . $search_date[6] . "')";
+        
+        $this->db->select('schedule_date');
+        $this->db->distinct('schedule_date');
+        $this->db->from('tbl_lawyer_schedule');
+        $this->db->where($condition);
+        
+        $this->db->order_by("schedule_date", "asc");
+        $this->db->order_by("schedule_time", "asc");
+        //$this->db->limit(1);
+        
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            //has at least one record with booking or not
+            return $query->result();
+        } 
+        else {
+            return false;
+        }
+        
+       // echo $this->db->last_query();
+    }
+
+    /**
+     * this modle will return upcomming scheduel including current date to dashboard
+     */
+    public function show_upcomming_schedule_dashboard($search_date,$user_id){
         //print_r($search_date);
 
          $condition = "user_id =" . "'" . $user_id . "' AND (".  "schedule_date =" . "'" . $search_date[0] . "' OR schedule_date = " . "'" . $search_date[1] . "' OR schedule_date =" . "'" . $search_date[2] . "' OR schedule_date =" ."'" . $search_date[3] . "' OR schedule_date =" . "'" . $search_date[4] . "' OR schedule_date =" . "'" . $search_date[5] . "' OR schedule_date =" . "'" . $search_date[6] . "')";
         $this->db->select('*');
         $this->db->from('tbl_lawyer_schedule');
         $this->db->where($condition);
+        
+        $this->db->order_by("schedule_date", "asc");
+        $this->db->order_by("schedule_time", "asc");
+        //$this->db->limit(1);
+        $query = $this->db->get();
+        //echo $this->db->last_query(); show last executed query
+        //print_r($query->result());
+        if ($query->num_rows() > 0) {
+            //has at least one record with booking or not
+            return $query->result();
+        } 
+        else {
+            return false;
+        }
+    }
+
+
+/**
+ * this model will give schedule to create lawyer scheudle
+ */
+    public function show_upcomming_schedule($search_date,$user_id){
+        //print_r($search_date);
+
+         $condition = "user_id =" . "'" . $user_id . "' AND (".  "schedule_date =" . "'" . $search_date[0] . "' OR schedule_date = " . "'" . $search_date[1] . "' OR schedule_date =" . "'" . $search_date[2] . "' OR schedule_date =" ."'" . $search_date[3] . "' OR schedule_date =" . "'" . $search_date[4] . "' OR schedule_date =" . "'" . $search_date[5] . "' OR schedule_date =" . "'" . $search_date[6] . "')";
+        $this->db->select('*');
+        $this->db->from('tbl_lawyer_schedule');
+        $this->db->where($condition);
+        
+        $this->db->order_by("schedule_date", "asc");
+        $this->db->order_by("schedule_time", "asc");
         //$this->db->limit(1);
         $query = $this->db->get();
         //echo $this->db->last_query(); show last executed query
@@ -109,7 +170,8 @@ public function read_user_information($email,$userType) {
      * insert lawyer scheduel dates to the the db
      */
     public function create_lawyer_schedule($data){
-        $condition = "schedule_date =" . "'" . $data['schedule_date'] . "' AND " . "schedule_time =" . "'" . $data['schedule_time'] . "'";
+        //$user_id = $this->session->lawyer_detail['user_id'];
+        $condition ="user_id =" . "'" . $data['user_id'] . "' AND " .  "schedule_date =" . "'" . $data['schedule_date'] . "' AND " . "schedule_time =" . "'" . $data['schedule_time'] . "'";
             $this->db->select('*');
             $this->db->from('tbl_lawyer_schedule');
             $this->db->where($condition);
