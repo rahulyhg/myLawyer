@@ -19,18 +19,42 @@ Class User extends CI_Controller {
 		$this->load->model('user_model');
 		
 	}  
-	
+	public function index() {
+		if(isset($this->session->userdata['lawyer_detail'])){
+			//if session is already set
+			redirect('/user/lawyerDashBoard');
+		}
+		else{
+			$this->load->view('login');
+			
+		}
+	}
 	// Show registration page for client and lawyer
 	public function register() {
-		$this->load->view('header');
+		if(isset($this->session->userdata['lawyer_detail'])){
+			//if session is already set
+			redirect('/user/lawyerDashBoard');
+		}
+		else{
+			$this->load->view('register');
+			
+		}
 		
-		$this->load->view('register');
+		
+		
 	
 	}
 	// Show login page for client and lawyer
 	public function login() {
-	
-		$this->load->view('login');
+		if(isset($this->session->userdata['lawyer_detail'])){
+				//if session is already set
+				redirect('/user/lawyerDashBoard');
+			}
+			else{
+				$this->load->view('login');
+				
+			}
+		
 		
 		
 	}
@@ -73,7 +97,9 @@ Class User extends CI_Controller {
 			$result = $this->user_model->lawyer_registration($data);
 			if ($result == TRUE) {
 				$data['success_message_display'] = 'Registration Successfully!.';
-				$this->load->view('register', $data);
+				$data['user_type'] = 'lawyer';
+				
+				$this->load->view('login', $data);
 			} 
 			else {
 				$data['error_message_display'] = 'Email Address Already Exist!';
@@ -94,10 +120,9 @@ Class User extends CI_Controller {
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 
 		if ($this->form_validation->run() == FALSE) {
-			if(isset($this->session->userdata['userinfo'])){
+			if(isset($this->session->userdata['lawyer_detail'])){
 				//if session is already set
-				// $this->load->view('dashboard');
-				// $this->load->view('menu');
+				redirect('/user/lawyerDashBoard');
 			}
 			else{
 				$this->load->view('login');
@@ -142,22 +167,38 @@ Class User extends CI_Controller {
 				}
 				else{
 					$data = array(
-					'error_loginmessage_display' => 'Invalid Username or Password'
+					'error_message_display' => 'Invalid Username or Password',
+					'user_type' => 'lawyer'
 					);
-					$this->load->view('register', $data);
+					$this->load->view('login', $data);
 				}
 			} 
 			else {
 				$data = array(
-				'error_loginmessage_display' => 'Invalid Username or Password'
+				'error_message_display' => 'Invalid Username or Password',
+				'user_type' => 'lawyer'
 				);
-				$this->load->view('register', $data);
-				$this->load->view('menu');
+				$this->load->view('login', $data);
 			}
 		}
 
 
 	}
+
+	// Logout from user page
+	public function logout() {
+
+		// Removing session data
+		
+		$this->session->unset_userdata('lawyer_detail');
+		
+		$data['success_message_display'] = 'Log out sucessfully';
+		$data['user_type'] = 'lawyer';
+				$this->load->view('login', $data);
+
+		
+		
+		}
 
 	// Show lawyer profle and dashboard page
 	public function lawyerDashBoard() {
@@ -166,6 +207,7 @@ Class User extends CI_Controller {
 		$search_date = array();
 		$current_date = Date('Y-m-d');
 		$tomorrow_date = date('Y-m-d', strtotime($current_date . ' +1 day'));
+		$search_date[] = $current_date;
 		$search_date[] = date('Y-m-d', strtotime($current_date . ' +1 day'));
 		
 		//$schedule_time =array("5",5,"5");
@@ -179,16 +221,23 @@ Class User extends CI_Controller {
 
 		$result_unique_dates = $this->user_model->show_upcomming_schedule_dates_dashboard($search_date,$lawyer_detail['user_id']);
 		$result_all_scheules = $this->user_model->show_upcomming_schedule($search_date,$lawyer_detail['user_id']);
-		//print_r($result);
+		//print_r($result_unique_dates);
 		if($result_unique_dates == FALSE AND $result_all_scheules == FALSE){
 			$data['result_unique_dates'] = 'empty';
 			$data['result_all_scheules'] = 'empty';
 		}
 		else{
 			$data['result_unique_dates'] = $result_unique_dates;
-			$data['result_all_scheules'] = $result_all_scheules;
+			$data['result_all_schedules'] = $result_all_scheules;
 		}
-		
+		$result_case_brief = $this->user_model->show_case_brief($lawyer_detail['user_id']);
+			
+			if($result_case_brief == FALSE){
+				$data['case_briefs'] = 'empty';
+			}
+			else{
+				$data['case_briefs'] = $result_case_brief;
+			}
 
 		$this->load->view('lawyer-dashboard',$data);
 		
@@ -353,6 +402,54 @@ Class User extends CI_Controller {
 				redirect('/user/showLawyerSchedule');
 			
 		//print_r($_POST);
+	}
+	/**
+	 * show form to add case details he attended
+	 */
+	public function showCaseBrief(){
+		$success = $this->session->flashdata('success_message_display');
+		$error = $this->session->flashdata('error_message_display');
+		if(!empty($success)){
+			$data['success_message_display'] = $success;
+			$this->load->view('create-casebrief',$data);
+		}
+		if(!empty($error)){
+			$data['error_message_display'] = $error;
+			$this->load->view('create-casebrief',$data);
+		}
+		$this->load->view('create-casebrief');
+	}
+
+	/**
+	 * lawyer submited previous case details he attended
+	 */
+	public function createCaseBrief(){
+		$this->form_validation->set_rules('case-title', 'Case title', 'trim|required');
+		$this->form_validation->set_rules('case-description', 'Case description', 'trim|required');
+		
+			if ($this->form_validation->run() == FALSE) {
+				$this->load->view('create-casebrief');				
+			}
+			else {
+				$data = array(
+					'user_id'=> $this->session->lawyer_detail['user_id'],
+					'case_title' => $this->input->post('case-title'),
+					'case_description' => $this->input->post('case-description'),
+					'case_added_date' => Date('Y-m-d')
+					);
+					$result = $this->user_model->create_case_brief($data);
+					if($result == TRUE){
+						
+						
+						$this->session->set_flashdata('success_message_display','Case added sucessfully');
+						redirect('/user/showCaseBrief');
+					}
+					else{
+						
+						$this->session->set_flashdata('error_message_display','Error or processing your request. Please try again');
+						redirect('/user/showCaseBrief');						
+					}
+			}
 	}
 	
 }

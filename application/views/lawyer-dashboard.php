@@ -88,17 +88,17 @@ else{
                     </tbody>
                   </table>
                   
-                  <a href="#" class="btn btn-primary">My Sales Performance</a>
-                  <a href="#" class="btn btn-primary">Team Sales Performance</a>
+                 
+                  
                 </div>
               </div>
             </div>
                  <div class="panel-footer">
-                        <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                        <!-- <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a> -->
                         <span class="pull-right">
-                            <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-                            <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                        <a href="#" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-md btn-warning">Edit My Profile</a>                           
                         </span>
+                        <div class="clearfix"></div>
                     </div>
             
           </div>
@@ -122,46 +122,54 @@ else{
  
 
                 <div class=" col-md-12 col-lg-12 "> 
-                  <table class="table table-user-information">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <h3>Case Title</h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque elementum aliquet pretium. Sed ultrices, magna in pulvinar vestibulum, orci urna tristique ex, vitae suscipit magna mi quis lorem. Nulla facilisi. Donec molestie ac magna id sollicitudin. Sed id vulputate velit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque condimentum vestibulum fringilla. Duis rutrum posuere fringilla. Nunc faucibus interdum porta.</p>
-                        
-                        </td>
-                       
-                      </tr>
-                      <tr>
-                        <td>
-                          <h3>Case Title</h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque elementum aliquet pretium. Sed ultrices, magna in pulvinar vestibulum, orci urna tristique ex, vitae suscipit magna mi quis lorem. Nulla facilisi. Donec molestie ac magna id sollicitudin. Sed id vulputate velit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque condimentum vestibulum fringilla. Duis rutrum posuere fringilla. Nunc faucibus interdum porta.</p>
-                        
-                        </td>
-                       
-                      </tr>
-                      
-                     
-                   
-                         
-                        
-                      
-                        
-                     
-                    </tbody>
-                  </table>
+                
+                  <?php
+                  if($case_briefs == 'empty'){
+                    echo "<span class='label label-default' style='font-size:18px'>Please add cases you atteneded</span><br><br>";
+                    
+                  }
+                  else{
+                    echo "<table class='table table-user-information' style='display: block; height: 300px !important; overflow: auto;'>";
+                    echo "<tbody>";
+                    foreach($case_briefs as $case_brief){
+                      echo "<tr>";
+                           echo "<td>";
+                             echo "<h3>";
+                               echo $case_brief->case_title;
+                               echo "</h3>";
+                             echo "<p>";
+                               echo $case_brief->case_description;
+                             echo "</p>";
+                             echo "<span class='label label-info'>";
+                             echo $case_brief->case_added_date;
+                             echo "</span>";
+                           
+                           echo "</td>";
+                          
+                         echo "</tr>";
+                     }
+                     echo "</tbody>";
+                echo "</table>";
+                  }
                   
-                  <a href="#" class="btn btn-primary">See All</a>
-                  <a href="#" class="btn btn-primary">Add New Case Title</a>
+                  ?>
+                  
+             
+                  
+                  
+                  
+                  
                 </div>
               </div>
             </div>
                  <div class="panel-footer">
-                        <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+
                         <span class="pull-right">
-                            <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-                            <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                        <a href="<?php echo base_url('/user/createCaseBrief'); ?>" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-md btn-warning"><i class="glyphicon glyphicon-edit"></i> &nbsp;Add New Case Title</a>
+
+                            <!-- <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a> -->
                         </span>
+                        <div class="clearfix"></div>
                     </div>
             
           </div>
@@ -182,21 +190,87 @@ else{
 
                 <div class=" col-md-12 col-lg-12 "> 
                 <?php 
-                  print_r($result_unique_dates);
-                  echo "<hr>";
-                  print_r($result_all_scheules);
+                  //print_r($result_unique_dates);
+                 // echo "<hr>";
+                // print_r($result_all_schedules);
+                  if($result_unique_dates == 'empty'){
+                    echo "<span class='label label-default' style='font-size:18px'>Please add your availabitity to show client</span><br><br>";
+                  }
+                  else{
+                    echo "<div id='accordion' role='tablist' aria-multiselectable='true'>";
+                  foreach($result_unique_dates as $unique_date){
+                   // print_r($unique_date->schedule_date);
 
+
+                  
+                   echo "<div class='card'>";
+                     echo "<div class='card-header' role='tab' id='headingOne'>";
+                       echo "<h5 class='mb-0'>";
+                         echo "<a data-toggle='collapse' data-parent='#accordion' href='#". $unique_date->schedule_date ."' aria-expanded='true' aria-controls='collapseOne'>";
+                           echo $unique_date->schedule_date;
+                           echo '&nbsp ('. date('l', strtotime($unique_date->schedule_date)) . ")";
+                         echo  "</a>";
+                       echo "</h5>";
+                     echo "</div>";
+                    echo  "<div id='". $unique_date->schedule_date."' class='collapse' role='tabpanel' aria-labelledby='headingOne'>";
+                      echo "<div class='card-block'>";
+                      echo "<table class='table table-user-information'>";
+                    echo "<tbody>";
+
+
+                      foreach($result_all_schedules as $schedule){
+                        //print_r($schedule->schedule_date);
+                       // print_r( $unique_date->schedule_date);
+
+                        if($unique_date->schedule_date == $schedule->schedule_date){
+                          echo "<tr>";
+                          echo "<td>";
+                         
+                          echo date('h:i:s a', strtotime($schedule->schedule_time));
+                          echo "</td>";
+                          echo "<td>";
+                            if($schedule->schedule_status == 'tentative booking'){
+                              echo "Tentative booking";
+                            }
+                            else if($schedule->schedule_status == 'available'){
+                              echo "<button class='btn btn-success'>". $schedule->schedule_status ."</button>";
+                            }
+                            else if($schedule->schedule_status == 'booked'){
+                              echo "Booked ";
+                            }
+                            else if($schedule->schedule_status == 'booked-closed'){
+                              echo "Booking completed ";
+                            }
+                            else if($schedule->schedule_status == 'closed'){
+                              echo "Slot closed";
+                            }
+                            
+                          echo "</td>";
+                          
+                        }
+                      }
+                    echo "</tbody>";
+                    echo "</table>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+
+                  }
+                  echo "</div>";
+                  }
+
+                 
                 ?>
-                  <!--  -->
-                  <div id="accordion" role="tablist" aria-multiselectable="true">
-  <div class="card">
-    <div class="card-header" role="tab" id="headingOne">
-      <h5 class="mb-0">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          07-05-2018
-        </a>
-      </h5>
-    </div>
+                  
+                  <!-- <div id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="card">
+                      <div class="card-header" role="tab" id="headingOne">
+                        <h5 class="mb-0">
+                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            07-05-2018
+                          </a>
+                        </h5>
+                      </div>
 
     <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
       <div class="card-block">
@@ -257,20 +331,21 @@ else{
     </div>
   </div>
 
-</div>
+</div> -->
                   <!--  -->
                   
-                  <a href="#" class="btn btn-primary">My Sales Performance</a>
-                  <a href="#" class="btn btn-primary">Team Sales Performance</a>
+                  
                 </div>
               </div>
             </div>
                  <div class="panel-footer">
-                        <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                 
                         <span class="pull-right">
-                            <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-                            <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                        <a href="<?php echo base_url('/user/showLawyerSchedule');?>" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-md btn-warning"> <i class="glyphicon glyphicon-edit"></i> &nbsp; Add New Schedule</a>
+                            
+                            <!-- <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a> -->
                         </span>
+                        <div class="clearfix"></div>
                     </div>
             
           </div>

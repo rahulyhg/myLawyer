@@ -53,6 +53,31 @@
                         </li>
                         <li><a href="gallery.html">Gallery</a></li>
                         <li><a href="contact.html">Contact us</a></li>
+                        <li><a href="<?php echo base_url('/user/register') ?>">Join</a></li>
+                        <?php 
+                            //print_r($this->session->userdata['lawyer_detail']);
+                            if(isset($this->session->userdata['lawyer_detail'])){
+                                echo "<li><a href='";
+                                echo base_url('/user/logout');
+                                echo "'>log out</a></li>";
+                            }
+                            else{
+                                echo "<li><a href='";
+                                echo base_url('/user/login');
+                                echo "'>log in</a></li>";
+                            }
+                        ?>
+                        <?php 
+                            if(isset($this->session->userdata['lawyer_detail'])){
+                                echo "<li><a href='";
+                                echo base_url('/user/lawyerDashBoard');
+                                echo "'>";
+                                echo "<span class='label label-default' style='font-size:18px'> My Dashboard</span>";
+                               
+                                echo "</a></li>";
+                            }
+                        ?>
+                        
                     </ul>
                 </div><!--/.nav-collapse -->
             </div><!--/.container-fluid -->

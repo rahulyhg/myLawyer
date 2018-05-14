@@ -190,6 +190,34 @@ public function read_user_information($email,$userType) {
                 //return false;
             }
     }
+    /**
+     * insert case brief in to the db
+     */
+    public function create_case_brief($data){
+        $this->db->insert('tbl_casebrief', $data);
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public function show_case_brief($data){
+        $condition ="user_id =" . "'" . $data . "'";
+        $this->db->select('*');
+        $this->db->from('tbl_casebrief');
+        $this->db->where($condition);
+        $this->db->order_by("case_added_date", "desc");
+        $query_case_brief = $this->db->get();
+         //echo $this->db->last_query();
+        if ($query_case_brief->num_rows() > 0) {
+            return $query_case_brief->result();
+            
+        } 
+        else{
+            echo  false;
+        }
+    }
     
 }
 
