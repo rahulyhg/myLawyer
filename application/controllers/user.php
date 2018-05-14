@@ -193,6 +193,7 @@ Class User extends CI_Controller {
 					'contact' => $result[0]->contact,
 					'register-date' => $result[0]->register_date,
 					'login' => TRUE,
+					'type' => 'client'
 
 					);
 			}
@@ -235,7 +236,7 @@ Class User extends CI_Controller {
 				
 				$result = $this->user_model->read_user_information($this->input->post('email'),'lawyer');
 				if ($result != false) {
-					if($result[0]->legal_professional == 'lawyer' || $result[0]->legal_professional == 'sworn-translator'){
+					if($result[0]->legal_professional == 'lawyer' || $result[0]->legal_professional == 'lawyer-sworn-translator'){
 						$lawyer_session_data = array(
 							'user_id' => $result[0]->user_id,
 							'fname' => $result[0]->first_name,
@@ -248,6 +249,7 @@ Class User extends CI_Controller {
 							'location' => $result[0]->location,
 							'register-date' => $result[0]->register_date,
 							'login' => TRUE,
+							'type' => 'lawyer'
 							);
 					}
 					else{
@@ -261,6 +263,7 @@ Class User extends CI_Controller {
 							'location' => $result[0]->location,
 							'register-date' => $result[0]->register_date,
 							'login' => TRUE,
+							'type' => 'lawyer'
 							
 							);
 					}

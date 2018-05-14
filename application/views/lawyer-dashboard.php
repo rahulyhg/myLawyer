@@ -139,12 +139,15 @@ else{
               <h3 class="panel-title">
               <?php 
               
-               if($this->session->userdata('lawyer_detail')['legal-professional'] === 'lawyer' || $this->session->userdata('lawyer_detail')['legal-professional'] === 'sworn-translator'){
+               if($this->session->userdata('lawyer_detail')['legal-professional'] === 'lawyer-sworn-translator'){
                 echo "<h3 class='panel-title'>Case handels and afflications</h3>";
                }
-               else{
-                 echo "<h3 class='panel-title'>Affiliations</h3>";
+               else if($this->session->userdata('lawyer_detail')['legal-professional'] === 'lawyer'){
+                 echo "<h3 class='panel-title'>Case handled</h3>";
                }
+               else if($this->session->userdata('lawyer_detail')['legal-professional'] === 'sworn-translator' || $this->session->userdata('lawyer_detail')['legal-professional'] === 'notary'||$this->session->userdata('lawyer_detail')['legal-professional'] === 'family-counselor'){
+                echo "<h3 class='panel-title'>Affiliations</h3>";
+              }
               ?>
   
             </div>
