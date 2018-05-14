@@ -55,18 +55,39 @@ else{
                         echo $lawyer_detail['provincial-area']
                         ?></td>
                       </tr>
-                      <tr>
-                        <td>Admitted Bar</td>
-                        <td><?php 
-                        echo $lawyer_detail['admitted-bar']
-                        ?></td>
-                      </tr>
-                      <tr>
-                        <td>Specialty</td>
-                        <td><?php 
-                        echo $lawyer_detail['specialty']
-                        ?></td>
-                      </tr>
+                      <?php 
+                        if($lawyer_detail['legal-professional'] == 'lawyer' || $lawyer_detail['legal-professional']== 'lawyer-sworn-translator'){
+                          echo "<tr>";
+                          echo "<td>Legal Professional</td>";
+                          echo "<td>";
+                          echo str_replace("-"," ",$lawyer_detail['legal-professional']);
+                          
+                          echo "</td>";
+                        echo "</tr>";
+                          echo "<tr>";
+                          echo "<td>Admitted Bar</td>";
+                          echo "<td>";
+                          echo $lawyer_detail['admitted-bar'];
+                          echo "</td>";
+                        echo "</tr>";
+                        echo "<tr>";
+                          echo "<td>Specialty</td>";
+                          echo "<td>";
+                          echo $lawyer_detail['specialty'];
+                          echo "</td>";
+                        echo "</tr>";
+                        }
+                        else{
+                          echo "<tr>";
+                          echo "<td>Legal Professional</td>";
+                          echo "<td>";
+                          echo $lawyer_detail['legal-professional'];
+                          echo "</td>";
+                        echo "</tr>";
+                        }
+                        
+                      ?>
+                      
                    
                          <tr>
                              <tr>
@@ -115,7 +136,17 @@ else{
       <!--  -->
       <div class="panel panel-warning">
             <div class="panel-heading">
-              <h3 class="panel-title">Case Status</h3>
+              <h3 class="panel-title">
+              <?php 
+              
+               if($this->session->userdata('lawyer_detail')['legal-professional'] === 'lawyer' || $this->session->userdata('lawyer_detail')['legal-professional'] === 'sworn-translator'){
+                echo "<h3 class='panel-title'>Case handels and afflications</h3>";
+               }
+               else{
+                 echo "<h3 class='panel-title'>Affiliations</h3>";
+               }
+              ?>
+  
             </div>
             <div class="panel-body">
               <div class="row">
@@ -198,6 +229,7 @@ else{
                   }
                   else{
                     echo "<div id='accordion' role='tablist' aria-multiselectable='true'>";
+                    $i=1;
                   foreach($result_unique_dates as $unique_date){
                    // print_r($unique_date->schedule_date);
 
@@ -212,7 +244,14 @@ else{
                          echo  "</a>";
                        echo "</h5>";
                      echo "</div>";
-                    echo  "<div id='". $unique_date->schedule_date."' class='collapse' role='tabpanel' aria-labelledby='headingOne'>";
+                    if($i == 1){
+                      echo  "<div id='". $unique_date->schedule_date."' class='collapse in' role='tabpanel' aria-labelledby='headingOne'>";
+                      $i++;
+                    }
+                    else{
+                      echo  "<div id='". $unique_date->schedule_date."' class='collapse' role='tabpanel' aria-labelledby='headingOne'>";
+                    }
+                    
                       echo "<div class='card-block'>";
                       echo "<table class='table table-user-information'>";
                     echo "<tbody>";

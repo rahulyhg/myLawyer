@@ -1,5 +1,6 @@
 
 
+
 //Testi slider
 $(document).ready(function () {
 $('.testi-slides').flexslider({

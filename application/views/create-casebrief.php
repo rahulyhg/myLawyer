@@ -17,7 +17,7 @@
                         <div class="tab-pane fade in active" id="tab2default">
                         
                         <div class="panel-heading">
-                        <h3 class="panel-title">Add your latest case brief</h3>
+                        <h3 class="panel-title">Add your latest work</h3>
                         
                         </div>
                     <div class="panel-body">
@@ -47,7 +47,7 @@
                             'type' => 'text',
                             'name' => 'case-title',
                             'class' => 'form-control',
-                            'placeholder' => 'Case Title'
+                            'placeholder' => 'Title'
                             );
                             echo form_input($data);
                         echo "</div>";
@@ -57,7 +57,7 @@
                             'rows' => '5',
                             'name' => 'case-description',
                             'class' => 'form-control',
-                            'placeholder' => 'Case Description'
+                            'placeholder' => 'Description'
                             );
                             echo form_textarea($data);
                         echo "</div>";

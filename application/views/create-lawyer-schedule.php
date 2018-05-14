@@ -34,7 +34,7 @@ else{
         }
     ?>
 
-    <h2>Aready Added</h2>
+    
         <div>
         <?php 
              //print_r($result_in_db);
@@ -42,7 +42,7 @@ else{
               * if lawyer adding first time schedule 
               */
              if($result_in_db == 'empty'){
-                echo "<h2>New to add</h2>";
+                echo "<h2>Confirmed upcomming schedule</h2>";
                 $schedule_time = array(0=>'06:00:00',1=>'06:30:00',2=>'07:00:00',3=>'07:30:00',4=>'08:00:00'
                 ,5=>'08:30:00',6=>'09:00:00',7=>'09:30:00',8=>'10:00:00',9=>'10:30:00',10=>'11:00:00'
                 ,11=>'11:30:00',12=>'12:00:00',13=>'12:30:00',14=>'13:00:00',15=>'13:30:00'
@@ -123,16 +123,25 @@ else{
 
              }
              else{
+                echo "<h2>Confirmed upcomming schedule</h2>";
+                $i =1;
                 foreach($result_in_db as $date => $all_time){
                     echo "<div class='card'>";
                         echo "<div class='card-header' role='tab' id='headingOne'>";
                         echo "<h5 class='mb-0'>";
-                        echo "<a data-toggle='collapse' data-parent='#accordion' href='#".$date."' aria-expanded='true' aria-controls='collapseOne'>";
+                        echo "<a data-toggle='collapse' data-parent='#accordion' href='#".$date."' aria-expanded='true' aria-controls='collapseOne' >";
                             echo $date;
                         echo "</a>";
                         echo "</h5>";
                     echo "</div>";
-                    echo "<div id='".$date."' class='collapse' role='tabpanel' aria-labelledby='headingOne'>";
+                    if($i ==1){
+                        echo "<div id='".$date."' class='collapse in' role='tabpanel' aria-labelledby='headingOne'>";
+                        $i++;
+                    }
+                    else{
+                        echo "<div id='".$date."' class='collapse' role='tabpanel' aria-labelledby='headingOne'>";
+                    }
+                    
                     echo "<div class='card-block'>";
                     
                     echo "<table class='table table-striped'>";
@@ -169,7 +178,8 @@ else{
                     echo "</div>";
                 echo "</div>";
                 }
-                echo "<h2>New to add</h2>";
+                echo "<hr>";
+                echo "<h2>Add more schedule</h2>";
                 $schedule_time = array(0=>'06:00:00',1=>'06:30:00',2=>'07:00:00',3=>'07:30:00',4=>'08:00:00'
                 ,5=>'08:30:00',6=>'09:00:00',7=>'09:30:00',8=>'10:00:00',9=>'10:30:00',10=>'11:00:00'
                 ,11=>'11:30:00',12=>'12:00:00',13=>'12:30:00',14=>'13:00:00',15=>'13:30:00'

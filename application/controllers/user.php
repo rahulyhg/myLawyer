@@ -61,7 +61,40 @@ Class User extends CI_Controller {
 
 	//client registration process
 	public function clientRegistration(){
-
+		$this->form_validation->set_rules('fname', 'First Name', 'trim|required|alpha');
+		$this->form_validation->set_rules('lname', 'Last Name', 'trim|required|alpha');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required');
+		$this->form_validation->set_rules('contact', 'Contact', 'trim|required');
+		if ($this->form_validation->run() == FALSE) {
+			$data = array(
+				'user_type' => 'client'
+			);
+			$this->load->view('register',$data);
+			
+		}
+		else{
+			$data = array(
+				'first_name' => $this->input->post('fname'),
+				'last_name' => $this->input->post('lname'),
+				'email' => $this->input->post('email'),
+				'password' => sha1($this->input->post('password')),
+				'contact' => $this->input->post('contact')
+				
+				);
+			$result = $this->user_model->client_registration($data);
+			if ($result == TRUE) {
+				$data['success_message_display'] = 'Registration Successfully!.';
+				$data['user_type'] = 'client';
+				
+				$this->load->view('login', $data);
+			} 
+			else {
+				$data['error_message_display'] = 'Email Address Already Exist!';
+				$data['user_type'] = 'client';
+				$this->load->view('register', $data);
+			}
+		}
 	}
 	
 	//lawyer registration process
@@ -74,11 +107,27 @@ Class User extends CI_Controller {
 		$this->form_validation->set_rules('provincial-area', 'Provincial Area', 'trim|required');
 		//$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
-		$this->form_validation->set_rules('admitted-bar', 'Admitted Bar', 'trim|required');
-		$this->form_validation->set_rules('specialty', 'Specialty Area', 'trim|required');
+		$this->form_validation->set_rules('legal-professional', 'Legal Professional', 'trim|required');
+		if($this->input->post('legal-professional') == 'lawyer' || $this->input->post('legal-professional') == 'lawyer-sworn-translator'){
+			$this->form_validation->set_rules('admitted-bar', 'Admitted Bar', 'trim|required');
+			$this->form_validation->set_rules('specialty', 'Specialty Area', 'trim|required');
+		}
+		else{
+			$this->form_validation->set_rules('admitted-bar', 'Admitted Bar', 'trim');
+			$this->form_validation->set_rules('specialty', 'Specialty Area', 'trim');
+		}
+		
+
 		$this->form_validation->set_rules('location', 'Location', 'trim|required');
+
+
+
 		if ($this->form_validation->run() == FALSE) {
-			$this->load->view('register');
+			$data = array(
+				'user_type' => 'lawyer'
+			);
+			$this->load->view('register',$data);
+			//print_r($_POST);
 			
 			
 		}
@@ -89,6 +138,7 @@ Class User extends CI_Controller {
 			'email' => $this->input->post('email'),
 			'provincial_area' => $this->input->post('provincial-area'),
 			'password' => sha1($this->input->post('password')),
+			'legal_professional' => $this->input->post('legal-professional'),
 			'admitted_bar' => $this->input->post('admitted-bar'),
 			'specialty' => $this->input->post('specialty'),
 			'location' => $this->input->post('location')
@@ -103,6 +153,7 @@ Class User extends CI_Controller {
 			} 
 			else {
 				$data['error_message_display'] = 'Email Address Already Exist!';
+				$data['user_type'] = 'lawyer';
 				$this->load->view('register', $data);
 			}
 		}
@@ -111,7 +162,48 @@ Class User extends CI_Controller {
 
 	//client login process
 	public function clientLogin(){
+		$this->form_validation->set_rules('email', 'Email', 'trim|required');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required');
+		if ($this->form_validation->run() == FALSE) {
+			if(isset($this->session->userdata['client_detail'])){
+				//if session is already set
+				redirect('/user/clientDashBoard');
+			}
+			else{
+				$data['user_type'] = 'client';
+				$this->load->view('login',$data);
+				
+			}
+		} 
+		else{
+			$data = array(
+				'email' => $this->input->post('email'),
+				'password' => sha1($this->input->post('password'))
+				);
+			$result = $this->user_model->user_login($data,'client');
+			if ($result == TRUE) {
+				echo "success";
+				$result = $this->user_model->read_user_information($this->input->post('email'),'client');
+				print_r($result);
+				$client_session_data = array(
+					'user_id' => $result[0]->client_id,
+					'fname' => $result[0]->first_name,
+					'lname' => $result[0]->last_name,
+					'email' => $result[0]->email,
+					'contact' => $result[0]->contact,
+					'register-date' => $result[0]->register_date,
+					'login' => TRUE,
 
+					);
+			}
+			else{
+				$data = array(
+					'error_message_display' => 'Invalid Username or Password',
+					'user_type' => 'client'
+					);
+					$this->load->view('login', $data);
+			}
+		}
 	}
 	//lawyer login process
 	public function lawyerLogin(){
@@ -125,7 +217,8 @@ Class User extends CI_Controller {
 				redirect('/user/lawyerDashBoard');
 			}
 			else{
-				$this->load->view('login');
+				$data['user_type'] = 'lawyer';
+				$this->load->view('login',$data);
 				
 			}
 		} 
@@ -138,23 +231,40 @@ Class User extends CI_Controller {
 			//print_r($data);
 			$result = $this->user_model->user_login($data,'lawyer');
 			if ($result == TRUE) {
-				echo "success";
+				//echo "success";
 				
 				$result = $this->user_model->read_user_information($this->input->post('email'),'lawyer');
 				if ($result != false) {
+					if($result[0]->legal_professional == 'lawyer' || $result[0]->legal_professional == 'sworn-translator'){
+						$lawyer_session_data = array(
+							'user_id' => $result[0]->user_id,
+							'fname' => $result[0]->first_name,
+							'lname' => $result[0]->last_name,
+							'email' => $result[0]->email,
+							'provincial-area' => $result[0]->provincial_area,
+							'admitted-bar' => $result[0]->admitted_bar,
+							'legal-professional' => $result[0]->legal_professional,
+							'specialty' => $result[0]->specialty,
+							'location' => $result[0]->location,
+							'register-date' => $result[0]->register_date,
+							'login' => TRUE,
+							);
+					}
+					else{
+						$lawyer_session_data = array(
+							'user_id' => $result[0]->user_id,
+							'fname' => $result[0]->first_name,
+							'lname' => $result[0]->last_name,
+							'email' => $result[0]->email,
+							'provincial-area' => $result[0]->provincial_area,
+							'legal-professional' => $result[0]->legal_professional,
+							'location' => $result[0]->location,
+							'register-date' => $result[0]->register_date,
+							'login' => TRUE,
+							
+							);
+					}
 					
-					$lawyer_session_data = array(
-					'user_id' => $result[0]->user_id,
-					'fname' => $result[0]->first_name,
-					'lname' => $result[0]->last_name,
-					'email' => $result[0]->email,
-					'provincial-area' => $result[0]->provincial_area,
-					'admitted-bar' => $result[0]->admitted_bar,
-					'specialty' => $result[0]->specialty,
-					'location' => $result[0]->location,
-					'register-date' => $result[0]->register_date,
-					'login' => TRUE,
-					);
 					//print_r($lawyer_session_data);
 					// Add user data in session
 					//$this->session->set_userdata('userinfo', $session_data);

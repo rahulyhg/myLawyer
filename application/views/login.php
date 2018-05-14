@@ -12,11 +12,11 @@
                             <?php
                             if(isset($user_type) && $user_type =='lawyer'){
                                 echo "<li><a href='#tab1default' data-toggle='tab'>Client Login</a></li>";
-                                echo "<li class='active'><a href='#tab2default' data-toggle='tab'>Lawyer Login</a></li>";
+                                echo "<li class='active'><a href='#tab2default' data-toggle='tab'>Legal Professional Login</a></li>";
                             }
                             else{
                                 echo "<li class='active'><a href='#tab1default' data-toggle='tab'>Client Login</a></li>";
-                                echo "<li><a href='#tab2default' data-toggle='tab'>Lawyer Login</a></li>";
+                                echo "<li><a href='#tab2default' data-toggle='tab'>Legal Professional Login</a></li>";
                             }
                             
                             ?>
@@ -102,7 +102,7 @@
                         ?>
                         
                         <div class="panel-heading">
-                        <h3 class="panel-title">Lawyer Sign In</h3>
+                        <h3 class="panel-title">Legal Professional Login</h3>
             </div>
                     <div class="panel-body">
                     <?php
