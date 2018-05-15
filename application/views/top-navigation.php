@@ -58,7 +58,12 @@
                             //print_r($this->session->userdata['lawyer_detail']);
                             if(isset($this->session->userdata['lawyer_detail'])){
                                 echo "<li><a href='";
-                                echo base_url('/user/logout');
+                                echo base_url('/user/logout/lawyer');
+                                echo "'>log out</a></li>";
+                            }
+                            elseif(isset($this->session->userdata['client_detail'])){
+                                echo "<li><a href='";
+                                echo base_url('/user/logout/client');
                                 echo "'>log out</a></li>";
                             }
                             else{
@@ -71,6 +76,14 @@
                             if(isset($this->session->userdata['lawyer_detail'])){
                                 echo "<li><a href='";
                                 echo base_url('/user/lawyerDashBoard');
+                                echo "'>";
+                                echo "<span class='label label-default' style='font-size:18px'> My Dashboard</span>";
+                               
+                                echo "</a></li>";
+                            }
+                            elseif(isset($this->session->userdata['client_detail'])){
+                                echo "<li><a href='";
+                                echo base_url('/user/clientDashBoard');
                                 echo "'>";
                                 echo "<span class='label label-default' style='font-size:18px'> My Dashboard</span>";
                                

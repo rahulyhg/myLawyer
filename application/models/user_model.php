@@ -265,7 +265,46 @@ public function read_user_information($email,$userType) {
             
         } 
         else{
-            echo  false;
+            return  false;
+        }
+    }
+
+    public function show_client_booking($data){
+        $condition ="client_id =" . "'" . $data . "'";
+        $this->db->select('*');
+        $this->db->from('tbl_lawyer_schedule');
+        $this->db->where($condition);
+        $this->db->order_by("schedule_date", "desc");
+        $query_client_booking = $this->db->get();
+         //echo $this->db->last_query();
+        if ($query_client_booking->num_rows() > 0) {
+            return $query_client_booking->result();
+            
+        } 
+        elseif($query_client_booking->num_rows() > 0){
+            return 'empty';
+        }
+        else{
+            return  false;
+        }
+    }
+    public function get_lawyer_detail($user_id){
+        $condition ="user_id =" . "'" . $user_id . "'";     
+        $this->db->select('*');
+        $this->db->from('tbl_user');
+        $this->db->where($condition);
+        $this->db->limit(1);
+        
+        $query_lawyer_detail = $this->db->get();
+        if ($query_lawyer_detail->num_rows() == 1) {
+            return $query_lawyer_detail->result();
+            
+        } 
+        elseif($query_lawyer_detail->num_rows() > 0){
+            return 'empty';
+        }
+        else{
+            return  false;
         }
     }
     

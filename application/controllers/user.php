@@ -35,6 +35,9 @@ Class User extends CI_Controller {
 			//if session is already set
 			redirect('/user/lawyerDashBoard');
 		}
+		elseif(isset($this->session->userdata['client_detail'])){
+			redirect('/user/clientDashBoard');
+		}
 		else{
 			$this->load->view('register');
 			
@@ -120,7 +123,7 @@ Class User extends CI_Controller {
 
 		$this->form_validation->set_rules('location', 'Location', 'trim|required');
 
-
+		print_r($_POST);
 
 		if ($this->form_validation->run() == FALSE) {
 			$data = array(
@@ -135,6 +138,7 @@ Class User extends CI_Controller {
 			$data = array(
 			'first_name' => $this->input->post('fname'),
 			'last_name' => $this->input->post('lname'),
+			'title' => $this->input->post('title'),
 			'email' => $this->input->post('email'),
 			'provincial_area' => $this->input->post('provincial-area'),
 			'password' => sha1($this->input->post('password')),
@@ -184,7 +188,7 @@ Class User extends CI_Controller {
 			if ($result == TRUE) {
 				echo "success";
 				$result = $this->user_model->read_user_information($this->input->post('email'),'client');
-				print_r($result);
+				//print_r($result);
 				$client_session_data = array(
 					'user_id' => $result[0]->client_id,
 					'fname' => $result[0]->first_name,
@@ -196,6 +200,12 @@ Class User extends CI_Controller {
 					'type' => 'client'
 
 					);
+					//print_r($client_session_data);
+					$this->session->set_userdata('client_detail', $client_session_data);
+					
+					//print_r($_SESSION);
+					redirect('/user/clientDashBoard');
+					//$this->load->view('dashboard');
 			}
 			else{
 				$data = array(
@@ -238,6 +248,7 @@ Class User extends CI_Controller {
 				if ($result != false) {
 					if($result[0]->legal_professional == 'lawyer' || $result[0]->legal_professional == 'lawyer-sworn-translator'){
 						$lawyer_session_data = array(
+							'title' => $result[0]->title,
 							'user_id' => $result[0]->user_id,
 							'fname' => $result[0]->first_name,
 							'lname' => $result[0]->last_name,
@@ -299,15 +310,22 @@ Class User extends CI_Controller {
 	}
 
 	// Logout from user page
-	public function logout() {
+	public function logout($user) {
 
 		// Removing session data
-		
-		$this->session->unset_userdata('lawyer_detail');
-		
-		$data['success_message_display'] = 'Log out sucessfully';
-		$data['user_type'] = 'lawyer';
+		if($user == 'lawyer'){
+				$this->session->unset_userdata('lawyer_detail');
+				$data['success_message_display'] = 'Log out sucessfully';
+				$data['user_type'] = 'lawyer';
 				$this->load->view('login', $data);
+		}
+		elseif($user = 'client'){
+				$this->session->unset_userdata('client_detail');
+				$data['success_message_display'] = 'Log out sucessfully';
+				$data['user_type'] = 'client';
+				$this->load->view('login', $data);
+		}
+		
 
 		
 		
@@ -358,8 +376,33 @@ Class User extends CI_Controller {
 	}
 	// Show client profle and dashboard page
 	public function clientDashBoard() {
-	
-		$this->load->view('client-dashboard');
+		$client_detail = $this->session->userdata('client_detail'); 
+		$result = $this->user_model->show_client_booking($client_detail['user_id']);
+		if($result == 'empty'){
+			$data['booking_history'] = 'empty';
+			$this->load->view('client-dashboard',$data);
+		}
+		else if($result == FALSE){
+			//error handeling
+
+		}
+		else{
+			
+			//print_r($result);
+			foreach($result as $key=>$book_value){
+				
+				$result_lawyer_detail= $this->user_model->get_lawyer_detail($book_value->user_id);
+				//print_r($result_lawyer_detail[0]->first_name);
+				$book_value->lawyer = $result_lawyer_detail[0]->first_name . ' '. $result_lawyer_detail[0]->last_name;
+				$result_booking_history[] = $book_value;
+				
+			}
+			
+			$data['booking_history'] = $result_booking_history;
+			$this->load->view('client-dashboard',$data);
+			//print_r($book_value);
+		}
+		
 		
 		
 	}
@@ -565,5 +608,60 @@ Class User extends CI_Controller {
 			}
 	}
 	
+	/**
+	 * client view of lawyer profile
+	 */
+
+	public function lawyerDashBoardClientView($user_id) {
+
+		$lawyer_detail = $this->session->userdata('lawyer_detail'); 
+		
+		//print_r($lawyer_detail);
+		$search_date = array();
+		$current_date = Date('Y-m-d');
+		$tomorrow_date = date('Y-m-d', strtotime($current_date . ' +1 day'));
+		$search_date[] = $current_date;
+		$search_date[] = date('Y-m-d', strtotime($current_date . ' +1 day'));
+		
+		//$schedule_time =array("5",5,"5");
+		
+		for($i=1;$i<7;$i++){
+			$search_date[] = date('Y-m-d', strtotime($tomorrow_date . ' +1 day'));
+			$tomorrow_date = date('Y-m-d', strtotime($tomorrow_date . ' +1 day'));
+
+		} 
+		//print_r($search_date);
+
+		$result_unique_dates = $this->user_model->show_upcomming_schedule_dates_dashboard($search_date,$user_id);
+		$result_all_scheules = $this->user_model->show_upcomming_schedule($search_date,$user_id);
+		$result_lawyer_detail = $this->user_model->get_lawyer_detail($user_id);
+		
+		//print_r($result_unique_dates);
+		if($result_unique_dates == FALSE AND $result_all_scheules == FALSE){
+			$data['result_unique_dates'] = 'empty';
+			$data['result_all_scheules'] = 'empty';
+		}
+		else{
+			$data['result_unique_dates'] = $result_unique_dates;
+			$data['result_all_schedules'] = $result_all_scheules;
+			$data['result_lawyer_detail'] = $result_lawyer_detail;
+		}
+		$result_case_brief = $this->user_model->show_case_brief($user_id);
+			
+			if($result_case_brief == FALSE){
+				$data['case_briefs'] = 'empty';
+			}
+			else{
+				$data['case_briefs'] = $result_case_brief;
+			}
+
+		$this->load->view('lawyer-dashboard-client-view',$data);
+		
+		
+	}
+
+	
+
+
 }
 ?>

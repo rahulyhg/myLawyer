@@ -1,14 +1,13 @@
 <?php
 
-if (!($this->session->userdata('lawyer_detail'))) {
+if (!($this->session->userdata('client_detail'))) {
    
-    redirect('/user/login');
+  redirect('/user/login');
 }
 else{
- $lawyer_detail = $this->session->userdata('lawyer_detail'); 
- 
-}
+$client_detail = $this->session->userdata('client_detail'); 
 
+}
 
 ?>
 
@@ -27,7 +26,7 @@ else{
             <div class="panel-heading">
               <h3 class="panel-title">
               <?php 
-              echo $lawyer_detail['title']. '. ' .$lawyer_detail['fname'] .' '. $lawyer_detail['lname'];
+              echo $result_lawyer_detail[0]->title . '.' . $result_lawyer_detail[0]->first_name .' '. $result_lawyer_detail[0]->last_name;
               ?>
               
               
@@ -44,7 +43,7 @@ else{
                         <td>Email Address:</td>
                         <td>
                         <?php 
-                        echo $lawyer_detail['email']
+                        echo $result_lawyer_detail[0]->email;
                         ?>
                         </td>
 
@@ -52,29 +51,28 @@ else{
                       <tr>
                         <td>Provicial Area</td>
                         <td><?php 
-                        echo $lawyer_detail['provincial-area']
+                        echo $result_lawyer_detail[0]->provincial_area;
                         ?></td>
                       </tr>
                       <?php 
-                        if($lawyer_detail['legal-professional'] == 'lawyer' || $lawyer_detail['legal-professional']== 'lawyer-sworn-translator'){
+                        if($result_lawyer_detail[0]->legal_professional == 'lawyer' || $result_lawyer_detail[0]->legal_professional== 'lawyer-sworn-translator'){
                           echo "<tr>";
                           echo "<td>Legal Professional</td>";
                           echo "<td>";
-                          echo str_replace("-"," ",$lawyer_detail['legal-professional']);
+                          echo str_replace("-"," ",$result_lawyer_detail[0]->legal_professional);
                           
                           echo "</td>";
                         echo "</tr>";
                           echo "<tr>";
                           echo "<td>Admitted Bar</td>";
                           echo "<td>";
-                          
-                          echo str_replace("-"," ",$lawyer_detail['admitted-bar']);
+                          echo $result_lawyer_detail[0]->admitted_bar;
                           echo "</td>";
                         echo "</tr>";
                         echo "<tr>";
                           echo "<td>Specialty</td>";
                           echo "<td>";
-                          echo $lawyer_detail['specialty'];
+                          echo $result_lawyer_detail[0]->specialty;
                           echo "</td>";
                         echo "</tr>";
                         }
@@ -82,7 +80,7 @@ else{
                           echo "<tr>";
                           echo "<td>Legal Professional</td>";
                           echo "<td>";
-                          echo $lawyer_detail['legal-professional'];
+                          echo $result_lawyer_detail[0]->legal_professional;
                           echo "</td>";
                         echo "</tr>";
                         }
@@ -94,13 +92,13 @@ else{
                              <tr>
                         <td>Available Location</td>
                         <td><?php 
-                        echo $lawyer_detail['location']
+                        echo $result_lawyer_detail[0]->location;
                         ?></td>
                       </tr>
                         <tr>
                         <td>Register Date</td>
                         <td><?php 
-                        echo $lawyer_detail['register-date']
+                        echo $result_lawyer_detail[0]->register_date;
                         ?></td>
                       </tr>
                       
@@ -118,7 +116,7 @@ else{
                  <div class="panel-footer">
                         <!-- <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a> -->
                         <span class="pull-right">
-                        <a href="#" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-md btn-warning">Edit My Profile</a>                           
+                        
                         </span>
                         <div class="clearfix"></div>
                     </div>
@@ -200,9 +198,7 @@ else{
                  <div class="panel-footer">
 
                         <span class="pull-right">
-                        <a href="<?php echo base_url('/user/createCaseBrief'); ?>" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-md btn-warning"><i class="glyphicon glyphicon-edit"></i> &nbsp;Add New Case Title</a>
-
-                            <!-- <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a> -->
+                      
                         </span>
                         <div class="clearfix"></div>
                     </div>
@@ -305,76 +301,7 @@ else{
                  
                 ?>
                   
-                  <!-- <div id="accordion" role="tablist" aria-multiselectable="true">
-                    <div class="card">
-                      <div class="card-header" role="tab" id="headingOne">
-                        <h5 class="mb-0">
-                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            07-05-2018
-                          </a>
-                        </h5>
-                      </div>
-
-    <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-      <div class="card-block">
-      <table class="table table-user-information">
-                    <tbody>
-                      <tr>
-                        <td>8.00 am</td>
-                        <td><button class="btn btn-success">Available</button></td>
-                      </tr>
-                      <tr>
-                        <td>8.30 am</td>
-                        <td><button class="btn btn-success">Available</button></td>
-                      </tr>
-                      <tr>
-                        <td>9.00 am</td>
-                        <td><button class="btn btn-default disabled danger">Booked</button></td>
-                      </tr>
-                      <tr>
-                        <td>9.30 am</td>
-                        <td><button class="btn btn-success">Available</button></td>
-                      </tr>
-                    </tbody>
-      </table>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" role="tab" id="headingTwo">
-      <h5 class="mb-0">
-        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          08-05-2018
-        </a>
-      </h5>
-    </div>
-    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-      <div class="card-block">
-      <table class="table table-user-information">
-                    <tbody>
-                      <tr>
-                        <td>8.00 am</td>
-                        <td><button class="btn btn-success">Available</button></td>
-                      </tr>
-                      <tr>
-                        <td>8.30 am</td>
-                        <td><button class="btn btn-success">Available</button></td>
-                      </tr>
-                      <tr>
-                        <td>9.00 am</td>
-                        <td><button class="btn btn-default disabled danger">Booked</button></td>
-                      </tr>
-                      <tr>
-                        <td>9.30 am</td>
-                        <td><button class="btn btn-success">Available</button></td>
-                      </tr>
-                    </tbody>
-      </table>
-      </div>
-    </div>
-  </div>
-
-</div> -->
+            
                   <!--  -->
                   
                   
@@ -384,9 +311,7 @@ else{
                  <div class="panel-footer">
                  
                         <span class="pull-right">
-                        <a href="<?php echo base_url('/user/showLawyerSchedule');?>" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-md btn-warning"> <i class="glyphicon glyphicon-edit"></i> &nbsp; Add New Schedule</a>
-                            
-                            <!-- <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a> -->
+                       
                         </span>
                         <div class="clearfix"></div>
                     </div>

@@ -190,6 +190,21 @@
                             );
                             echo form_input($data);
                         echo "</div>";
+
+                        echo "<div class='form-group'>";
+                        $options = array(
+                            'Mr'         => 'Mr',
+                            'Mrs'         => 'Mrs',
+                            'Ms'  => 'Ms',
+                            'Miss' => 'Miss',                            
+                        );
+                        $attribute = 'class="form-control legal-professional"';
+
+
+                    echo form_dropdown('title', $options, 'Mr',$attribute);
+                        echo "</div>";
+
+
                         echo "<div class='form-group'>";
                         $data = array(
                             'type' => 'email',
@@ -245,17 +260,79 @@
 
                     echo form_dropdown('provincial-area', $options, 'western',$attribute);
                         echo "</div>";
+                        
+
+
                         echo "<div class='form-group'>";
-                        $data = array(
-                            'type' => 'text',
-                            'name' => 'admitted-bar',
-                            'class' => 'form-control admitted-bar',
-                            'style' => 'display:none',
-                            'placeholder' => 'Admitted Bar'
+                        $options = array(
+                            ' '         => 'Admitted Bar',
+                            'Wellawaya-Combined-Court'         => 'Wellawaya Combined Court',
+                            'Welimada-Combined-Court '         => 'Welimada Combined Court ',
+                            'Welikada-Hight-Court '         => 'Welikada Hight Court ',
+                            'Wattala-Magistrate-Court '         => 'Wattala Magistrate Court ',
+                            'Wariyapola-Magistrate-Court '         => 'Wariyapola Magistrate Court ',
+                            'Warakapola-Magistrate-Court '         => 'Warakapola Magistrate Court ',
+                            'Walasmulla-Combined-Court '         => 'Walasmulla Combined Court ',
+                            'Vavuniya'         => 'Vavuniya ',
+                            'Valachchnai-Magistrate-Court '         => 'Valachchnai Magistrate Court ',
+                            'Trincomalee'         => 'Trincomalee ',
+                            'Tissamaramaya-Combined-Court '         => 'Tissamaramaya Combined Court ',
+                            'Theldeniya-Magistrate-Court '         => 'Theldeniya Magistrate Court ',
+                            'Thangalle-Combined-Court '         => 'Thangalle Combined Court ',
+                            'Thambuththegama '         => 'Thambuththegama ',
+                            'Ruwanwella-Magistrate-Court '         => 'Ruwanwella Magistrate Court ',
+                            'Rambadagalla-Magistrate-Court  '         => 'Rambadagalla Magistrate Court  ',
+                            'Pugoda-Combined-Court  '         => 'Pugoda Combined Court  ',
+                            'Polonnaruwa'         => 'Polonnaruwa ',
+                            'Point-Pedro'         => 'Point Pedro ',
+                            'Pilessa-Magistrate-Court '         => 'Pilessa Magistrate Court ',
+                            'Panadura'         => 'Panadura ',
+                            'Palmadulla-Combined-Court '         => 'Palmadulla Combined Court ',
+                            'banNuwara-Eliya-kruptcy'         => 'Nuwara Eliya ',
+                            'Nugegoda'         => 'Nugegoda ',
+                            'Nikaweratiya-Magistrate-Court '         => 'Nikaweratiya Magistrate Court ',
+                            'Negambo'         => 'Negambo ',
+                            'Nawalapitiya-Combined-Court '         => 'Nawalapitiya Combined Court',
+                            'bankruptcy'         => 'bankruptcy',
+                            'Muthur-Magistrate-Court '         => 'Muthur Magistrate Court',
+                            'Mount-Lavinia'         => 'Mount Lavinia ',
+                            'Morawaka-District-Court-(Combined-Court) '         => 'Morawaka District Court (Combined Court) ',
+                            'Moratuwa-Combined-Court '         => 'Moratuwa Combined Court ',
+                            'Monaragala-Combined-Court '         => 'Monaragala Combined Court ',
+                            'Minuwangoda-Magistrate-Court '         => 'Minuwangoda Magistrate Court ',
+                            'Mawanella-Combined-Court '         => 'Mawanella Combined Court ',
+                            'Mathugama'         => 'Mathugama ',
+                            'Matara'         => 'Matara ',
+                            'Matale-Combined-Court '         => 'Matale Combined Court ',
+                            'Marawila-Combined-Court '         => 'Marawila Combined Court ',
+                            'Mallakam-District-Court '         => 'Mallakam District Court ',
+                            'Maligakanda-Magistrate-Court '         => 'Maligakanda Magistrate Court',
+                            'Maho-Combined-Court'         => 'Maho Combined Court',
+                            'Mahiyanganaya-Combined-Court '         => 'Mahiyanganaya Combined Court ',
+                            'Kurunegala'         => 'Kurunegala ',
+                            'Kuliyapitiya'         => 'Kuliyapitiya ',
+                            'Kekirawa-Magistrate-Court '         => 'Kekirawa Magistrate Court ',
+                            'Kegalle'         => 'Kegalle ',
+                            'Kayts-Combined-Court '         => 'Kayts Combined Court ',
+                            'Kasbewa-Magistrate-Court '         => 'Kasbewa Magistrate Court ',
+                            'Kantale-Magistrate-Court '         => 'Kantale Magistrate Court',
+                            'Kandy'         => 'Kandy ',
                             
-                            );
-                            echo form_input($data);
+                        );
+                        $attribute = 'class="form-control specialty" style="display:none;"';
+
+
+                    echo form_dropdown('admitted-bar', $options, ' ',$attribute);
+
+                        
                         echo "</div>";
+
+
+
+
+
+
+
                         echo "<div class='form-group'>";
                         $options = array(
                             ' '         => 'Specialty',
