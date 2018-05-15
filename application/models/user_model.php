@@ -277,11 +277,12 @@ public function read_user_information($email,$userType) {
         $this->db->order_by("schedule_date", "desc");
         $query_client_booking = $this->db->get();
          //echo $this->db->last_query();
+         
         if ($query_client_booking->num_rows() > 0) {
             return $query_client_booking->result();
             
         } 
-        elseif($query_client_booking->num_rows() > 0){
+        elseif($query_client_booking->num_rows() == 0){
             return 'empty';
         }
         else{

@@ -376,8 +376,10 @@ Class User extends CI_Controller {
 	}
 	// Show client profle and dashboard page
 	public function clientDashBoard() {
-		$client_detail = $this->session->userdata('client_detail'); 
+		$client_detail = $this->session->userdata('client_detail');
+		
 		$result = $this->user_model->show_client_booking($client_detail['user_id']);
+		
 		if($result == 'empty'){
 			$data['booking_history'] = 'empty';
 			$this->load->view('client-dashboard',$data);
