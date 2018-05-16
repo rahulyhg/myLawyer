@@ -123,7 +123,7 @@ Class User extends CI_Controller {
 
 		$this->form_validation->set_rules('location', 'Location', 'trim|required');
 
-		print_r($_POST);
+		//print_r($_POST);
 
 		if ($this->form_validation->run() == FALSE) {
 			$data = array(
@@ -376,6 +376,15 @@ Class User extends CI_Controller {
 	}
 	// Show client profle and dashboard page
 	public function clientDashBoard() {
+		$success = $this->session->flashdata('success_message_display');
+		 $error = $this->session->flashdata('error_message_display');
+		if(!empty($success)){
+			$data['success_message_display'] = $success;
+		}
+		if(!empty($error)){
+			$data['error_message_display'] = $error;
+		}
+
 		$client_detail = $this->session->userdata('client_detail');
 		
 		$result = $this->user_model->show_client_booking($client_detail['user_id']);
@@ -615,6 +624,14 @@ Class User extends CI_Controller {
 	 */
 
 	public function lawyerDashBoardClientView($user_id) {
+		 $success = $this->session->flashdata('success_message_display');
+		 $error = $this->session->flashdata('error_message_display');
+		if(!empty($success)){
+			$data['success_message_display'] = $success;
+		}
+		if(!empty($error)){
+			$data['error_message_display'] = $error;
+		}
 
 		$lawyer_detail = $this->session->userdata('lawyer_detail'); 
 		
@@ -638,10 +655,12 @@ Class User extends CI_Controller {
 		$result_all_scheules = $this->user_model->show_upcomming_schedule($search_date,$user_id);
 		$result_lawyer_detail = $this->user_model->get_lawyer_detail($user_id);
 		
+		
 		//print_r($result_unique_dates);
 		if($result_unique_dates == FALSE AND $result_all_scheules == FALSE){
 			$data['result_unique_dates'] = 'empty';
 			$data['result_all_scheules'] = 'empty';
+			$data['result_lawyer_detail'] = $result_lawyer_detail;
 		}
 		else{
 			$data['result_unique_dates'] = $result_unique_dates;
@@ -692,7 +711,7 @@ Class User extends CI_Controller {
 		}
 		else {
 			if($this->input->post('legal-professional') == 'lawyer' || $this->input->post('legal-professional') == 'lawyer-sworn-translator'){
-				print_r($_POST);
+				//print_r($_POST);
 				$data = array(
 					'provincial_area' => $this->input->post('provincial-area'),
 					
@@ -713,7 +732,7 @@ Class User extends CI_Controller {
 					
 			}
 			else{
-				print_r($_POST);
+				//print_r($_POST);
 				$data = array(
 					'provincial_area' => $this->input->post('provincial-area'),
 					'legal_professional' => $this->input->post('legal-professional')			
@@ -732,6 +751,50 @@ Class User extends CI_Controller {
 
 		}
 
+
+		
+	}
+
+	public function bookConsultant($schedule_id,$consultant_id){
+		//print_r($this->session->userdata('client_detail'));
+		if(isset($this->session->userdata('client_detail')['user_id'])){
+			//echo "work";
+			$client_detail = $this->session->userdata('client_detail');
+			$data['schedule_id'] = $schedule_id;
+			$data = array(
+			'schedule_id' =>  $schedule_id,
+			'client_id' => $client_detail['user_id'],
+			'current_date'=> Date('Y-m-d')
+
+			);
+
+			echo $result = $this->user_model->set_to_book($data);
+
+			if($result === "notavailable"){
+				
+				
+				$this->session->set_flashdata('error_message_display','This booking no longer available. Please with different schedule');
+				
+				redirect('/user/lawyerDashBoardClientView/'.$consultant_id);
+				
+			}elseif($result == FALSE){
+				
+				//$this->session->set_flashdata('error_message_display','Error when processing your booking. Please try againg');
+				$data['error_message_display'] = 'Error when processing your booking. Please try againg';
+				$this->load->view('search',$data);
+				
+				
+			}elseif($result == TRUE){
+				
+				$this->session->set_flashdata('success_message_display','Successfully Booked');
+				//$data['success_message_display'] = 'Successfully Booked';.
+				//$this->load->view('client-dashboard',$data);
+				//client session should be avaiable
+				redirect('/user/clientDashBoard');
+			}
+		}else{
+			//client has to login
+		}
 
 		
 	}

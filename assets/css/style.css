@@ -1499,4 +1499,14 @@ Blog
 	height: 15px;
 }
 
-/* 
+
+
+.card{
+  border: rgb(184, 176, 176) 1px solid;
+    margin-left: 15px;
+    padding: 8px;
+    margin-right: 15px;
+    border-radius: 3px;
+    box-shadow: 1px 1px 5px #b3afaf;
+    margin-bottom: 10px;
+}

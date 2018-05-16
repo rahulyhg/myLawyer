@@ -19,6 +19,20 @@ else{
 <br>
 <div class="container">
 <div class="row">
+<?php 
+
+  if(isset($error_message_display)){
+      echo '<div class="alert alert-danger" role="alert">';
+      echo $error_message_display;
+      echo '</div>';
+      }
+      if(isset($success_message_display)){
+      echo '<div class="alert alert-success" role="alert">';
+      echo $success_message_display;
+      echo '</div>';
+      }
+
+?>
 	<!-- Spacer -->
     
       <div class="col-md-5">

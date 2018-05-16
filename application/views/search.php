@@ -5,7 +5,20 @@
 
         <div class="col-md-offset-1 col-md-10">
     
+        <?php 
 
+        if(isset($error_message_display)){
+            echo '<div class="alert alert-danger" role="alert">';
+            echo $error_message_display;
+            echo '</div>';
+            }
+            if(isset($success_message_display)){
+            echo '<div class="alert alert-success" role="alert">';
+            echo $success_message_display;
+            echo '</div>';
+            }
+
+        ?>
         <div class="panel with-nav-tabs panel-default">
                 <div class="panel-heading">
                         <ul class="nav nav-tabs">
@@ -237,7 +250,53 @@
                        if(isset($search_result) && $search_result == 'empty' ){
                         echo "<h4>No result found</h4>";
                        }elseif(isset($search_result)){
-                           print_r($search_result);
+                           $i=1;
+                           echo "<container>";
+                           echo "<div class='row'>";
+                           foreach($search_result as $lawyer_detail){
+                               
+                            if(($i%3) == 0){
+                                                              
+                                    $i == 1;
+                                   
+                            }
+                                echo "<div class='col-md-6'>";
+                                echo "<div class='card'>";
+                                echo '<h5>' . $lawyer_detail->title . ' ' . $lawyer_detail->first_name . ' '. $lawyer_detail->last_name . '</h5>';
+                                
+                                
+                                echo 'Legal professional: ' . str_replace("-"," ",$lawyer_detail->legal_professional);
+                                echo "<br>";
+                                if($lawyer_detail->legal_professional == 'lawyer' || $lawyer_detail->legal_professional == 'lawyer-sworn-translator'){
+                                   
+                                    echo 'Admitted bar: ' . str_replace("-"," ",$lawyer_detail->admitted_bar);
+                                    echo "<br>";
+                                    
+                                    echo 'Specialty: ' . str_replace("-"," ",$lawyer_detail->specialty);
+                                }
+                                
+                                echo 'Provincial area: ' . str_replace("-"," ",$lawyer_detail->provincial_area);
+                                
+                                
+                                echo "<br>";
+                                echo 'Practice Location:' . $lawyer_detail->location;
+                                echo "<br>";
+                                echo "<a href='". base_url('/user/lawyerDashBoardClientView/'. $lawyer_detail->user_id) ."' type='button' class='btn btn-danger pull-right '>Book Now</a>";
+                                echo "<div class='clearfix'></div>";
+                                echo "</div>";
+
+                                echo "</div>";
+                                
+                                $i++;
+                            
+
+
+                           }
+                           echo "</div>";
+                           echo "</container>";
+                                
+                            
+                          // print_r($search_result);
                        }
                        
                        ?>
@@ -245,7 +304,7 @@
                     </div>
                 </div>
             </div>
-
+        </div>
 
 
             

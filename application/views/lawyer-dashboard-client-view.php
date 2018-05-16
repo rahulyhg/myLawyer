@@ -1,13 +1,13 @@
 <?php
 
-if (!($this->session->userdata('client_detail'))) {
+// if (!($this->session->userdata('client_detail'))) {
    
-  redirect('/user/login');
-}
-else{
-$client_detail = $this->session->userdata('client_detail'); 
+//   redirect('/user/login');
+// }
+// else{
+// $client_detail = $this->session->userdata('client_detail'); 
 
-}
+// }
 
 ?>
 
@@ -17,6 +17,20 @@ $client_detail = $this->session->userdata('client_detail');
 <?php $this->load->view('top-navigation'); ?>
 <br>
 <div class="container">
+<?php 
+
+  if(isset($error_message_display)){
+      echo '<div class="alert alert-danger" role="alert">';
+      echo $error_message_display;
+      echo '</div>';
+      }
+      if(isset($success_message_display)){
+      echo '<div class="alert alert-success" role="alert">';
+      echo $success_message_display;
+      echo '</div>';
+      }
+
+?>
 <div class="row">
 	<!-- Spacer -->
     
@@ -158,7 +172,7 @@ $client_detail = $this->session->userdata('client_detail');
                 
                   <?php
                   if($case_briefs == 'empty'){
-                    echo "<span class='label label-default' style='font-size:18px'>Please add cases you atteneded</span><br><br>";
+                    echo "<span class='label label-default' style='font-size:18px'>No recent work found for this consultant</span><br><br>";
                     
                   }
                   else{
@@ -225,7 +239,7 @@ $client_detail = $this->session->userdata('client_detail');
                  // echo "<hr>";
                 // print_r($result_all_schedules);
                   if($result_unique_dates == 'empty'){
-                    echo "<span class='label label-default' style='font-size:18px'>Please add your availabitity to show client</span><br><br>";
+                    echo "<span class='label label-default' style='font-size:18px'>No upcomming schedule found for this consultant</span><br><br>";
                   }
                   else{
                     echo "<div id='accordion' role='tablist' aria-multiselectable='true'>";
@@ -238,7 +252,7 @@ $client_detail = $this->session->userdata('client_detail');
                    echo "<div class='card'>";
                      echo "<div class='card-header' role='tab' id='headingOne'>";
                        echo "<h5 class='mb-0'>";
-                         echo "<a data-toggle='collapse' data-parent='#accordion' href='#". $unique_date->schedule_date ."' aria-expanded='true' aria-controls='collapseOne'>";
+                         echo "<a class='label label-warning' style='font-size:15px;' data-toggle='collapse' data-parent='#accordion' href='#". $unique_date->schedule_date ."' aria-expanded='true' aria-controls='collapseOne'>";
                            echo $unique_date->schedule_date;
                            echo '&nbsp ('. date('l', strtotime($unique_date->schedule_date)) . ")";
                          echo  "</a>";
@@ -258,6 +272,7 @@ $client_detail = $this->session->userdata('client_detail');
 
 
                       foreach($result_all_schedules as $schedule){
+                        print_r($schedule);
                         //print_r($schedule->schedule_date);
                        // print_r( $unique_date->schedule_date);
 
@@ -272,7 +287,7 @@ $client_detail = $this->session->userdata('client_detail');
                               echo "Tentative booking";
                             }
                             else if($schedule->schedule_status == 'available'){
-                              echo "<button class='btn btn-success'>". $schedule->schedule_status ."</button>";
+                              echo "<a href='" . base_url('/user/bookConsultant/'. $schedule->schedule_id .'/'. $schedule->user_id )  ."' class='btn btn-success'>". $schedule->schedule_status ."</a>";
                             }
                             else if($schedule->schedule_status == 'booked'){
                               echo "Booked ";

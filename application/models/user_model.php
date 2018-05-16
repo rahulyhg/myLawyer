@@ -310,20 +310,20 @@ public function read_user_information($email,$userType) {
     }
 
     public function searh_lawyer($data){
-        print_r($data);
+       // print_r($data);
         echo "<br>";
         if($data['admitted_bar'] == '0' && $data['specialty'] == '0'){
             
-           echo  $condition ="legal_professional =" . "'" . $data['legal_professional'] . "' AND provincial_area =". "'" . $data['provincial_area'] . "'";
+           $condition ="legal_professional =" . "'" . $data['legal_professional'] . "' AND provincial_area =". "'" . $data['provincial_area'] . "'";
         }
         elseif($data['admitted_bar'] != '0' && $data['specialty'] != '0'){
-            echo  $condition ="legal_professional =" . "'" . $data['legal_professional'] . "' AND provincial_area =". "'" . $data['provincial_area'] . "' AND specialty =" . "'" . $data['specialty']. "' AND admitted_bar =" . "'" . $data['admitted_bar'] ."'";
+           $condition ="legal_professional =" . "'" . $data['legal_professional'] . "' AND provincial_area =". "'" . $data['provincial_area'] . "' AND specialty =" . "'" . $data['specialty']. "' AND admitted_bar =" . "'" . $data['admitted_bar'] ."'";
         }
         elseif($data['specialty'] != '0'){
-            echo  $condition ="legal_professional =" . "'" . $data['legal_professional'] . "' AND provincial_area =". "'" . $data['provincial_area'] . "' AND specialty =" . "'" . $data['specialty']."'";
+           $condition ="legal_professional =" . "'" . $data['legal_professional'] . "' AND provincial_area =". "'" . $data['provincial_area'] . "' AND specialty =" . "'" . $data['specialty']."'";
         }
         else{
-            echo  $condition ="legal_professional =" . "'" . $data['legal_professional'] . "' AND provincial_area =". "'" . $data['provincial_area'] . "' AND admitted_bar =" . "'" . $data['admitted_bar']."'";
+           $condition ="legal_professional =" . "'" . $data['legal_professional'] . "' AND provincial_area =". "'" . $data['provincial_area'] . "' AND admitted_bar =" . "'" . $data['admitted_bar']."'";
         }
         $this->db->select('*');
         $this->db->from('tbl_user');
@@ -350,6 +350,36 @@ public function read_user_information($email,$userType) {
         } 
         else{
             return 'empty';
+        }
+    }
+
+    public function set_to_book($data){
+        $condition ="schedule_id =" . "'" . $data['schedule_id'] . "'";
+        $this->db->select('schedule_status');
+        $this->db->from('tbl_lawyer_schedule');
+        $this->db->where($condition);
+        $this->db->limit(1);
+        $query_check_availability = $this->db->get();
+        $schedule_status = $query_check_availability->result()[0]->schedule_status;
+        
+        if($schedule_status == 'available'){
+            
+            $this->db->set('schedule_status', 'booked');
+            $this->db->set('client_id', $data['client_id']);
+            $this->db->set('booked_date', $data['current_date']);
+            $this->db->where('schedule_id', $data['schedule_id']);
+            $this->db->update('tbl_lawyer_schedule');
+            //echo $this->db->last_query();
+            if ($this->db->affected_rows() > 0) {
+                return true;
+                //echo "success";
+            }else{
+                //echo "error";
+                return false;
+            }
+            
+        }else{
+            return "notavailable";
         }
     }
     
