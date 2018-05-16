@@ -662,8 +662,80 @@ Class User extends CI_Controller {
 		
 	}
 
+	public function search() {
+		$this->load->view('search');
+	}
 	
+	public function showSearchResult() {
+		
+		$this->form_validation->set_rules('provincial-area', 'Provincial Area', 'trim|required');
+		
+		$this->form_validation->set_rules('legal-professional', 'Legal Professional', 'trim|required');
+		if($this->input->post('legal-professional') == 'lawyer' || $this->input->post('legal-professional') == 'lawyer-sworn-translator'){
+			$this->form_validation->set_rules('admitted-bar', 'Admitted Bar', 'trim|required');
+			$this->form_validation->set_rules('specialty', 'Specialty Area', 'trim|required');
+		}
+		else{
+			$this->form_validation->set_rules('admitted-bar', 'Admitted Bar', 'trim');
+			$this->form_validation->set_rules('specialty', 'Specialty Area', 'trim');
+		}
 
+
+		if ($this->form_validation->run() == FALSE) {
+			// $data = array(
+			// 	'user_type' => 'lawyer'
+			// );
+			$this->load->view('search');
+			//print_r($_POST);
+			
+			
+		}
+		else {
+			if($this->input->post('legal-professional') == 'lawyer' || $this->input->post('legal-professional') == 'lawyer-sworn-translator'){
+				print_r($_POST);
+				$data = array(
+					'provincial_area' => $this->input->post('provincial-area'),
+					
+					'legal_professional' => $this->input->post('legal-professional'),
+					'admitted_bar' => $this->input->post('admitted-bar'),
+					'specialty' => $this->input->post('specialty'),
+					);
+					
+					$result = $this->user_model->searh_lawyer($data);
+					if($result == 'empty'){
+						$data['search_result'] = 'empty';
+						$this->load->view('search',$data);
+					}else{
+						//print_r($result);
+						$data['search_result'] = $result;
+						$this->load->view('search',$data);
+					}
+					
+			}
+			else{
+				print_r($_POST);
+				$data = array(
+					'provincial_area' => $this->input->post('provincial-area'),
+					'legal_professional' => $this->input->post('legal-professional')			
+					);
+					$result = $this->user_model->searh_other_lawyer($data);
+					if($result == 'empty'){
+						$data['search_result'] = 'empty';
+						$this->load->view('search',$data);
+					}else{
+						//print_r($result);
+						$data['search_result'] = $result;
+						$this->load->view('search',$data);
+					}
+					//print_r($result);
+			}
+
+		}
+
+
+		
+	}
+	
 
 }
 ?>

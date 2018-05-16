@@ -308,6 +308,50 @@ public function read_user_information($email,$userType) {
             return  false;
         }
     }
+
+    public function searh_lawyer($data){
+        print_r($data);
+        echo "<br>";
+        if($data['admitted_bar'] == '0' && $data['specialty'] == '0'){
+            
+           echo  $condition ="legal_professional =" . "'" . $data['legal_professional'] . "' AND provincial_area =". "'" . $data['provincial_area'] . "'";
+        }
+        elseif($data['admitted_bar'] != '0' && $data['specialty'] != '0'){
+            echo  $condition ="legal_professional =" . "'" . $data['legal_professional'] . "' AND provincial_area =". "'" . $data['provincial_area'] . "' AND specialty =" . "'" . $data['specialty']. "' AND admitted_bar =" . "'" . $data['admitted_bar'] ."'";
+        }
+        elseif($data['specialty'] != '0'){
+            echo  $condition ="legal_professional =" . "'" . $data['legal_professional'] . "' AND provincial_area =". "'" . $data['provincial_area'] . "' AND specialty =" . "'" . $data['specialty']."'";
+        }
+        else{
+            echo  $condition ="legal_professional =" . "'" . $data['legal_professional'] . "' AND provincial_area =". "'" . $data['provincial_area'] . "' AND admitted_bar =" . "'" . $data['admitted_bar']."'";
+        }
+        $this->db->select('*');
+        $this->db->from('tbl_user');
+        $this->db->where($condition);
+        $query_lawyer_detail = $this->db->get();
+        if ($query_lawyer_detail->num_rows() > 0) {
+            return $query_lawyer_detail->result();
+            
+        } 
+        else{
+            return 'empty';
+        }
+        //print_r($data);
+    }
+    public function searh_other_lawyer($data){
+        $condition ="legal_professional =" . "'" . $data['legal_professional'] . "' AND provincial_area =". "'". $data['provincial_area'] . "'";
+        $this->db->select('*');
+        $this->db->from('tbl_user');
+        $this->db->where($condition);
+        $query_lawyer_detail = $this->db->get();
+        if ($query_lawyer_detail->num_rows() > 0) {
+            return $query_lawyer_detail->result();
+            
+        } 
+        else{
+            return 'empty';
+        }
+    }
     
 }
 

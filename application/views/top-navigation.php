@@ -90,7 +90,7 @@
                                 echo "</a></li>";
                             }
                         ?>
-                        
+                        <li><a href="<?php echo base_url('/user/search') ?>"><span class="label label-primary " style="font-size:18px;"> Search My Consultant <span class="glyphicon glyphicon glyphicon-search" aria-hidden="true"></span></span></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div><!--/.container-fluid -->
