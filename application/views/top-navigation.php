@@ -7,7 +7,7 @@
                     </div>
                     <div class="col-md-5 text-right">
                         <div class="top-bar-right">
-                            <a href="#" class="appointment">make an appointment</a>
+                            <a class='appointment' href="<?php echo base_url('/user/search') ?>">make an appointment </a>
                         </div>
 
                     </div>
@@ -90,7 +90,7 @@
                                 echo "</a></li>";
                             }
                         ?>
-                        <li><a href="<?php echo base_url('/user/search') ?>"><span class="label label-primary " style="font-size:18px;"> Search My Consultant <span class="glyphicon glyphicon glyphicon-search" aria-hidden="true"></span></span></a></li>
+                        <li><a href="<?php echo base_url('/user/createQuestion') ?>"><span class="label label-primary " style="font-size:18px;"> Forum </span></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div><!--/.container-fluid -->

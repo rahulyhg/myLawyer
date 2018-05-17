@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2018 at 07:02 PM
+-- Generation Time: May 17, 2018 at 07:07 AM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -48,6 +48,43 @@ INSERT INTO `tbl_casebrief` (`case_id`, `user_id`, `case_title`, `case_descripti
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_forum_answer`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_forum_answer` (
+  `answer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `forum_id` int(11) NOT NULL,
+  `answer_description` text NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `answer_added_date` date NOT NULL,
+  PRIMARY KEY (`answer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_forum_question`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_forum_question` (
+  `forum_id` int(11) NOT NULL AUTO_INCREMENT,
+  `forum_title` varchar(255) NOT NULL,
+  `forum_description` text NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `forum_added_date` date NOT NULL,
+  PRIMARY KEY (`forum_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `tbl_forum_question`
+--
+
+INSERT INTO `tbl_forum_question` (`forum_id`, `forum_title`, `forum_description`, `user_id`, `forum_added_date`) VALUES
+(1, 'question', 'trasfasdfasdf', 5, '2018-05-17');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_lawyer_schedule`
 --
 
@@ -80,7 +117,7 @@ INSERT INTO `tbl_lawyer_schedule` (`schedule_id`, `user_id`, `schedule_date`, `d
 (8, 2, '2018-05-13', 'Sunday', '06:00:00', 'closed', 0, '2018-05-12', '2018-05-12', '0000-00-00'),
 (9, 2, '2018-05-13', 'Sunday', '06:30:00', 'closed', 0, '2018-05-12', '2018-05-12', '0000-00-00'),
 (10, 2, '2018-05-15', 'Tuesday', '06:00:00', 'available', 0, '2018-05-12', '2018-05-12', '0000-00-00'),
-(11, 2, '2018-05-16', 'Wednesday', '06:00:00', 'available', 0, '2018-05-12', '2018-05-12', '0000-00-00'),
+(11, 2, '2018-05-16', 'Wednesday', '06:00:00', 'booked', 5, '2018-05-12', '2018-05-12', '2018-05-16'),
 (12, 2, '2018-05-16', 'Wednesday', '06:30:00', 'available', 0, '2018-05-12', '2018-05-12', '0000-00-00'),
 (13, 2, '2018-05-16', 'Wednesday', '07:00:00', 'available', 0, '2018-05-12', '2018-05-12', '0000-00-00'),
 (14, 2, '2018-05-16', 'Wednesday', '07:30:00', 'available', 0, '2018-05-12', '2018-05-12', '0000-00-00'),
@@ -101,8 +138,8 @@ INSERT INTO `tbl_lawyer_schedule` (`schedule_id`, `user_id`, `schedule_date`, `d
 (29, 2, '2018-05-20', 'Sunday', '06:30:00', 'booked', 5, '2018-05-13', '2018-05-13', '0000-00-00'),
 (30, 2, '2018-05-20', 'Sunday', '21:30:00', 'booked', 5, '2018-05-13', '2018-05-13', '2018-05-14'),
 (31, 2, '2018-05-17', 'Thursday', '22:00:00', 'booked', 5, '2018-05-13', '2018-05-13', '2018-05-14'),
-(32, 2, '2018-05-17', 'Thursday', '22:30:00', 'available', 0, '2018-05-13', '2018-05-13', '0000-00-00'),
-(33, 2, '2018-05-17', 'Thursday', '23:00:00', 'available', 0, '2018-05-13', '2018-05-13', '0000-00-00'),
+(32, 2, '2018-05-17', 'Thursday', '22:30:00', 'booked', 8, '2018-05-13', '2018-05-13', '2018-05-17'),
+(33, 2, '2018-05-17', 'Thursday', '23:00:00', 'booked', 9, '2018-05-13', '2018-05-13', '2018-05-17'),
 (34, 2, '2018-05-14', 'Monday', '23:00:00', 'available', 0, '2018-05-13', '2018-05-13', '0000-00-00'),
 (35, 3, '2018-05-14', 'Monday', '06:00:00', 'available', 0, '2018-05-13', '2018-05-13', '0000-00-00'),
 (36, 3, '2018-05-14', 'Monday', '06:30:00', 'available', 0, '2018-05-13', '2018-05-13', '0000-00-00'),
@@ -142,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`user_id`, `title`, `first_name`, `last_name`, `email`, `provincial_area`, `password`, `legal_professional`, `admitted_bar`, `specialty`, `location`, `register_date`) VALUES
-(2, 'Mr', 'praveen', 'tissera', 'praveen.tissera@gmail.com', 'north-Western', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'lawyer', 'test bar', 'accident-personal', 'kotikawatta', '2018-05-09'),
+(2, 'Mr', 'praveen', 'tissera', 'praveen.tissera@gmail.com', 'north-Western', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'lawyer', 'vavuniya', 'accident-personal', 'kotikawatta', '2018-05-09'),
 (3, 'Mr', 'sampa', 'rasini', 'samap@gmail.com', 'western', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'lawyer', 'colombo', 'immigration', 'colombo', '2018-05-13'),
 (4, 'Mr', 'surangi', 'tissera', 'hgs@gmail.com', 'northern', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'lawyer', 'colombo-10', 'accident-personal', 'colombo', '2018-05-14'),
 (5, 'Mr', 'udari', 'tissera', 'udari01@gmail.com', 'north-Western', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'lawyer', 'colombo-10', 'accident-personal', 'colombo', '2018-05-14'),
@@ -180,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user_client` (
   `contact` varchar(15) NOT NULL,
   `register_date` date NOT NULL,
   PRIMARY KEY (`client_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `tbl_user_client`
@@ -188,7 +225,10 @@ CREATE TABLE IF NOT EXISTS `tbl_user_client` (
 
 INSERT INTO `tbl_user_client` (`client_id`, `first_name`, `last_name`, `email`, `password`, `contact`, `register_date`) VALUES
 (4, 'saseema', 'damaya', 'sasi@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '014521244', '2018-05-14'),
-(5, 'udari', 'tissera', 'udari011@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '0123654787', '2018-05-15');
+(5, 'udari', 'tissera', 'udari011@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '0123654787', '2018-05-15'),
+(6, 'gimi', 'ti', 'gimi@yahoo.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '012456874', '2018-05-15'),
+(8, 'luky', 'perera', 'luky@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '0124587544', '2018-05-17'),
+(9, 'chatu', 'kari', 'chatu@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '012458544', '2018-05-17');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

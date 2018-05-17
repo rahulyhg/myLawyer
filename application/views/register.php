@@ -4,7 +4,7 @@
     <div class="row">
 
         <div class="col-md-offset-2 col-md-8">
-    
+       
 
         <div class="panel with-nav-tabs panel-default">
                 <div class="panel-heading">
@@ -43,6 +43,7 @@
                     <?php
 
                         echo form_open('user/clientRegistration');   
+                       
                         if((form_error('fname') || form_error('lname') || form_error('email') || form_error('password')) && isset($user_type) && $user_type =='client' ){
                             echo '<div class="alert alert-danger" role="alert">';
                                 echo form_error('fname');
@@ -67,6 +68,32 @@
                                     }
                             }
                         echo "<fieldset>";
+                       
+                        if(isset($schedule_id) && isset($consultant_id)){
+                            $data = array(
+                                'type' => 'hidden',
+                                'name' => 'schedule-id',
+                                'class' => 'form-control',
+                                'value' => $schedule_id
+                                );
+                                echo form_input($data);
+                            $data = array(
+                                    'type' => 'hidden',
+                                    'name' => 'consultant-id',
+                                    'class' => 'form-control',
+                                    'value' => $consultant_id
+                                    );
+                                    echo form_input($data);
+                        }else{
+                            $data = array(
+                                'type' => 'text',
+                                'name' => 'schedule-id',
+                                'class' => 'form-control',
+                                'value' => 0
+                                );
+                                echo form_input($data);
+                        }
+
                             echo "<div class='form-group'>";
                             $data = array(
                                 'type' => 'text',

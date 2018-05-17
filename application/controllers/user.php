@@ -64,6 +64,8 @@ Class User extends CI_Controller {
 
 	//client registration process
 	public function clientRegistration(){
+		
+
 		$this->form_validation->set_rules('fname', 'First Name', 'trim|required|alpha');
 		$this->form_validation->set_rules('lname', 'Last Name', 'trim|required|alpha');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
@@ -87,14 +89,60 @@ Class User extends CI_Controller {
 				);
 			$result = $this->user_model->client_registration($data);
 			if ($result == TRUE) {
-				$data['success_message_display'] = 'Registration Successfully!.';
+				//$data['success_message_display'] = 'Registration Successfully!.';
 				$data['user_type'] = 'client';
+				$schedule_id =$this->input->post('schedule-id');
+				$consultant_id =$this->input->post('consultant-id');
+				if($schedule_id > 0 && $consultant_id>0 ){
+
+
+
+
+					$data = array(
+						'email' => $this->input->post('email'),
+						'password' => sha1($this->input->post('password'))
+						);
+					$result = $this->user_model->user_login($data,'client');
+					if ($result == TRUE) {
+						echo "success";
+						$result = $this->user_model->read_user_information($this->input->post('email'),'client');
+						//print_r($result);
+						$client_session_data = array(
+							'user_id' => $result[0]->client_id,
+							'fname' => $result[0]->first_name,
+							'lname' => $result[0]->last_name,
+							'email' => $result[0]->email,
+							'contact' => $result[0]->contact,
+							'register-date' => $result[0]->register_date,
+							'login' => TRUE,
+							'type' => 'client'
+		
+							);
+							//print_r($client_session_data);
+							$this->session->set_userdata('client_detail', $client_session_data);
+							/**
+							 * once registration done call for booking fucttion
+							 */
+							$this-> bookConsultant($schedule_id,$consultant_id);
+					
+					}
+
+
+
+
+
+
+
+					
+				}else{
+					$this->load->view('login', $data);
+				}
 				
-				$this->load->view('login', $data);
 			} 
 			else {
 				$data['error_message_display'] = 'Email Address Already Exist!';
 				$data['user_type'] = 'client';
+				$data['schedule_id'] = $schedule_id;
 				$this->load->view('register', $data);
 			}
 		}
@@ -794,11 +842,72 @@ Class User extends CI_Controller {
 			}
 		}else{
 			//client has to login
+				$data['success_message_display'] = 'You need to register with us to complete booking. ';
+				$data['schedule_id'] = $schedule_id;
+				$data['consultant_id'] = $consultant_id;
+				$data['user_type'] = 'client';
+				$this->load->view('register',$data);
 		}
 
 		
 	}
 	
+	/**
+	 * lawyer submited previous case details he attended
+	 */
+	public function createQuestion(){
+		$this->form_validation->set_rules('question-title', 'question title', 'trim|required');
+		$this->form_validation->set_rules('question-description', 'question description', 'trim|required');
+		
+			if ($this->form_validation->run() == FALSE) {
+				$this->load->view('create-question');				
+			}
+			else {
+				if($this->session->userdata('client_detail') == FALSE && $this->session->userdata('lawyer_detail') == FALSE){
+					redirect('/user/login');
+				}elseif($this->session->userdata('client_detail') == TRUE){
+					$question_poster_id = $this->session->userdata('client_detail')['user_id'];
+				}else{
+					$question_poster_id = $this->session->userdata('lawyer_detail')['user_id'];
+				}
+
+				$data = array(
+					'user_id'=> $question_poster_id,
+					'forum_title' => $this->input->post('question-title'),
+					'forum_description' => $this->input->post('question-description'),
+					'forum_added_date' => Date('Y-m-d')
+					);
+					//print_r($data);
+					$result = $this->user_model->create_question($data);
+					 if($result == TRUE){
+						
+						
+					 	$this->session->set_flashdata('success_message_display','Question added sucessfully');
+					 	redirect('/user/showForum');
+					 }
+					else{
+						
+						$this->session->set_flashdata('error_message_display','Error or processing your request. Please try again');
+						redirect('/user/createQuestion');						
+					}
+			}
+	
+	}
+	public function showForum(){
+		$success = $this->session->flashdata('success_message_display');
+		 $error = $this->session->flashdata('error_message_display');
+		if(!empty($success)){
+			$data['success_message_display'] = $success;
+		}
+		if(!empty($error)){
+			$data['error_message_display'] = $error;
+		}
+
+		
+
+
+		$this->load->view('show-forum',$data);	
+	}
 
 }
 ?>

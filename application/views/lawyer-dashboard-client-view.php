@@ -86,7 +86,8 @@
                         echo "<tr>";
                           echo "<td>Specialty</td>";
                           echo "<td>";
-                          echo $result_lawyer_detail[0]->specialty;
+                          echo str_replace("-"," ",$result_lawyer_detail[0]->specialty);
+                          
                           echo "</td>";
                         echo "</tr>";
                         }
@@ -272,7 +273,7 @@
 
 
                       foreach($result_all_schedules as $schedule){
-                        print_r($schedule);
+                        
                         //print_r($schedule->schedule_date);
                        // print_r( $unique_date->schedule_date);
 

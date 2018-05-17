@@ -382,6 +382,16 @@ public function read_user_information($email,$userType) {
             return "notavailable";
         }
     }
+
+    public function create_question($data){
+        $this->db->insert('tbl_forum_question', $data);
+        echo $this->db->last_query();
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        }else{
+            return false;
+        }
+    }
     
 }
 
