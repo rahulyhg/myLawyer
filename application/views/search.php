@@ -41,7 +41,9 @@
                 <div class="panel-body">
                     <div class="tab-content">
                     <?php
+                   
                     echo "<div class='tab-pane fade in active' id='tab1default'>";
+                    
                         // if(isset($user_type) && $user_type =='lawyer'){
                         //     echo "<div class='tab-pane fade' id='tab1default'>";
                         // }
@@ -73,9 +75,11 @@
             </div>
                     <div class="panel-body">
                     <?php
+                    
 
                     echo form_open('user/showSearchResult');   
                     if(form_error('provincial-area')|| form_error('legal-professional')||form_error('admitted-bar')|| form_error('specialty')){
+
                         echo '<div class="alert alert-danger" role="alert">';
                            
                             echo form_error('provincial-area'); 
@@ -105,7 +109,14 @@
                         
 
 
-                       
+                        echo "<p class='pull-right'>";
+                                echo "<a href='".base_url('/user/faq') ."'>";
+                                
+                                echo "<span class='glyphicon glyphicon glyphicon-info-sign' aria-hidden='true'></span>";
+                                echo "<span class='sr-only'>Error:</span>";
+                                    echo " How to select the relevant lawyer ?";
+                                echo "</a>";
+                    echo "</p>";
                         
                         echo "<div class='form-group'>";
                         $options = array(
@@ -281,7 +292,7 @@
                                 echo "<br>";
                                 echo 'Practice Location:' . $lawyer_detail->location;
                                 echo "<br>";
-                                echo "<a href='". base_url('/user/lawyerDashBoardClientView/'. $lawyer_detail->user_id) ."' type='button' class='btn btn-danger pull-right '>Book Now</a>";
+                                echo "<a id='appointment' href='". base_url('/user/lawyerDashBoardClientView/'. $lawyer_detail->user_id) ."' type='button' class='btn btn-danger pull-right '>Book Now</a>";
                                 echo "<div class='clearfix'></div>";
                                 echo "</div>";
 

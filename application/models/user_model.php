@@ -352,7 +352,9 @@ public function read_user_information($email,$userType) {
             return 'empty';
         }
     }
-
+/**
+ * do the booking
+ */
     public function set_to_book($data){
         $condition ="schedule_id =" . "'" . $data['schedule_id'] . "'";
         $this->db->select('schedule_status');
@@ -382,7 +384,9 @@ public function read_user_information($email,$userType) {
             return "notavailable";
         }
     }
-
+/**
+ * question creation client and lawyer can submit
+ */
     public function create_question($data){
         $this->db->insert('tbl_forum_question', $data);
         echo $this->db->last_query();
@@ -392,6 +396,9 @@ public function read_user_information($email,$userType) {
             return false;
         }
     }
+    /**
+     * get all the questions
+     */
     public function get_all_question(){
         $this->db->select('*');
         $this->db->from('tbl_forum_question');
@@ -405,6 +412,9 @@ public function read_user_information($email,$userType) {
             return 'empty';
         }
     }
+    /**
+     * get indivual user detail need user id 
+     */
     public function get_any_user_detail($data){
         if($data['user_type'] == 'client'){
             $condition ="client_id =" . "'" . $data['user_id'] . "'";
@@ -425,6 +435,9 @@ public function read_user_information($email,$userType) {
         return $any_user_detail->result();
 
     }
+    /**
+     * get single question need forum id 
+     */
     public function get_single_question($data){
         $condition ="forum_id =" . "'" . $data['forum_id'] . "'";
         $this->db->select('*');
@@ -440,6 +453,37 @@ public function read_user_information($email,$userType) {
             return 'empty';
         }
         
+    }
+    /**
+     * insert new answer for a forum question
+     */
+    public function insert_answer_question($data){
+        $this->db->insert('tbl_forum_answer', $data);
+        echo $this->db->last_query();
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+    /**
+     * get all the answers for a single forum question
+     */
+    public function get_answers($forum_id){
+        $condition ="forum_id =" . "'" . $forum_id . "'";
+        $this->db->select('*');
+        $this->db->from('tbl_forum_answer');
+        $this->db->where($condition);
+        $this->db->order_by("answer_added_date", "desc");
+        
+        $answers = $this->db->get();
+        if ($answers->num_rows() > 0) {
+            return $answers->result();
+            
+        } 
+        else{
+            return 'empty';
+        }
     }
     
 }

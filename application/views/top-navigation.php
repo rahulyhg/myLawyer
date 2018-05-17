@@ -7,7 +7,7 @@
                     </div>
                     <div class="col-md-5 text-right">
                         <div class="top-bar-right">
-                            <a class='appointment' href="<?php echo base_url('/user/search') ?>">make an appointment </a>
+                            <a class='appointment' id="appointment" href="<?php echo base_url('/user/search') ?>">make an appointment </a>
                         </div>
 
                     </div>
@@ -29,7 +29,7 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="index.html">Home</a></li>
+                        <li class="active"><a href="<?php echo base_url(); ?>">Home</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About Us<span class="caret"></span></a>
                             <ul class="dropdown-menu">

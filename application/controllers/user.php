@@ -878,7 +878,7 @@ Class User extends CI_Controller {
 					'user_id'=> $question_poster_id,
 					'forum_title' => $this->input->post('question-title'),
 					'forum_description' => $this->input->post('question-description'),
-					'forum_added_date' => Date('Y-m-d'),
+					'forum_added_date' => Date('Y-m-d H:i:s'),
 					'user_type' => $user_type
 					);
 					//print_r($data);
@@ -936,6 +936,18 @@ Class User extends CI_Controller {
 		$this->load->view('show-forum',$data);	
 	}
 	public function showSingleQuestion($forum_id){
+
+		$success = $this->session->flashdata('success_message_display');
+		 $error = $this->session->flashdata('error_message_display');
+		if(!empty($success)){
+			$data['success_message_display'] = $success;
+		}
+		if(!empty($error)){
+			
+			$data['error_message_display'] = $error;
+		}
+
+		
 		if($this->session->userdata('client_detail') == FALSE && $this->session->userdata('lawyer_detail') == FALSE){
 			redirect('/user/login');
 		}elseif($this->session->userdata('client_detail') == TRUE){
@@ -945,16 +957,88 @@ Class User extends CI_Controller {
 			$question_poster_id = $this->session->userdata('lawyer_detail')['user_id'];
 			$user_type = $this->session->userdata('lawyer_detail')['type'];
 		}
-		$data = array(
-			'forum_id'=>$forum_id
-		);
+		
+		$data['forum_id'] = $forum_id;
+		
+		
 		$result_single_question = $this->user_model->get_single_question($data);
-		print_r($result_single_question);
-		//$this->load->view('answer-forum',$data);	
+		$result_answers = $this->user_model->get_answers($forum_id);
+		
+		
+		if($result_answers == 'empty'){
+			$data['result_answers'] = 'empty';
+		}else{
+			foreach($result_answers as $key => $answer){
+				// $data = array(
+				// 	'user_type' => $answer->user_type,
+				// 	'user_id' => $answer->user_id
+				// );
+				$data['user_type'] = $answer->user_type;
+				$data['user_id'] = $answer->user_id;
+				$result_answers = $this->user_model->get_any_user_detail($data);
+				$answer->answer_owner = $result_answers[0]->first_name . ' '. $result_answers[0]->last_name;
+				$result_updated_all_answers[] = $answer;
+			}
+			$data['result_answers'] = $result_updated_all_answers;
+			
+		}
+		
+		
+		$data['result_single_question'] = $result_single_question;
+		//print_r($result_single_question);
+		
+		$this->load->view('answer-forum',$data);	
 	}
 	public function answerQuestion(){
+		$this->form_validation->set_rules('answer', 'answer', 'trim|required');
+		$forum_id = $this->input->post('forum-id');
+		if ($this->form_validation->run() == FALSE) {
+			
+			//$this->load->view('create-question');	
+			
+			$this->session->set_flashdata('error_message_display','The answer field cannot empty');
+			redirect('/user/showSingleQuestion/'.$forum_id);
+			//showSingleQuestion/3			
+		}
+		else {
+			if($this->session->userdata('client_detail') == FALSE && $this->session->userdata('lawyer_detail') == FALSE){
+				redirect('/user/login');
+			}elseif($this->session->userdata('client_detail') == TRUE){
+				$answer_poster_id = $this->session->userdata('client_detail')['user_id'];
+				$user_type = $this->session->userdata('client_detail')['type'];
+			}else{
+				$answer_poster_id = $this->session->userdata('lawyer_detail')['user_id'];
+				$user_type = $this->session->userdata('lawyer_detail')['type'];
+			}
+			$data = array(
+				'forum_id' =>$forum_id,
+				'answer_description' => $this->input->post('answer'),
+				'user_id' => $answer_poster_id,
+				'user_type' => $user_type,
+				'answer_added_date' => Date('Y-m-d H:i:s')
+
+			);
+			$result_single_question = $this->user_model->insert_answer_question($data);
+			if($result_single_question == TRUE){
+				$this->session->set_flashdata('success_message_display','Answer submitted sucessfully');
+				redirect('/user/showSingleQuestion/'.$forum_id);
+			}else{
+				$this->session->set_flashdata('erro_message_display','Error when prcessing your request, try aganing');
+				redirect('/user/showSingleQuestion/'.$forum_id);
+			}
+
+		}
+
+		
 		
 	}
+	/**
+		 * how faq page this is a static page
+		 */
+		public function faq(){
+			
+			$this->load->view('faq-page');
+		}
 
 }
 ?>

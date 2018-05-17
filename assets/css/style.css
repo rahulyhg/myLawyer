@@ -1510,3 +1510,26 @@ Blog
     box-shadow: 1px 1px 5px #b3afaf;
     margin-bottom: 10px;
 }
+
+#appointment:hover{
+  color: #fff !important;
+  background-color: rgb(119, 6, 44)
+}
+
+
+
+.panel-title > a:before {
+  float: right !important;
+  font-family: FontAwesome;
+  content:"\f055";
+  padding-right: 5px;
+}
+.panel-title > a.collapsed:before {
+  float: right !important;
+  content:"\f056";
+}
+.panel-title > a:hover, 
+.panel-title > a:active, 
+.panel-title > a:focus  {
+  text-decoration:none;
+}

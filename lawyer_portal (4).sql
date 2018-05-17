@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2018 at 07:07 AM
+-- Generation Time: May 17, 2018 at 03:15 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `tbl_casebrief` (
   `case_description` text NOT NULL,
   `case_added_date` date NOT NULL,
   PRIMARY KEY (`case_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `tbl_casebrief`
@@ -43,7 +43,8 @@ INSERT INTO `tbl_casebrief` (`case_id`, `user_id`, `case_title`, `case_descripti
 (6, 2, 'Perera V. Perera', 'Perera V. Perera , in this case I  have tried to limit number of rows in textarea to 4 but its giving error Message: Array to string', '2018-05-14'),
 (7, 2, 'Perera V. Perera', 'Perera V. Perera , in this case I  have tried to limit number of rows in textarea to 4 but its giving error Message: Array to string', '2018-05-14'),
 (8, 2, 'Perera V. Perera2', 'have tried to limit number of rows in textarea to 4 but its giving error Message: Array to string', '2018-05-14'),
-(9, 2, 'Perera V. Perera2', 'have tried to limit number of rows in textarea to 4 but its giving error Message: Array to string', '2018-05-14');
+(9, 2, 'Perera V. Perera2', 'have tried to limit number of rows in textarea to 4 but its giving error Message: Array to string', '2018-05-14'),
+(10, 24, 'nimal v. perera 2017', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam mauris odio, fringilla eget turpis ut, malesuada scelerisque felis. Phasellus dui ligula, maximus sed urna sit amet, tincidunt volutpat metus. Vivamus id ante sit amet enim varius aliquam. Fusce ut nibh a nunc pulvinar efficitur. Etiam eget magna vitae risus porttitor auctor eu sit amet est. Duis commodo tortor ut purus interdum, sed viverra orci luctus. Quisque rhoncus lobortis turpis eu malesuada. Nulla posuere dapibus porta. Suspendisse vitae fringilla libero, sed vulputate est. Duis quam nulla, maximus sagittis auctor bibendum, scelerisque nec elit. Ut tristique libero justo, vitae porttitor lorem hendrerit et.\r\n\r\nNullam vestibulum sapien non ex volutpat, eu finibus enim interdum. In arcu erat, molestie eu consequat vitae, efficitur sed mi. Aliquam lorem nibh, viverra aliquam convallis aliquam, fermentum nec urna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin nec finibus tortor, eu blandit mi. Donec ligula neque, tempus et ornare in, interdum ut mauris. Curabitur imperdiet ex non odio suscipit, eget auctor nisi molestie. Proin luctus varius justo, sed semper leo vehicula sollicitudin. Nunc facilisis nisl accumsan porttitor condimentum. Sed in tortor vel velit feugiat euismod cursus vel orci. Nulla facilisi. Suspendisse id massa id dolor auctor euismod. In cursus turpis eu sem pharetra suscipit. Integer imperdiet condimentum nibh, in eleifend purus. Pellentesque elementum elit nisi.', '2018-05-17');
 
 -- --------------------------------------------------------
 
@@ -56,9 +57,26 @@ CREATE TABLE IF NOT EXISTS `tbl_forum_answer` (
   `forum_id` int(11) NOT NULL,
   `answer_description` text NOT NULL,
   `user_id` int(11) NOT NULL,
-  `answer_added_date` date NOT NULL,
+  `user_type` varchar(10) NOT NULL,
+  `answer_added_date` datetime NOT NULL,
   PRIMARY KEY (`answer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+--
+-- Dumping data for table `tbl_forum_answer`
+--
+
+INSERT INTO `tbl_forum_answer` (`answer_id`, `forum_id`, `answer_description`, `user_id`, `user_type`, `answer_added_date`) VALUES
+(2, 3, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam mauris odio, fringilla eget turpis ut, malesuada scelerisque felis. Phasellus dui ligula, maximus sed urna sit amet, tincidunt volutpat metus. Vivamus id ante sit amet enim varius aliquam. Fusce ut nibh a nunc pulvinar efficitur. Etiam eget magna vitae risus porttitor auctor eu sit amet est. Duis commodo tortor ut purus interdum, sed viverra orci luctus. Quisque rhoncus lobortis turpis eu malesuada. Nulla posuere dapibus porta. Suspendisse vitae fringilla libero, sed vulputate est. Duis quam nulla, maximus sagittis auctor bibendum, scelerisque nec elit. Ut tristique libero justo, vitae porttitor lorem hendrerit et.', 5, 'client', '2018-05-17 03:13:20'),
+(3, 3, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam mauris odio, fringilla eget turpis ut, malesuada scelerisque felis. Phasellus dui ligula, maximus sed urna sit amet, tincidunt volutpat metus. Vivamus id ante sit amet enim varius aliquam. Fusce ut nibh a nunc pulvinar efficitur. Etiam eget magna vitae risus porttitor auctor eu sit amet est. Duis commodo tortor ut purus interdum, sed viverra orci luctus. Quisque rhoncus lobortis turpis eu malesuada. Nulla posuere dapibus porta. Suspendisse vitae fringilla libero, sed vulputate est. Duis quam nulla, maximus sagittis auctor bibendum, scelerisque nec elit. Ut tristique libero justo, vitae porttitor lorem hendrerit et.', 5, 'client', '2018-05-18 00:00:00'),
+(4, 3, 'answer 33', 5, 'client', '2018-05-17 00:00:00'),
+(5, 3, 'sed viverra orci luctus. Quisque rhoncus lobortis turpis eu malesuada. Nulla posuere dapibus porta. Suspendisse vitae fringilla libero, sed vulputate est. Duis quam nulla, maximus sagittis auctor bibendum, scelerisque nec elit. Ut tristique libero justo, vitae porttitor lorem hendrerit et.', 5, 'client', '2018-05-17 13:11:51'),
+(6, 3, 'test answer to check the date and time', 5, 'client', '2018-05-17 13:13:56'),
+(7, 1, 'Nullam vestibulum sapien non ex volutpat, eu finibus enim interdum. In arcu erat, molestie eu consequat vitae, efficitur sed mi. Aliquam lorem nibh, viverra aliquam convallis aliquam, fermentum nec urna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin nec finibus tortor, eu blandit mi. Donec ligula neque, tempus et ornare in, interdum ut mauris. Curabitur imperdiet ex non odio suscipit, eget auctor nisi molestie. Proin luctus varius justo, sed semper leo vehicula sollicitudin. Nunc facilisis nisl accumsan porttitor condimentum. Sed in tortor vel velit feugiat euismod cursus vel orci. Nulla facilisi. Suspendisse id massa id dolor auctor euismod. In cursus turpis eu sem pharetra suscipit. Integer imperdiet condimentum nibh, in eleifend purus. Pellentesque elementum elit nisi.', 5, 'client', '2018-05-17 13:21:50'),
+(8, 1, 'Nullam vestibulum sapien non ex volutpat, eu finibus enim interdum. In arcu erat, molestie eu consequat vitae, efficitur sed mi. Aliquam lorem nibh, viverra aliquam convallis aliquam, fermentum nec urna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin nec finibus tortor, eu blandit mi. Donec ligula neque, tempus et ornare in, interdum ut mauris. Curabitur imperdiet ex non odio suscipit, eget auctor nisi molestie. Proin luctus varius justo, sed semper leo vehicula sollicitudin. Nunc facilisis nisl accumsan porttitor condimentum. Sed in tortor vel velit feugiat euismod cursus vel orci. Nulla facilisi. Suspendisse id massa id dolor auctor euismod. In cursus turpis eu sem pharetra suscipit. Integer imperdiet condimentum nibh, in eleifend purus. Pellentesque elementum elit nisi.', 5, 'client', '2018-05-17 13:22:28'),
+(9, 2, 'auctor. Pellentesque rhoncus, diam in accumsan feugiat, ligula lacus aliquam enim, vel gravida ante leo at turpis. Nunc posuere lorem sed sem porttitor, sit amet pharetra mauris mattis. Aenean mattis purus quis', 5, 'client', '2018-05-17 13:31:52'),
+(10, 2, 'm sed. Curabitur finibus erat eu odio maximus auctor. Pellentesque rhoncus, diam in accumsan feugiat, ligula lacus aliquam enim, vel gravida ante leo at turpis. Nunc posuere lorem sed sem porttitor, sit amet pharetra mauris mattis. Aenean mattis purus quis volutpat feugiat. Etiam sed mi ut lacus aliquam efficitur. Pellentesque feugiat ultrices neque a laoreet.', 5, 'client', '2018-05-17 13:33:55'),
+(11, 5, 'This is the soloution can provie\r\n\r\nSed dui tortor, tempor quis dignissim id, hendrerit sed massa. Aenean dui elit, rhoncus eget eros congue, varius ullamcorper neque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam id mollis tortor. Vestibulum bibendum', 24, 'lawyer', '2018-05-17 15:06:57');
 
 -- --------------------------------------------------------
 
@@ -71,16 +89,21 @@ CREATE TABLE IF NOT EXISTS `tbl_forum_question` (
   `forum_title` varchar(255) NOT NULL,
   `forum_description` text NOT NULL,
   `user_id` int(11) NOT NULL,
-  `forum_added_date` date NOT NULL,
+  `user_type` varchar(10) NOT NULL,
+  `forum_added_date` datetime NOT NULL,
   PRIMARY KEY (`forum_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `tbl_forum_question`
 --
 
-INSERT INTO `tbl_forum_question` (`forum_id`, `forum_title`, `forum_description`, `user_id`, `forum_added_date`) VALUES
-(1, 'question', 'trasfasdfasdf', 5, '2018-05-17');
+INSERT INTO `tbl_forum_question` (`forum_id`, `forum_title`, `forum_description`, `user_id`, `user_type`, `forum_added_date`) VALUES
+(1, 'question title ', 'Sed sed vestibulum metus, sed pretium risus. Vestibulum dui nisi, dignissim vel euismod ac, congue ut lorem. Pellentesque feugiat nibh mauris, sit amet auctor ante bibendum sed. Curabitur finibus erat eu odio maximus auctor. Pellentesque rhoncus, diam in accumsan feugiat, ligula lacus aliquam enim, vel gravida ante leo at turpis. Nunc posuere lorem sed sem porttitor, sit amet pharetra mauris mattis. Aenean mattis purus quis volutpat feugiat. Etiam sed mi ut lacus aliquam efficitur. Pellentesque feugiat ultrices neque a laoreet.', 5, 'client', '2018-05-17 00:00:00'),
+(2, 'Sed sed vestibulum metus, sed pretium risus', 'Sed sed vestibulum metus, sed pretium risus. Vestibulum dui nisi, dignissim vel euismod ac, congue ut lorem. Pellentesque feugiat nibh mauris, sit amet auctor ante bibendum sed. Curabitur finibus erat eu odio maximus auctor. Pellentesque rhoncus, diam in accumsan feugiat, ligula lacus aliquam enim, vel gravida ante leo at turpis. Nunc posuere lorem sed sem porttitor, sit amet pharetra mauris mattis. Aenean mattis purus quis volutpat feugiat. Etiam sed mi ut lacus aliquam efficitur. Pellentesque feugiat ultrices neque a laoreet.', 5, 'client', '2018-05-17 00:00:00'),
+(3, 'How can i store the table content that is the comments of the html page into a database using php', 'Integer elit dui, finibus a tellus eget, rhoncus sodales orci. Fusce vitae consequat nulla. Vestibulum scelerisque lectus vel velit porttitor cursus. Praesent consectetur lorem non turpis accumsan, sit amet elementum sapien mattis. In lobortis turpis sed libero luctus ornare. Praesent pulvinar neque mollis risus suscipit, nec eleifend leo interdum. Cras lacinia ligula mattis eros tristique, euismod bibendum sem accumsan. Nullam sit amet mauris dolor. Nunc malesuada porttitor arcu eget consequat. Cras lorem dui, tristique sit amet tortor a, suscipit condimentum', 5, 'client', '2018-05-17 00:00:00'),
+(4, 'question title user', 'question title user - description', 5, 'client', '2018-05-17 00:00:00'),
+(5, 'Land Issue in Kaduwela', 'Sed dui tortor, tempor quis dignissim id, hendrerit sed massa. Aenean dui elit, rhoncus eget eros congue, varius ullamcorper neque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam id mollis tortor. Vestibulum bibendum nisi a lacus dictum, vel semper enim molestie. Sed feugiat mi eget massa interdum elementum. Morbi a dapibus felis, eget porttitor mi. Nam imperdiet, elit eu faucibus porta, nisl nunc pulvinar enim, at pharetra velit nisl a erat. Nunc id ipsum ac arcu vestibulum tincidunt eu nec nunc. Sed elementum euismod varius. Donec viverra diam arcu, sit amet euismod nisi tristique ut.', 10, 'client', '2018-05-17 15:06:10');
 
 -- --------------------------------------------------------
 
@@ -100,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `tbl_lawyer_schedule` (
   `updated_date` date NOT NULL,
   `booked_date` date NOT NULL,
   PRIMARY KEY (`schedule_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=54 ;
 
 --
 -- Dumping data for table `tbl_lawyer_schedule`
@@ -150,7 +173,16 @@ INSERT INTO `tbl_lawyer_schedule` (`schedule_id`, `user_id`, `schedule_date`, `d
 (41, 3, '2018-05-15', 'Tuesday', '06:00:00', 'available', 0, '2018-05-14', '2018-05-14', '0000-00-00'),
 (42, 3, '2018-05-15', 'Tuesday', '06:30:00', 'booked-closed', 5, '2018-05-14', '2018-05-14', '2018-05-15'),
 (43, 3, '2018-05-15', 'Tuesday', '07:00:00', 'booked-closed', 5, '2018-05-14', '2018-05-14', '2018-05-15'),
-(44, 3, '2018-05-15', 'Tuesday', '07:30:00', 'booked', 5, '2018-05-14', '2018-05-14', '0000-00-00');
+(44, 3, '2018-05-15', 'Tuesday', '07:30:00', 'booked', 5, '2018-05-14', '2018-05-14', '0000-00-00'),
+(45, 24, '2018-05-18', 'Friday', '08:00:00', 'available', 0, '2018-05-17', '2018-05-17', '0000-00-00'),
+(46, 24, '2018-05-18', 'Friday', '08:30:00', 'available', 0, '2018-05-17', '2018-05-17', '0000-00-00'),
+(47, 24, '2018-05-18', 'Friday', '09:00:00', 'available', 0, '2018-05-17', '2018-05-17', '0000-00-00'),
+(48, 24, '2018-05-18', 'Friday', '09:30:00', 'available', 0, '2018-05-17', '2018-05-17', '0000-00-00'),
+(49, 24, '2018-05-18', 'Friday', '10:00:00', 'booked', 10, '2018-05-17', '2018-05-17', '2018-05-17'),
+(50, 24, '2018-05-18', 'Friday', '10:30:00', 'available', 0, '2018-05-17', '2018-05-17', '0000-00-00'),
+(51, 24, '2018-05-18', 'Friday', '11:00:00', 'available', 0, '2018-05-17', '2018-05-17', '0000-00-00'),
+(52, 24, '2018-05-18', 'Friday', '11:30:00', 'available', 0, '2018-05-17', '2018-05-17', '0000-00-00'),
+(53, 24, '2018-05-18', 'Friday', '12:00:00', 'available', 0, '2018-05-17', '2018-05-17', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -172,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
   `location` varchar(255) NOT NULL,
   `register_date` date NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 --
 -- Dumping data for table `tbl_user`
@@ -200,7 +232,8 @@ INSERT INTO `tbl_user` (`user_id`, `title`, `first_name`, `last_name`, `email`, 
 (20, 'Mr', 'praveen', 'tissera', 'praveen171.tissera@gmail.com', 'sabaragamuwa', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'lawyer', 'nuwara', 'criminal', 'colombo', '2018-05-14'),
 (21, 'Mr', 'praveen', 'tissera', 'praveen144.tissera@gmail.com', 'western', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'lawyer-sworn-translator', 'colombo-10', 'criminal', 'colombo', '2018-05-14'),
 (22, 'Miss', 'sasmitha', 'tissera', 'sasmitha123@gmail.com', 'northern', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'lawyer', 'colombo-10', 'immigration', 'colombo', '2018-05-15'),
-(23, 'Mr', 'raveen', 'jaya', 'raveen@gmail.com', 'northern', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'lawyer', 'Welimada-Combined-Court', 'divorce', 'colombo', '2018-05-15');
+(23, 'Mr', 'raveen', 'jaya', 'raveen@gmail.com', 'northern', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'lawyer', 'Welimada-Combined-Court', 'divorce', 'colombo', '2018-05-15'),
+(24, 'Mr', 'wanigasekara', 'perera', 'wanni@gmail.com', 'western', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'lawyer', 'Kandy', 'divorce', 'kandy', '2018-05-17');
 
 -- --------------------------------------------------------
 
@@ -217,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user_client` (
   `contact` varchar(15) NOT NULL,
   `register_date` date NOT NULL,
   PRIMARY KEY (`client_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `tbl_user_client`
@@ -228,7 +261,8 @@ INSERT INTO `tbl_user_client` (`client_id`, `first_name`, `last_name`, `email`, 
 (5, 'udari', 'tissera', 'udari011@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '0123654787', '2018-05-15'),
 (6, 'gimi', 'ti', 'gimi@yahoo.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '012456874', '2018-05-15'),
 (8, 'luky', 'perera', 'luky@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '0124587544', '2018-05-17'),
-(9, 'chatu', 'kari', 'chatu@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '012458544', '2018-05-17');
+(9, 'chatu', 'kari', 'chatu@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '012458544', '2018-05-17'),
+(10, 'achini', 'siriwardana', 'achini@yahoo.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '0713695488', '2018-05-17');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -1,7 +1,12 @@
 <?php $this->load->view('header'); ?>
 <?php $this->load->view('top-navigation'); ?>
 <?php
-
+// $client_id = $this->session->userdata('client_detail')['user_id'];
+// $consultant_id = $this->session->userdata('lawyer_detail')['user_id'];
+// if (!isset($client_id) && !isset($consultant_id)) {
+   
+//    redirect('/user/login');
+// }
 if($this->session->userdata('client_detail') == FALSE && $this->session->userdata('lawyer_detail') == FALSE){
     redirect('/user/login');
 }

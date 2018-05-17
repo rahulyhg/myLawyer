@@ -86,7 +86,7 @@
                                     echo form_input($data);
                         }else{
                             $data = array(
-                                'type' => 'text',
+                                'type' => 'hidden',
                                 'name' => 'schedule-id',
                                 'class' => 'form-control',
                                 'value' => 0
