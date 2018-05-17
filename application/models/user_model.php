@@ -392,6 +392,55 @@ public function read_user_information($email,$userType) {
             return false;
         }
     }
+    public function get_all_question(){
+        $this->db->select('*');
+        $this->db->from('tbl_forum_question');
+        $this->db->order_by("forum_added_date", "desc");
+        $all_question = $this->db->get();
+        if ($all_question->num_rows() > 0) {
+            return $all_question->result();
+            
+        } 
+        else{
+            return 'empty';
+        }
+    }
+    public function get_any_user_detail($data){
+        if($data['user_type'] == 'client'){
+            $condition ="client_id =" . "'" . $data['user_id'] . "'";
+            $this->db->select('*');
+            $this->db->from('tbl_user_client');
+            $this->db->where($condition);
+            $this->db->limit(1);
+            
+        }else if($data['user_type']=='lawyer'){
+            $condition ="user_id =" . "'" . $data['user_id'] . "'";
+            $this->db->select('*');
+            $this->db->from('tbl_user');
+            $this->db->where($condition);
+            $this->db->limit(1);
+           
+        }
+        $any_user_detail = $this->db->get();
+        return $any_user_detail->result();
+
+    }
+    public function get_single_question($data){
+        $condition ="forum_id =" . "'" . $data['forum_id'] . "'";
+        $this->db->select('*');
+        $this->db->from('tbl_forum_question');
+        $this->db->where($condition);
+        $this->db->limit(1);
+        $single_forum_detail = $this->db->get();
+        if ($single_forum_detail->num_rows() > 0) {
+            return $single_forum_detail->result();
+            
+        } 
+        else{
+            return 'empty';
+        }
+        
+    }
     
 }
 

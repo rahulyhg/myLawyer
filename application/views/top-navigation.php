@@ -51,7 +51,7 @@
 
                             </ul>
                         </li>
-                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="<?php echo base_url('/user/showForum') ?>">Forum</a></li>
                         <li><a href="contact.html">Contact us</a></li>
                         <li><a href="<?php echo base_url('/user/register') ?>">Join</a></li>
                         <?php 
@@ -82,15 +82,15 @@
                                 echo "</a></li>";
                             }
                             elseif(isset($this->session->userdata['client_detail'])){
-                                echo "<li><a href='";
+                                echo "<li><a style='padding-left: 5px; padding-right: 5px;' href='";
                                 echo base_url('/user/clientDashBoard');
                                 echo "'>";
-                                echo "<span class='label label-default' style='font-size:18px'> My Dashboard</span>";
+                                echo "<span class='label label-default' style='font-size:14px;'> My Dashboard</span>";
                                
                                 echo "</a></li>";
                             }
                         ?>
-                        <li><a href="<?php echo base_url('/user/createQuestion') ?>"><span class="label label-primary " style="font-size:18px;"> Forum </span></a></li>
+                        <li><a style="padding-left: 5px; padding-right: 5px;" href="<?php echo base_url('/user/createQuestion') ?>"><span class="label label-primary " style="font-size:14px"> Ask Question </span></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div><!--/.container-fluid -->

@@ -863,19 +863,23 @@ Class User extends CI_Controller {
 				$this->load->view('create-question');				
 			}
 			else {
+				
 				if($this->session->userdata('client_detail') == FALSE && $this->session->userdata('lawyer_detail') == FALSE){
 					redirect('/user/login');
 				}elseif($this->session->userdata('client_detail') == TRUE){
 					$question_poster_id = $this->session->userdata('client_detail')['user_id'];
+					$user_type = $this->session->userdata('client_detail')['type'];
 				}else{
 					$question_poster_id = $this->session->userdata('lawyer_detail')['user_id'];
+					$user_type = $this->session->userdata('lawyer_detail')['type'];
 				}
 
 				$data = array(
 					'user_id'=> $question_poster_id,
 					'forum_title' => $this->input->post('question-title'),
 					'forum_description' => $this->input->post('question-description'),
-					'forum_added_date' => Date('Y-m-d')
+					'forum_added_date' => Date('Y-m-d'),
+					'user_type' => $user_type
 					);
 					//print_r($data);
 					$result = $this->user_model->create_question($data);
@@ -902,11 +906,54 @@ Class User extends CI_Controller {
 		if(!empty($error)){
 			$data['error_message_display'] = $error;
 		}
+		/**
+		 * get latest from records
+		 */
+		$result_all_question = $this->user_model->get_all_question();
+
+		foreach($result_all_question as $key=>$question){
+			//print_r($question);
+			$data = array(
+				'user_id'=>$question->user_id,
+				'user_type'=>$question->user_type
+			);
+			$result_user_detail = $this->user_model->get_any_user_detail($data);
+			//print_r($result_user_detail);
+
+			$question->post_owner = $result_user_detail[0]->first_name . ' '. $result_user_detail[0]->last_name;
+			$result_updated_all_question[] = $question;
+			
+		}
+
 
 		
-
+		if($result_all_question == 'empty'){
+			$data['result_all_question'] = 'empty';
+		}else{
+			$data['result_all_question'] = $result_updated_all_question;
+		}
 
 		$this->load->view('show-forum',$data);	
+	}
+	public function showSingleQuestion($forum_id){
+		if($this->session->userdata('client_detail') == FALSE && $this->session->userdata('lawyer_detail') == FALSE){
+			redirect('/user/login');
+		}elseif($this->session->userdata('client_detail') == TRUE){
+			$question_poster_id = $this->session->userdata('client_detail')['user_id'];
+			$user_type = $this->session->userdata('client_detail')['type'];
+		}else{
+			$question_poster_id = $this->session->userdata('lawyer_detail')['user_id'];
+			$user_type = $this->session->userdata('lawyer_detail')['type'];
+		}
+		$data = array(
+			'forum_id'=>$forum_id
+		);
+		$result_single_question = $this->user_model->get_single_question($data);
+		print_r($result_single_question);
+		//$this->load->view('answer-forum',$data);	
+	}
+	public function answerQuestion(){
+		
 	}
 
 }

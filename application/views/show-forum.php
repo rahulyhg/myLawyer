@@ -3,52 +3,15 @@
 <div class="container">
     <div class="row">
 
-        <div class="col-md-offset-2 col-md-8">
+        <div class="col-md-12">
     
 
-        <div class="panel with-nav-tabs panel-default">
-                <div class="panel-heading">
-                        <ul class="nav nav-tabs">
-                            <?php
-                            if(isset($user_type) && $user_type =='lawyer'){
-                                echo "<li><a href='#tab1default' data-toggle='tab'>Client Login</a></li>";
-                                echo "<li class='active'><a href='#tab2default' data-toggle='tab'>Legal Professional Login</a></li>";
-                            }
-                            else{
-                                echo "<li class='active'><a href='#tab1default' data-toggle='tab'>Client Login</a></li>";
-                                echo "<li><a href='#tab2default' data-toggle='tab'>Legal Professional Login</a></li>";
-                            }
-                            
-                            ?>
-                          
-                        </ul>
-                </div>
-                <div class="panel-body">
-                    <div class="tab-content">
-                        <?php
-                        if(isset($user_type) && $user_type =='lawyer'){
-                            echo "<div class='tab-pane fade' id='tab1default'>";
-                        }
-                        else{
-                            echo "<div class='tab-pane fade in active' id='tab1default'>";
-                        }
-                        ?>
-                        
-                        
-                        <div class="panel-heading">
-                        <h3 class="panel-title">Client Sign In</h3>
-            </div>
-                    <div class="panel-body">
+                    
+                    
                     <?php
 
-                        echo form_open('user/clientLogin');   
-                        if(form_error('email') || form_error('password') ){
-                            echo '<div class="alert alert-danger" role="alert">';
-                                echo form_error('email');
-                                echo form_error('password');
-
-                            echo '</div>';
-                            }
+                       
+                       
                             if(isset($error_message_display)){
                                 echo '<div class="alert alert-danger" role="alert">';
                                 echo $error_message_display;
@@ -60,101 +23,56 @@
                                 echo '</div>';
                                 }
 
-                        echo "<fieldset>";
-                            echo "<div class='form-group'>";
-                            $data = array(
-                                'type' => 'email',
-                                'name' => 'email',
-                                'class' => 'form-control',
-                                'placeholder' => 'E-mail'
-                                );
-                                echo form_input($data);
-                            echo "</div>";
-                            echo "<div class='form-group'>";
-                            $data = array(
-                                'type' => 'password',
-                                'name' => 'password',
-                                'class' => 'form-control',
-                                'placeholder' => 'Password'
-                                );
-                                echo form_input($data);
-                            echo "</div>";
-                        echo "</fieldset>";
-                        echo form_submit('submit', 'Login', "class='btn btn-success btn-md btn-block'");
-                        echo form_close();
-                        
-                        ?>
-
-
-
-                    </div>
-                        
-                        
-                        
-                        </div>
-                        <?php
-                        if(isset($user_type) && $user_type =='lawyer'){
-                            echo "<div class='tab-pane fade in active' id='tab2default'>";
-                        }
-                        else{
-                            echo "<div class='tab-pane fade' id='tab2default'>";
-                        }
-                        ?>
-                        
-                        <div class="panel-heading">
-                        <h3 class="panel-title">Legal Professional Login</h3>
-            </div>
-                    <div class="panel-body">
-                    <?php
-                    if(isset($error_message_display)){
-                        echo '<div class="alert alert-danger" role="alert">';
-                        echo $error_message_display;
-                        echo '</div>';
-                        }
-                        if(isset($success_message_display)){
-                        echo '<div class="alert alert-success" role="alert">';
-                        echo $success_message_display;
-                        echo '</div>';
-                        }
-
-
-
-                        echo form_open('user/lawyerLogin');   
-
-                        echo "<fieldset>";
-                            echo "<div class='form-group'>";
-                            $data = array(
-                                'type' => 'email',
-                                'name' => 'email',
-                                'class' => 'form-control',
-                                'placeholder' => 'E-mail'
-                                );
-                                echo form_input($data);
-                            echo "</div>";
-                            echo "<div class='form-group'>";
-                            $data = array(
-                                'type' => 'password',
-                                'name' => 'password',
-                                'class' => 'form-control',
-                                'placeholder' => 'Password'
-                                );
-                                echo form_input($data);
-                            echo "</div>";
-                        echo "</fieldset>";
-                        echo form_submit('submit', 'Login', "class='btn btn-success btn-md btn-block'");
-                        echo form_close();
-
-                    ?>
-                    </div>
-                        
-                        
-                        </div>
                        
-                        
-                    </div>
-                </div>
-            </div>
+                                //print_r($result_all_question);
+                                if($result_all_question == 'empty'){
+                                    echo "No question found. Be the first to add a question";
+                                }else{
+                                    //print_r($result_all_question);
+                                    echo "<table class='table table-striped table-hover'>";
+                                    echo "<tbody>";
 
+                                    foreach($result_all_question as $question){
+                                    
+                                        
+                                        echo "<tr>";
+                                            echo "<td>";
+                                                echo "<h4 class='text-capitalize'>";
+                                                    echo "<a href='" . base_url('/user/showSingleQuestion/'. $question->forum_id) ."' style='color:#4286f4;'>";
+                                                    echo $question->forum_title;
+                                                    echo "</a>";
+                                                echo "</h4>";
+                                                echo "<p>";
+                                                
+                                                    //echo $question->forum_description;
+                                                    if(strlen($question->forum_description)>400){
+                                                        $pos=strpos($question->forum_description, ' ', 400);
+                                                        echo substr($question->forum_description,0,$pos );
+                                                        echo "...";
+                                                    }else{
+                                                        echo $question->forum_description;
+                                                    }
+
+                                                echo "</p>";
+                                                echo "<p class='pull-right'>";
+                                                    //echo 'asked on ' .  $question->forum_added_date;
+                                                    echo  'asked on ' . date('l jS \of F Y', strtotime( $question->forum_added_date)).'<br>';
+                                                    echo 'posted by ' . $question->post_owner;
+                                                echo "</p>";
+
+                                            echo "</td>";
+
+                                        echo "</tr>";
+
+                                    
+                                    }
+                                    echo "</tbody>";
+                                    echo "</table>";
+
+
+                                }
+                                
+                        ?>
 
             
         </div>
