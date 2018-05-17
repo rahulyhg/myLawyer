@@ -227,7 +227,7 @@ else{
                 <?php 
                   //print_r($result_unique_dates);
                  // echo "<hr>";
-                // print_r($result_all_schedules);
+                 //print_r($result_all_schedules);
                   if($result_unique_dates == 'empty'){
                     echo "<span class='label label-default' style='font-size:18px'>Please add your availabitity to show client</span><br><br>";
                   }
@@ -279,7 +279,15 @@ else{
                               echo "<button class='btn btn-success'>". $schedule->schedule_status ."</button>";
                             }
                             else if($schedule->schedule_status == 'booked'){
-                              echo "Booked ";
+                              //echo "Booked ";
+                              echo "<button type='button' class='btn btn-default' data-container='body' data-toggle='popover' data-placement='top' data-html='true' data-content='";
+                              echo 'Name: ' . $schedule->client_name . '<br>';
+                              echo 'Email: ' . $schedule->client_email. '<br>';
+                              echo 'Contact: ' .$schedule->client_contact;
+
+                              echo "'>";
+                               echo  "booked (view detail)";
+                              echo "</button>";
                             }
                             else if($schedule->schedule_status == 'booked-closed'){
                               echo "Booking completed ";
@@ -401,3 +409,9 @@ else{
 
 
 <?php $this->load->view('footer'); ?>
+
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+</script>

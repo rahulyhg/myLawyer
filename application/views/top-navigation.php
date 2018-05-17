@@ -77,7 +77,7 @@
                                 echo "<li><a href='";
                                 echo base_url('/user/lawyerDashBoard');
                                 echo "'>";
-                                echo "<span class='label label-default' style='font-size:18px'> My Dashboard</span>";
+                                echo "<span class='label label-default' style='font-size:14px'> My Dashboard</span>";
                                
                                 echo "</a></li>";
                             }

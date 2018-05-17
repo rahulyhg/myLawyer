@@ -96,7 +96,7 @@ else{
                  <div class="panel-footer">
                         <!-- <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a> -->
                         <span class="pull-right">
-                        <a href="#" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-md btn-warning">Edit My Profile</a>                           
+                        <a href="#"  type="button" class="btn btn-md btn-warning">Edit My Profile</a>                           
                         </span>
                         <div class="clearfix"></div>
                     </div>
@@ -153,7 +153,7 @@ else{
                     echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
-                    //print_r($booking_history);
+                   //print_r($booking_history);
                     
                     foreach($booking_history as $booking){
                       $current_date = date('Y-m-d');
@@ -198,10 +198,21 @@ else{
                               echo "</td>";
                               echo "<td>";
                                 echo date('h:i:s a', strtotime( $booking->schedule_time)); 
+                               
                               echo "</td>";
 
                               echo "<td>";
+                              if($booking->legal_professional == 'sworn-translator' || $booking->legal_professional == 'lawyer-sworn-translator' ){
+                                  echo "<a href='".base_url('user/clientMoreInfo/'.$booking->schedule_id). "'>";
+                                    echo "<span class='label label-danger' data-toggle='tooltip' data-placement='top' title='Click to submit more information if request by consultant'>";
+                                    echo str_replace("-"," ",$booking->schedule_status) ;
+                                    echo "</span>";
+                                    
+                                  echo "</a>";
+                              }else{
                                 echo str_replace("-"," ",$booking->schedule_status);
+                              }
+                                
                               echo "</td>";
                               echo "<td>";
                                 echo $booking->booked_date;
@@ -232,7 +243,7 @@ else{
                  <div class="panel-footer">
 
                         <span class="pull-right">
-                        <a href="<?php echo base_url('/user/editSchedules'); ?>" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-md btn-warning"><i class="glyphicon glyphicon-edit"></i> &nbsp;Edit Upcomming Bookings</a>
+                        <a href="<?php echo base_url('/user/editSchedules'); ?>"  type="button" class="btn btn-md btn-warning"><i class="glyphicon glyphicon-edit"></i> &nbsp;Edit Upcomming Bookings</a>
 
                             <!-- <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a> -->
                         </span>
@@ -251,3 +262,8 @@ else{
 
 
 <?php $this->load->view('footer'); ?>
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip('show')
+})
+</script>

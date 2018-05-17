@@ -313,6 +313,7 @@ Class User extends CI_Controller {
 					}
 					else{
 						$lawyer_session_data = array(
+							'title' => $result[0]->title,
 							'user_id' => $result[0]->user_id,
 							'fname' => $result[0]->first_name,
 							'lname' => $result[0]->last_name,
@@ -406,8 +407,29 @@ Class User extends CI_Controller {
 			$data['result_all_scheules'] = 'empty';
 		}
 		else{
+			
+			
+			foreach($result_all_scheules as $key => $single_schedule){
+				if($single_schedule->client_id>0){
+					//get client details
+					$data = array(
+						'user_type'=>'client',
+						'user_id'=> $single_schedule->client_id
+					);
+					$result_user_detail = $this->user_model->get_any_user_detail($data);
+					$single_schedule->client_name = $result_user_detail[0]->first_name . ' ' . $result_user_detail[0]->last_name;
+					$single_schedule->client_email = $result_user_detail[0]->email;
+					$single_schedule->client_contact = $result_user_detail[0]->contact;
+					$reslt_updated_schedule[] = $single_schedule;
+				}else{
+					$reslt_updated_schedule[] = $single_schedule;
+				}
+			}
 			$data['result_unique_dates'] = $result_unique_dates;
-			$data['result_all_schedules'] = $result_all_scheules;
+			
+
+
+			$data['result_all_schedules'] = $reslt_updated_schedule;
 		}
 		$result_case_brief = $this->user_model->show_case_brief($lawyer_detail['user_id']);
 			
@@ -449,10 +471,13 @@ Class User extends CI_Controller {
 			
 			//print_r($result);
 			foreach($result as $key=>$book_value){
+				//print_r($book_value);
+				
 				
 				$result_lawyer_detail= $this->user_model->get_lawyer_detail($book_value->user_id);
 				//print_r($result_lawyer_detail[0]->first_name);
 				$book_value->lawyer = $result_lawyer_detail[0]->first_name . ' '. $result_lawyer_detail[0]->last_name;
+				$book_value->legal_professional = $result_lawyer_detail[0]->legal_professional;
 				$result_booking_history[] = $book_value;
 				
 			}
@@ -1038,6 +1063,14 @@ Class User extends CI_Controller {
 		public function faq(){
 			
 			$this->load->view('faq-page');
+		}
+
+		/**
+		 * for sworn translator and lawyer-sworn translator requires client more details this form will direct to client 
+		 */
+		public function clientMoreInfo($schedule_id){
+			$data['schedule_id'] = $schedule_id;
+			$this->load->view('create-user-form',$data);
 		}
 
 }
