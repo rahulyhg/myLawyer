@@ -173,7 +173,7 @@
                 
                   <?php
                   if($case_briefs == 'empty'){
-                    echo "<span class='label label-default' style='font-size:18px'>No recent work found for this consultant</span><br><br>";
+                    echo "<span class='label label-default' style='font-size:18px'>No recent work found for this Legal Professional</span><br><br>";
                     
                   }
                   else{
@@ -240,7 +240,7 @@
                  // echo "<hr>";
                 // print_r($result_all_schedules);
                   if($result_unique_dates == 'empty'){
-                    echo "<span class='label label-default' style='font-size:18px'>No upcomming schedule found for this consultant</span><br><br>";
+                    echo "<span class='label label-default' style='font-size:18px'>No upcomming schedule found for this Legal Professional</span><br><br>";
                   }
                   else{
                     echo "<div id='accordion' role='tablist' aria-multiselectable='true'>";

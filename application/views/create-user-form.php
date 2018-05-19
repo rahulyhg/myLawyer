@@ -24,11 +24,15 @@
                     <?php
 
                     echo form_open('user/createMoreInfo');   
-                    if(form_error('case-title') || form_error('case-description') ){
+                    if(form_error('gender') || form_error('birth-place') || form_error('birth-year') || form_error('father-name') || form_error('mother-name') || form_error('father-profession')){
                         echo '<div class="alert alert-danger" role="alert">';
-                            echo form_error('case-title');
-                            echo form_error('case-description');
-                            
+                            echo form_error('gender');
+                            echo form_error('birth-place');
+                            echo form_error('birth-place');
+                            echo form_error('birth-year');
+                            echo form_error('father-name');
+                            echo form_error('mother-name');
+                            echo form_error('father-profession');
                         echo '</div>';
                         }
                         if(isset($error_message_display)){
@@ -44,7 +48,7 @@
 
 
                             $data = array(
-                                'type' => 'text',
+                                'type' => 'hidden',
                                 'name' => 'schedule-id',
                                 'class' => 'form-control',
                                 'value' => $schedule_id
@@ -52,43 +56,180 @@
                                 echo form_input($data);
 
                     echo "<fieldset>";
-                        echo "<div class='form-group'>";
+
+                    echo "<div class='form-group'>";
+                    echo "<h5>Gender</h5>";
+                    if(isset($user_form_details)){
+                        if($user_form_details[0]->gender == 'female'){
+                            $data = array(
+                                'type' => 'text',
+                                'name' => 'gender',                           
+                                'value'=> 'male',
+                                
+                                );
+                                echo form_radio($data);
+                                echo "<label>Male</lable> ";
+        
+                                $data = array(
+                                    'type' => 'text',
+                                    'name' => 'gender',
+                                    'checked'=>true,
+                                    'value'=> 'female',
+                                    
+                                    );
+                                echo form_radio($data);
+                        }else{
+                            $data = array(
+                                'type' => 'text',
+                                'name' => 'gender',
+                                'checked'=>true, 
+                                'value'=> 'male',
+                                );
+                                echo form_radio($data);
+                                echo "<label>Male</lable> ";
+        
+        
+                                $data = array(
+                                    'type' => 'text',
+                                    'name' => 'gender',
+                                    'value'=> 'female',
+                                    );
+                                echo form_radio($data);
+                        }
+                    }else{
                         $data = array(
                             'type' => 'text',
-                            'name' => 'birth-place',
-                            'class' => 'form-control',
-                            'placeholder' => 'Birth Place'
+                            'name' => 'gender',
+                            'checked'=>true, 
+                            'value'=> 'male',
                             );
+                            echo form_radio($data);
+                            echo "<label>Male</lable> ";
+    
+    
+                            $data = array(
+                                'type' => 'text',
+                                'name' => 'gender',
+                                'value'=> 'female',
+                                );
+                            echo form_radio($data);
+                    }
+                   
+                           
+                            echo "<label>Female</lable>";
+
+                    echo "</div>";
+                    
+
+                            
+
+
+
+                        echo "<div class='form-group'>";
+                        if(isset($user_form_details)){
+                            $data = array(
+                                'type' => 'text',
+                                'name' => 'birth-place',
+                                'class' => 'form-control',
+                                'placeholder' => 'Birth Place',
+                                'value'=>$user_form_details[0]->birth_place
+                                );
+                        }else{
+                            $data = array(
+                                'type' => 'text',
+                                'name' => 'birth-place',
+                                'class' => 'form-control',
+                                'placeholder' => 'Birth Place'
+                                );
+                        }
+                        
+                            echo form_input($data);
+                        echo "</div>";
+
+
+
+                       
+
+                        echo "<div class='form-group'>";
+                        $year = array();
+                        $year[' '] = 'Birth Year';
+                        for($i = 1930; $i <= 2018; $i++){
+                            $year[$i] = $i;
+                        }
+                        
+                        $options = $year;
+                        $attribute = 'class="form-control specialty"';
+
+                        if(isset($user_form_details)){
+                            echo form_dropdown('birth-year', $user_form_details[0]->birth_year, ' ',$attribute);
+                        }else{
+                            echo form_dropdown('birth-year', $options, ' ',$attribute);
+                        }
+                        
+
+                        
+                        echo "</div>";
+
+                        echo "<div class='form-group'>";
+                        if(isset($user_form_details)){
+                            $data = array(
+                                'type' => 'text',
+                                'name' => 'father-name',
+                                'class' => 'form-control',
+                                'placeholder' => 'Fathers Name',
+                                'value' => $user_form_details[0]->father_name
+                                );
+                        }else{
+                            $data = array(
+                                'type' => 'text',
+                                'name' => 'father-name',
+                                'class' => 'form-control',
+                                'placeholder' => 'Fathers Name'
+                                );
+                        }
+                        
                             echo form_input($data);
                         echo "</div>";
 
                         echo "<div class='form-group'>";
-                        $data = array(
-                            'type' => 'text',
-                            'name' => 'father-name',
-                            'class' => 'form-control',
-                            'placeholder' => 'Fathers Name'
-                            );
+                        if(isset($user_form_details)){
+                            $data = array(
+                                'type' => 'text',
+                                'name' => 'mother-name',
+                                'class' => 'form-control',
+                                'placeholder' => 'Mothers Name',
+                                'value' =>  $user_form_details[0]->mother_name
+                                );
+                        }else{
+                            $data = array(
+                                'type' => 'text',
+                                'name' => 'mother-name',
+                                'class' => 'form-control',
+                                'placeholder' => 'Mothers Name'
+                                );
+                        }
+                       
                             echo form_input($data);
                         echo "</div>";
 
                         echo "<div class='form-group'>";
-                        $data = array(
-                            'type' => 'text',
-                            'name' => 'mother-name',
-                            'class' => 'form-control',
-                            'placeholder' => 'Mothers Name'
-                            );
-                            echo form_input($data);
-                        echo "</div>";
-
-                        echo "<div class='form-group'>";
-                        $data = array(
-                            'type' => 'text',
-                            'name' => 'father-profession',
-                            'class' => 'form-control',
-                            'placeholder' => 'Fathers Profession'
-                            );
+                        if(isset($user_form_details)){
+                            $data = array(
+                                'type' => 'text',
+                                'name' => 'father-profession',
+                                'class' => 'form-control',
+                                'placeholder' => 'Fathers Profession',
+                                'value' =>  $user_form_details[0]->father_profession
+                                );
+                        }else{
+                            $data = array(
+                                'type' => 'text',
+                                'name' => 'father-profession',
+                                'class' => 'form-control',
+                                'placeholder' => 'Fathers Profession'
+                                );
+                        }
+                        
                             echo form_input($data);
                         echo "</div>";
 

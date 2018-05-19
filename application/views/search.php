@@ -24,7 +24,7 @@
                         <ul class="nav nav-tabs">
                             
                             <?php
-                            echo "<li><a href='#tab1default' data-toggle='tab'>Search consultant</a></li>";
+                            echo "<li><a href='' data-toggle='tab'>Search Legal Professional</a></li>";
                             // if(isset($user_type) && $user_type =='lawyer'){
                             //     echo "<li><a href='#tab1default' data-toggle='tab'>Client Registration</a></li>";
                                 

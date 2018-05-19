@@ -3,7 +3,7 @@
             <div class="top-bar">
                 <div class="row">
                     <div class="col-md-7 hidden-xs hidden-sm">
-                        <span><i class="glyphicon glyphicon-phone"></i> +1 324 567 8910</span>
+                        <span><i class="glyphicon glyphicon-phone"></i> +94 714898231</span>
                     </div>
                     <div class="col-md-5 text-right">
                         <div class="top-bar-right">
@@ -30,7 +30,11 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active"><a href="<?php echo base_url(); ?>">Home</a></li>
-                        <li class="dropdown">
+                        <li><a href="<?php echo base_url('/user/showForum') ?>">Forum</a></li>
+                        <li><a href="<?php echo base_url('/user/createQuestion') ?>">Ask Question</a></li>
+                        <!-- <li><a style="padding-left: 5px; padding-right: 5px;" href="<?php //echo base_url('/user/createQuestion') ?>"><span class="label label-primary " style="font-size:14px"> Ask Question </span></a></li> -->
+                        <li><a href="<?php echo base_url('/user/search') ?>">Make an Appointment</a></li>
+                        <!-- <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About Us<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="about.html">What we do</a></li>
@@ -39,9 +43,9 @@
                                 <li><a href="about.html">Press about us</a></li>
 
                             </ul>
-                        </li>
-                        <li><a href="team.html">Our Team</a></li>
-                        <li class="dropdown">
+                        </li> -->
+                        <!-- <li><a href="team.html">Our Team</a></li> -->
+                        <!-- <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="services.html">Cancer Center</a></li>
@@ -50,9 +54,9 @@
                                 <li><a href="services.html">Emergency Room</a></li>
 
                             </ul>
-                        </li>
-                        <li><a href="<?php echo base_url('/user/showForum') ?>">Forum</a></li>
-                        <li><a href="contact.html">Contact us</a></li>
+                        </li> -->
+                        
+                        <!-- <li><a href="contact.html">Contact us</a></li> -->
                         <li><a href="<?php echo base_url('/user/register') ?>">Join</a></li>
                         <?php 
                             //print_r($this->session->userdata['lawyer_detail']);
@@ -90,7 +94,7 @@
                                 echo "</a></li>";
                             }
                         ?>
-                        <li><a style="padding-left: 5px; padding-right: 5px;" href="<?php echo base_url('/user/createQuestion') ?>"><span class="label label-primary " style="font-size:14px"> Ask Question </span></a></li>
+                        
                     </ul>
                 </div><!--/.nav-collapse -->
             </div><!--/.container-fluid -->

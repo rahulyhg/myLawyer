@@ -145,7 +145,7 @@ else{
                     echo "<table class='table table-user-information' style='height: 300px !important; overflow: auto;'>";
                     echo "<thead>";
                     echo "<tr>";
-                      echo "<th>Consultant Name</th>";
+                      echo "<th>Legal Professional Name</th>";
                       echo "<th>Date</th>";
                       echo "<th>Time</th>";
                       echo "<th>Status</th>";
@@ -173,7 +173,16 @@ else{
                               echo "</td>";
 
                               echo "<td>";
-                                echo str_replace("-"," ",$booking->schedule_status);
+                              if($booking->legal_professional == 'sworn-translator' || $booking->legal_professional == 'lawyer-sworn-translator' ){
+                                echo "<a href='".base_url('user/clientMoreInfo/'.$booking->schedule_id). "'>";
+                                  echo "<span class='label label-danger' data-toggle='tooltip' data-placement='top' title='Click to submit more information if request by Legal Professional'>";
+                                  echo str_replace("-"," ",$booking->schedule_status) ;
+                                  echo "</span>";
+                                  
+                                echo "</a>";
+                            }else{
+                              echo str_replace("-"," ",$booking->schedule_status);
+                            }
                               echo "</td>";
                               echo "<td>";
                                 echo $booking->booked_date;
@@ -204,7 +213,7 @@ else{
                               echo "<td>";
                               if($booking->legal_professional == 'sworn-translator' || $booking->legal_professional == 'lawyer-sworn-translator' ){
                                   echo "<a href='".base_url('user/clientMoreInfo/'.$booking->schedule_id). "'>";
-                                    echo "<span class='label label-danger' data-toggle='tooltip' data-placement='top' title='Click to submit more information if request by consultant'>";
+                                    echo "<span class='label label-danger' data-toggle='tooltip' data-placement='top' title='Click to submit more information if request by Legal Professional'>";
                                     echo str_replace("-"," ",$booking->schedule_status) ;
                                     echo "</span>";
                                     
@@ -243,7 +252,7 @@ else{
                  <div class="panel-footer">
 
                         <span class="pull-right">
-                        <a href="<?php echo base_url('/user/editSchedules'); ?>"  type="button" class="btn btn-md btn-warning"><i class="glyphicon glyphicon-edit"></i> &nbsp;Edit Upcomming Bookings</a>
+                        <!-- <a href="<?php echo base_url('/user/editSchedules'); ?>"  type="button" class="btn btn-md btn-warning"><i class="glyphicon glyphicon-edit"></i> &nbsp;Edit Upcomming Bookings</a> -->
 
                             <!-- <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a> -->
                         </span>

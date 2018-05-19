@@ -142,7 +142,7 @@ Class User extends CI_Controller {
 			else {
 				$data['error_message_display'] = 'Email Address Already Exist!';
 				$data['user_type'] = 'client';
-				$data['schedule_id'] = $schedule_id;
+				//$data['schedule_id'] = $schedule_id;
 				$this->load->view('register', $data);
 			}
 		}
@@ -412,11 +412,20 @@ Class User extends CI_Controller {
 			foreach($result_all_scheules as $key => $single_schedule){
 				if($single_schedule->client_id>0){
 					//get client details
+					//print_r($single_schedule);
 					$data = array(
 						'user_type'=>'client',
-						'user_id'=> $single_schedule->client_id
+						'user_id'=> $single_schedule->client_id,
+						'schedule_id'=> $single_schedule->schedule_id
+						
 					);
 					$result_user_detail = $this->user_model->get_any_user_detail($data);
+					$result_user_form = $this->user_model->get_user_form_deatail($data);
+					if($result_user_form == FALSE){
+						$single_schedule->user_form = 0;
+					}else{
+						$single_schedule->user_form = $single_schedule->schedule_id;
+					}
 					$single_schedule->client_name = $result_user_detail[0]->first_name . ' ' . $result_user_detail[0]->last_name;
 					$single_schedule->client_email = $result_user_detail[0]->email;
 					$single_schedule->client_contact = $result_user_detail[0]->contact;
@@ -430,6 +439,7 @@ Class User extends CI_Controller {
 
 
 			$data['result_all_schedules'] = $reslt_updated_schedule;
+			
 		}
 		$result_case_brief = $this->user_model->show_case_brief($lawyer_detail['user_id']);
 			
@@ -1070,8 +1080,63 @@ Class User extends CI_Controller {
 		 */
 		public function clientMoreInfo($schedule_id){
 			$data['schedule_id'] = $schedule_id;
-			$this->load->view('create-user-form',$data);
+			$result_user_form_detail = $this->user_model->get_user_form_deatail($data);
+			if($result_user_form_detail == FALSE){
+				
+				$data['schedule_id'] = $schedule_id;
+				$this->load->view('create-user-form',$data);
+			}else{
+				$data['user_form_details'] = $result_user_form_detail;
+				$this->load->view('create-user-form',$data);
+			}
+			
+		}
+		public function createMoreInfo(){
+			//print_r($_POST);
+			$this->form_validation->set_rules('gender', 'gender', 'trim|required');
+			$this->form_validation->set_rules('birth-place', 'birth place', 'trim|required');
+			$this->form_validation->set_rules('birth-year', 'birth year', 'trim|required');
+			$this->form_validation->set_rules('father-name', 'fathers name', 'trim|required');
+			$this->form_validation->set_rules('mother-name', 'mothers name', 'trim|required');
+			$this->form_validation->set_rules('father-profession', 'fathers profession', 'trim|required');
+			$schedule_id = $this->input->post('schedule-id');
+		if ($this->form_validation->run() == FALSE) {
+			
+			$data['schedule_id'] = $schedule_id;
+			$this->load->view('create-user-form',$data);	
+		}else{
+			$client_detail = $this->session->userdata('client_detail');
+			$data = array(
+				'schedule_id' => $schedule_id,
+				'client_id' => $client_detail['user_id'],
+				'gender' => $this->input->post('gender'),
+				'birth_place' => $this->input->post('birth-place'),
+				'birth_year' => $this->input->post('birth-year'),
+				'father_name' => $this->input->post('father-name'),
+				'mother_name' => $this->input->post('mother-name'),
+				'father_profession' => $this->input->post('father-profession'),
+				'last_update_date' => Date('Y-m-d')
+
+			);
+			//print_r($data);
+			$result_user_form = $this->user_model->insert_user_form($data);
+			if($result_user_form === 'form_filled'){
+				$data['error_message_display'] = 'You have already filled this form.';
+				$data['schedule_id'] = $schedule_id;
+				$this->load->view('create-user-form',$data);
+			}elseif($result_user_form == TRUE){
+				
+				$this->session->set_flashdata('success_message_display','Form submitted successfully');
+				redirect('/user/clientDashBoard');
+			}else{
+				$data['error_message_display'] = 'Error on processing your request. Try again';
+				$data['schedule_id'] = $schedule_id;
+				$this->load->view('create-user-form',$data);
+			}
+
+			
 		}
 
+}
 }
 ?>

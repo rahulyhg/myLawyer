@@ -16,17 +16,17 @@
   				<div class="carousel-inner" role="listbox">
     				<div class="item active"> 
                     	<img src="<?php echo  base_url('/assets/img/slider/slide1.jpg');?>" alt="...">
-      					<div class="carousel-caption"> <span class="second-head">Advanced</span> healthcare made personal. 
+      					<div class="carousel-caption"> <span class="second-head">Easy</span> legal professional booking. 
                         </div>
     				</div>
                     <div class="item"> 
                         <img src="<?php echo  base_url('/assets/img/slider/slide2.jpg');?>" alt="...">
-                        <div class="carousel-caption"> <span class="second-head">Exceptional</span> technology. Extraordinary care!
+                        <div class="carousel-caption"> <span class="second-head">Proper</span> guideline. !
                         </div>
                     </div>
                     <div class="item"> 
                     	<img src="<?php echo  base_url('/assets/img/slider/slide3.jpg');?>" alt="...">
-                        <div class="carousel-caption"> <span class="second-head">Medicine</span> that touches the world!
+                        <div class="carousel-caption"> <span class="second-head">Platform</span> to discuss your problems!
                         </div>
                     </div>
   				</div>
@@ -50,9 +50,12 @@
         <div class="container">
             <div class="row center-title">
                 <div class="col-md-8 col-md-offset-2 clearfix text-center wow animated fadeInUp">
-                    <h2>Medical Bootstrap Theme</h2>
+                    <h2>My legal professionals</h2>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                    The system "My legal professionals" mainly helps the Client in searching of Legal Professionals  based on his specialty area, 
+                    provincial area, admitted bar as well as by looking at the latest performance of a particular Legal Professionals, 
+                    where the system helps the Client to search a Legal Professionals relevant to the legal claim as the individuals are
+                     lack of experience and expertise from legal aspects to make judgments
                     </p>
                     <!--                   -->
                 </div>
@@ -61,50 +64,50 @@
                 <div class="col-sm-6 col-md-3 margin30">
                     <div class="service-box wow animated fadeIn" data-wow-delay="0.1s">
                         <i class="glyphicon glyphicon-scale"></i>
-                        <h4>Special Care </h4>
+                        <h4>Legal Professional Booking</h4>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt. 
+                        Make a booking to meet a legal professional at your preference. 
                         </p>
                     </div>
                 </div><!--service column-->
                 <div class="col-sm-6 col-md-3 margin30">
                     <div class="service-box wow animated fadeIn" data-wow-delay="0.2s">
                         <i class="glyphicon glyphicon-user"></i>
-                        <h4>On-line Support</h4>
+                        <h4>Forum</h4>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt. 
+                        Share your knowledge on legal matter   with experts. 
                         </p>
                     </div>
                 </div><!--service column-->
                 <div class="col-sm-6 col-md-3 margin30">
                     <div class="service-box wow animated fadeIn" data-wow-delay="0.3s">
                         <i class="glyphicon glyphicon-leaf"></i>
-                        <h4>Medical Consultation</h4>
+                        <h4>Data for Sworn Translator</h4>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt. 
+                        Send details for documents to sworn translator before you visit. 
                         </p>
                     </div>
                 </div><!--service column-->
                 <div class="col-sm-6 col-md-3 margin30">
                     <div class="service-box wow animated fadeIn" data-wow-delay="0.4s">
                         <i class="glyphicon glyphicon-earphone"></i>
-                        <h4>Emergency Services</h4>
+                        <h4>Tips to Select Lawyer</h4>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt. 
+                        Find lawyer specializations for the legal issue you meet with. 
                         </p>
                     </div>
                 </div><!--service column-->
             </div>
             <div class="divide20"></div>
             <div class="text-center">
-                <a href="#" class="btn btn-lg btn-theme-bg">More about our Services <i class="glyphicon glyphicon-circle-arrow-right"></i></a>
+                <!-- <a href="#" class="btn btn-lg btn-theme-bg">More about our Services <i class="glyphicon glyphicon-circle-arrow-right"></i></a> -->
             </div>
         </div>
         <div class="divide60"></div>
 
-        <div class="team-section">
-            <div class="container">
-                <div class="row">
+        <!-- <div class="team-section">
+            <div class="container"> -->
+                <!-- <div class="row">
                     <div class="col-sm-8 col-sm-offset-2">
                         <div class="center-title">
                             <i class="glyphicon glyphicon-education"></i>
@@ -114,11 +117,11 @@
                             </p>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6 col-sm-3 margin30">
-                        <div class="team-col wow animated fadeInLeft" data-wow-delay="0.1s">
-                            <a href="#"><img src="<?php echo  base_url('/assets/img/medical/team-1.jpg');?>" class="img-responsive" alt=""></a>
+                </div> -->
+                <!-- <div class="row">
+                    <div class="col-sm-6 col-sm-3 margin30"> -->
+                        <!-- <div class="team-col wow animated fadeInLeft" data-wow-delay="0.1s">
+                            <a href="#"><img src="<?php //echo  base_url('/assets/img/medical/team-1.jpg');?>" class="img-responsive" alt=""></a>
                             <div class="divide20"></div>
                             <h3>Dr. Lorem</h3>
                             <em>Gastro Specialist</em>
@@ -143,10 +146,10 @@
                                     </a>
                                 </li>
                             </ul>
-                        </div><!--team col-->
-                    </div><!--col-md-3 col-sm-6--> 
-                    <div class="col-sm-6 col-sm-3 margin30">
-                        <div class="team-col wow animated fadeInLeft" data-wow-delay="0.2s">
+                        </div>team col -->
+                    <!-- </div>col-md-3 col-sm-6  -->
+                    <!-- <div class="col-sm-6 col-sm-3 margin30"> -->
+                        <!-- <div class="team-col wow animated fadeInLeft" data-wow-delay="0.2s">
                             <a href="#"><img src="<?php echo  base_url('/assets/img/medical/team-3.jpg');?>" class="img-responsive" alt=""></a>
                             <div class="divide20"></div>
                             <h3>Dr. Ipsum</h3>
@@ -172,11 +175,11 @@
                                     </a>
                                 </li>
                             </ul>
-                        </div><!--team col-->
-                    </div><!--col-md-3 col-sm-6-->
-                    <div class="col-sm-6 col-sm-3 margin30">
-                        <div class="team-col wow animated fadeInLeft" data-wow-delay="0.3s">
-                            <a href="#"><img src="<?php echo  base_url('/assets/img/medical/team-2.jpg');?>" class="img-responsive" alt=""></a>
+                        </div>team col -->
+                    <!-- </div>col-md-3 col-sm-6 -->
+                    <!-- <div class="col-sm-6 col-sm-3 margin30"> -->
+                        <!-- <div class="team-col wow animated fadeInLeft" data-wow-delay="0.3s">
+                            <a href="#"><img src="<?php //echo  base_url('/assets/img/medical/team-2.jpg');?>" class="img-responsive" alt=""></a>
                             <div class="divide20"></div>
                             <h3>Dr. Dallar</h3>
                             <em>Dental Specialist</em>
@@ -201,11 +204,11 @@
                                     </a>
                                 </li>
                             </ul>
-                        </div><!--team col-->
-                    </div><!--col-md-3 col-sm-6-->
-                    <div class="col-sm-6 col-sm-3 margin30">
-                        <div class="team-col wow animated fadeInLeft" data-wow-delay="0.4s">
-                            <a href="#"><img src="<?php echo  base_url('/assets/img/medical/team-4.jpg');?>" class="img-responsive" alt=""></a>
+                        </div>team col -->
+                    <!-- </div>col-md-3 col-sm-6 -->
+                    <!-- <div class="col-sm-6 col-sm-3 margin30"> -->
+                        <!-- <div class="team-col wow animated fadeInLeft" data-wow-delay="0.4s">
+                            <a href="#"><img src="<?php //echo  base_url('/assets/img/medical/team-4.jpg');?>" class="img-responsive" alt=""></a>
                             <div class="divide20"></div>
                             <h3>Dr. Inpost</h3>
                             <em>Diet Specialist</em>
@@ -230,146 +233,21 @@
                                     </a>
                                 </li>
                             </ul>
-                        </div><!--team col-->
-                    </div><!--col-md-3 col-sm-6-->
-                </div>
+                        </div>team col -->
+                    <!-- </div>col-md-3 col-sm-6 -->
+                <!-- </div>
             </div>
-        </div><!--team section end-->
+        </div>team section end -->
 
 
-        <section class="know-more">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6 margin30">
-                        <h3>Video Presentation</h3>
-                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <iframe src="http://player.vimeo.com/video/133170635"></iframe>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 margin30">
-                        <h3>Medical Departments</h3>
-                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-
-                        <div class="panel-group collapse-colored-col" id="accordion">
-                            <div class="panel panel-default">
-                                <div class="panel-heading active">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                            Primary doctors
-                                        </a>
-                                    </h4>
-                                </div><!-- /.panel-heading -->
-
-                                <div id="collapseOne" class="panel-collapse collapse in">
-                                    <div class="panel-body">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus odio augue, scelerisque eget erat vel, hendrerit feugiat dui. Quisque velit erat, eleifend sed ligula vel, bibendum accumsan justo. Sed in justo ac massa suscipit tincidunt. Integer ac mauris ut dolor lobortis ullamcorper. Duis facilisis vitae odio ut commodo. Etiam et enim est. Sed ultrices hendrerit euismod. Aliquam lobortis rutrum adipiscing.
-                                    </div><!-- /.panel-body -->
-                                </div><!-- /.panel-heading -->
-                            </div><!-- /.panel -->
-
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                            Dental center
-                                        </a>
-                                    </h4>
-                                </div><!-- /.panel-heading -->
-
-                                <div id="collapseTwo" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        Praesent rutrum arcu lacus, nec consectetur mauris pellentesque sit amet. Nulla facilisi. Donec tempor nunc in varius fermentum. Nulla eget vulputate neque. Sed ultricies viverra augue, ut accumsan metus malesuada id. Cras ultrices arcu nec mauris consequat, viverra accumsan enim vulputate. Nunc auctor, dolor et aliquet consequat, sapien leo viverra felis, ac gravida purus libero sit amet eros. Nam iaculis augue vitae rhoncus elementum. In hac habitasse platea dictumst. Morbi aliquet adipiscing elit, at convallis massa fringilla et.
-                                    </div><!-- /.panel-body -->
-                                </div><!-- /.panel-collapse -->
-                            </div><!-- /.panel -->
-
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                                            Gastro center
-                                        </a>
-                                    </h4>
-                                </div><!-- /.panel-heading -->
-
-                                <div id="collapseThree" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        Phasellus mattis dignissim neque vel tincidunt. Nam posuere nisl at erat mollis euismod. Cras diam diam, luctus vitae metus vitae, porttitor porttitor lorem. Integer feugiat justo in lectus dignissim consectetur. Aliquam vel fringilla neque. Pellentesque eget arcu ac ante pulvinar malesuada et id erat. Praesent mattis porta arcu placerat pellentesque. Maecenas ullamcorper dui non est elementum aliquam.
-                                    </div><!-- /.panel-body -->
-                                </div><!-- /.panel-collapse -->
-                            </div><!-- /.panel -->
-
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                                            Cancer center
-                                        </a>
-                                    </h4>
-                                </div><!-- /.panel-heading -->
-
-                                <div id="collapseFour" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        Cras sed nunc eu lectus feugiat ultricies lobortis eget mi. Nam et nulla venenatis, luctus lacus eget, pharetra lacus. Nam facilisis congue nibh et iaculis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed vel commodo lectus. Curabitur tellus nunc, bibendum viverra quam sed, tempor posuere dui. Aliquam a lectus ligula. Mauris congue, urna ac ullamcorper dapibus, lacus sapien consectetur tortor, vel semper ligula eros ut urna. Quisque egestas et lectus in faucibus.
-                                    </div><!-- /.panel-body -->
-                                </div><!-- /.panel-collapse -->
-                            </div><!-- /.panel -->
-                        </div><!-- /.panel-group -->
-                    </div>
-                </div>
-            </div>
-        </section>
+        
         <!--know more section end-->
 
 
-        <section class="testimonials">
-            <div class="container">
-                <div class="center-title">
-                    <i class="glyphicon glyphicon-volume-up"></i>
-                    <h2>What people say<strong> about us</strong></h2>                        
-                </div>
-                <div class="row">
-                    <div class="col-sm-8 col-sm-offset-2 text-center">
-                        <div class="testi-slides">
-                            <ul class="slides">
-                                <li>
-                                    <img src="<?php echo  base_url('/assets/img/medical/testimonials-1.jpg');?>" alt="">
-                                    <h4>Garry McCleey</h4>
-                                    <em>Software developer</em>
-
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                                    </p>
-                                </li>
-                                <li>
-								
-                                    <img src="<?php echo  base_url('/assets/img/medical/testimonials-2.jpg');?>" alt="">
-                                    <h4>Sarah Brown</h4>
-                                    <em>School teacher</em>
-
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                                    </p>
-                                </li>
-                                <li>
-                                    <img src="<?php echo  base_url('/assets/img/medical/testimonials-3.jpg');?>" alt="">
-                                    <h4>Donald Trump</h4>
-                                    <em>Artist</em>
-
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                                    </p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+       
         <!--testimonials end-->
         
-        <div class="ads-section">
+        <!-- <div class="ads-section">
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 text-center">
@@ -380,73 +258,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <section class="blog-home">
-            <div class="container">
-                <div class="center-title">
-                    <i class="glyphicon glyphicon-qrcode"></i>
-                    <h2>Special<strong> Services</strong></h2>                        
-                </div>
-                <div class="row">
-                    <div class="col-md-4 margin30">
-                        <div class="blog-post">
-                            <img src="<?php echo  base_url('/assets/img/medical/home-services-1.jpg');?>" alt="" class="img-responsive">
-                            <h3>
-                                <a href="#"> lorem ipsum dolor sit amet</a>
-                            </h3>
-                            <span>July 12, 2015 Dr. Lorem</span>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id bibendum massa, vulputate consectetur dui. Ut ut eros congue, condimentum massa
-                            </p>
-                            <p><a href="#">Read more...</a></p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 margin30">
-                        <div class="blog-post">
-                            <img src="<?php echo  base_url('/assets/img/medical/home-services-2.jpg');?>g" alt="" class="img-responsive">
-                            <h3>
-                                <a href="#"> Lorem ipsum dolor sit amet</a>
-                            </h3>
-                            <span>June 11, 2015 Dr. Ipsum</span>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id bibendum massa, vulputate consectetur dui. Ut ut eros congue, condimentum massa
-                            </p>
-                            <p><a href="#">Read more...</a></p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 margin30">
-                        <div class="blog-post">
-                            <img src="<?php echo  base_url('/assets/img/medical/home-services-3.jpg');?>" alt="" class="img-responsive">
-                            <h3>
-                                <a href="#"> Lorem ipsum dolor sit amet</a>
-                            </h3>
-                            <span>January 1, 2015 Dr. Lorem</span>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id bibendum massa, vulputate consectetur dui. Ut ut eros congue, condimentum massa
-                            </p>
-                            <p><a href="#">Read more...</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
         
-        <div class="ads-section-newsletter">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-8 col-sm-offset-2 text-center">
-                        <h3>Subscribe to Newsletter</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                        <form class="form-inline">
-                            <div class="form-group">
-                                <input type="text" name="email" class="form-control" id="email" placeholder="Your email">
-                            </div>
-                            <button type="submit" name="submit" class="btn btn-theme-bg btn-lg">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
 
         <?php $this->load->view('footer'); ?>

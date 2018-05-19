@@ -485,6 +485,75 @@ public function read_user_information($email,$userType) {
             return 'empty';
         }
     }
+    public function get_user_form_deatail($data){
+        $condition = "schedule_id =" . "'" . $data['schedule_id'] . "'";
+        $this->db->select('*');
+            $this->db->from('tbl_user_form');
+            $this->db->where($condition);
+            $this->db->limit(1);
+            $query = $this->db->get();
+            $query->num_rows();
+            if ($query->num_rows() == 1) {
+                return $query->result();
+            }else{
+                return false;
+            }
+    }
+
+    public function insert_user_form($data){
+        //print_r($data);
+        $condition = "schedule_id =" . "'" . $data['schedule_id'] . "'";
+            $this->db->select('*');
+            $this->db->from('tbl_user_form');
+            $this->db->where($condition);
+            $this->db->limit(1);
+            $query = $this->db->get();
+            $query->num_rows();
+            if ($query->num_rows() == 1) {
+               // echo "form filled";
+                
+                $this->db->set('client_id', $data['client_id']);
+                $this->db->set('gender', $data['gender']);
+                $this->db->set('birth_place', $data['birth_place']);
+                $this->db->set('birth_year', $data['birth_year']);
+                $this->db->set('father_name', $data['father_name']);
+                $this->db->set('mother_name', $data['mother_name']);
+                $this->db->set('father_profession', $data['father_profession']);
+                $this->db->set('birth_place', $data['birth_place']);
+                $this->db->set('last_update_date', $data['last_update_date']);
+                $this->db->where('schedule_id', $data['schedule_id']);
+                
+                $this->db->update('tbl_user_form');
+
+                if ($this->db->affected_rows() > 0) {
+                    return 'updated';
+                    //echo "success";
+                }else{
+                    //echo "error";
+                    return 'error_update';
+                }
+            } 
+            else {
+                
+                    $this->db->insert('tbl_user_form', $data);
+                        
+                    if ($this->db->affected_rows() > 0) {
+                        //echo "work";
+                        return true;
+                    }else{
+                        //echo "eror";
+                        return 'error_processing';
+                    }
+
+                //return false;
+            }
+
+
+
+
+
+
+    }
     
 }
 

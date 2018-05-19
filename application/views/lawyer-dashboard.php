@@ -283,7 +283,14 @@ else{
                               echo "<button type='button' class='btn btn-default' data-container='body' data-toggle='popover' data-placement='top' data-html='true' data-content='";
                               echo 'Name: ' . $schedule->client_name . '<br>';
                               echo 'Email: ' . $schedule->client_email. '<br>';
-                              echo 'Contact: ' .$schedule->client_contact;
+                              echo 'Contact: ' .$schedule->client_contact.'<br>';
+                              if($schedule->user_form == 0){
+                                echo '<a href="#" disabled>Document Translation Details(Not submited)</a>';
+                              }else{
+                                echo '<a href="' .base_url('user/clientMoreInfo/'. $schedule->user_form) .'">Document Translation Details</a>';
+                              }
+                              
+
 
                               echo "'>";
                                echo  "booked (view detail)";

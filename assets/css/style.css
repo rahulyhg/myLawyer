@@ -412,7 +412,8 @@ p.lead {
   padding: 4px 15px;
   line-height: 30px;
   vertical-align: middle;
-  background-color: #ee5068;
+  /* background-color: #ee5068; */
+  background:#ea964d;
   display: inline-block;
   width: auto;
   height: auto;
@@ -451,7 +452,7 @@ p.lead {
   text-transform: capitalize;
   letter-spacing: -1px;
   font-weight: 300;
-  color: #ee5068;
+  color: #f39427;
   margin-bottom: 20px;
 }
 .center-title h2 strong {
@@ -471,7 +472,7 @@ Bootstrap navigation overrides
 }
 
 .navbar-default .navbar-nav > li > a {
-  color: #ee5068;
+  color: #c24309;
   text-transform: capitalize;
   font-weight: 400;
   font-size: 15px;
@@ -482,7 +483,7 @@ Bootstrap navigation overrides
 }
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
-  color: #ee5068;
+  color: #c24309;
   background-color: transparent;
 }
 
@@ -1144,7 +1145,7 @@ Blog
 
 /*services*/
 .service-box {
-  border: 1px solid #ee5068;
+  border: 1px solid #df6f25;
   margin-bottom: 30px;
 }
 .service-box .btn-theme-bg {
@@ -1170,7 +1171,9 @@ Blog
   text-align: center;
   display: inline-block;
   color: #fff;
-  background-color: #ee5068;
+  /* background-color: #ee5068; */
+  background-color: #df6f25;
+
   font-size: 30px;
   margin-top: -60px;
   position: relative;
