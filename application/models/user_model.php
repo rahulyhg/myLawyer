@@ -2,7 +2,7 @@
 class User_model extends CI_Model
 {
     public function lawyer_registration($data){
-            // Query to check whether username already exist or not
+        // Query to check whether username already exist or not
         $condition = "email =" . "'" . $data['email'] . "'";
         $this->db->select('*');
         $this->db->from('tbl_user');
@@ -11,10 +11,8 @@ class User_model extends CI_Model
         $query = $this->db->get();
         if ($query->num_rows() == 0) {
             $data['register_date'] = date('Y-m-d');
-            //$data['state'] = 'pending';
-            //$data['email_url'] = sha1(time() . $data['email']);
             
-            // Query to insert data in database
+            // Query to insert data into database
             $this->db->insert('tbl_user', $data);
             
             if ($this->db->affected_rows() > 0) {
@@ -23,9 +21,7 @@ class User_model extends CI_Model
         } 
         else {
             return false;
-        }
-
-        
+        }      
     }
     public function client_registration($data){
             // Query to check whether username already exist or not
@@ -52,6 +48,10 @@ class User_model extends CI_Model
             }
     
     }
+/**
+ * login detail will validate against DB
+ */
+
     public function user_login($data,$userType){
         if($userType == 'lawyer'){
            
@@ -62,7 +62,7 @@ class User_model extends CI_Model
             $this->db->where($condition);
             $this->db->limit(1);
             $query = $this->db->get();
-            echo $query->num_rows();
+            $query->num_rows();
             if ($query->num_rows() == 1) {
                 return true;
             } 
@@ -78,7 +78,7 @@ class User_model extends CI_Model
             $this->db->where($condition);
             $this->db->limit(1);
             $query = $this->db->get();
-            echo $query->num_rows();
+            $query->num_rows();
             if ($query->num_rows() == 1) {
                 return true;
             } 
@@ -140,8 +140,12 @@ public function read_user_information($email,$userType) {
  * return unique upcomming dates avaiable in db
  */
     public function show_upcomming_schedule_dates_dashboard($search_date,$user_id){
+        if(sizeof($search_date) == 8){
+            $condition = "user_id =" . "'" . $user_id . "' AND (".  "schedule_date =" . "'" . $search_date[0] . "' OR schedule_date = " . "'" . $search_date[1] . "' OR schedule_date =" . "'" . $search_date[2] . "' OR schedule_date =" ."'" . $search_date[3] . "' OR schedule_date =" . "'" . $search_date[4] . "' OR schedule_date =" . "'" . $search_date[5] . "' OR schedule_date =" . "'" . $search_date[6] . "' OR schedule_date =" . "'" . $search_date[7] . "')";    
+        }elseif(sizeof($search_date) == 7){
+            $condition = "user_id =" . "'" . $user_id . "' AND (".  "schedule_date =" . "'" . $search_date[0] . "' OR schedule_date = " . "'" . $search_date[1] . "' OR schedule_date =" . "'" . $search_date[2] . "' OR schedule_date =" ."'" . $search_date[3] . "' OR schedule_date =" . "'" . $search_date[4] . "' OR schedule_date =" . "'" . $search_date[5] . "' OR schedule_date =" . "'" . $search_date[6] . "')";
+        }
         
-        $condition = "user_id =" . "'" . $user_id . "' AND (".  "schedule_date =" . "'" . $search_date[0] . "' OR schedule_date = " . "'" . $search_date[1] . "' OR schedule_date =" . "'" . $search_date[2] . "' OR schedule_date =" ."'" . $search_date[3] . "' OR schedule_date =" . "'" . $search_date[4] . "' OR schedule_date =" . "'" . $search_date[5] . "' OR schedule_date =" . "'" . $search_date[6] . "')";
         
         $this->db->select('schedule_date');
         $this->db->distinct('schedule_date');
@@ -169,8 +173,13 @@ public function read_user_information($email,$userType) {
      */
     public function show_upcomming_schedule_dashboard($search_date,$user_id){
         //print_r($search_date);
-
-         $condition = "user_id =" . "'" . $user_id . "' AND (".  "schedule_date =" . "'" . $search_date[0] . "' OR schedule_date = " . "'" . $search_date[1] . "' OR schedule_date =" . "'" . $search_date[2] . "' OR schedule_date =" ."'" . $search_date[3] . "' OR schedule_date =" . "'" . $search_date[4] . "' OR schedule_date =" . "'" . $search_date[5] . "' OR schedule_date =" . "'" . $search_date[6] . "')";
+        if(sizeof($search_date) == 8){
+            $condition = "user_id =" . "'" . $user_id . "' AND (".  "schedule_date =" . "'" . $search_date[0] . "' OR schedule_date = " . "'" . $search_date[1] . "' OR schedule_date =" . "'" . $search_date[2] . "' OR schedule_date =" ."'" . $search_date[3] . "' OR schedule_date =" . "'" . $search_date[4] . "' OR schedule_date =" . "'" . $search_date[5] . "' OR schedule_date =" . "'" . $search_date[6] . "' OR schedule_date =" . "'" . $search_date[7] . "')";    
+        }elseif(sizeof($search_date) == 7){
+            $condition = "user_id =" . "'" . $user_id . "' AND (".  "schedule_date =" . "'" . $search_date[0] . "' OR schedule_date = " . "'" . $search_date[1] . "' OR schedule_date =" . "'" . $search_date[2] . "' OR schedule_date =" ."'" . $search_date[3] . "' OR schedule_date =" . "'" . $search_date[4] . "' OR schedule_date =" . "'" . $search_date[5] . "' OR schedule_date =" . "'" . $search_date[6] . "')";
+        }
+         
+        //$condition = "user_id =" . "'" . $user_id . "' AND (".  "schedule_date =" . "'" . $search_date[0] . "' OR schedule_date = " . "'" . $search_date[1] . "' OR schedule_date =" . "'" . $search_date[2] . "' OR schedule_date =" ."'" . $search_date[3] . "' OR schedule_date =" . "'" . $search_date[4] . "' OR schedule_date =" . "'" . $search_date[5] . "' OR schedule_date =" . "'" . $search_date[6] . "')";
         $this->db->select('*');
         $this->db->from('tbl_lawyer_schedule');
         $this->db->where($condition);
@@ -196,8 +205,12 @@ public function read_user_information($email,$userType) {
  */
     public function show_upcomming_schedule($search_date,$user_id){
         //print_r($search_date);
-
-         $condition = "user_id =" . "'" . $user_id . "' AND (".  "schedule_date =" . "'" . $search_date[0] . "' OR schedule_date = " . "'" . $search_date[1] . "' OR schedule_date =" . "'" . $search_date[2] . "' OR schedule_date =" ."'" . $search_date[3] . "' OR schedule_date =" . "'" . $search_date[4] . "' OR schedule_date =" . "'" . $search_date[5] . "' OR schedule_date =" . "'" . $search_date[6] . "')";
+        if(sizeof($search_date) == 8){
+            $condition = "user_id =" . "'" . $user_id . "' AND (".  "schedule_date =" . "'" . $search_date[0] . "' OR schedule_date = " . "'" . $search_date[1] . "' OR schedule_date =" . "'" . $search_date[2] . "' OR schedule_date =" ."'" . $search_date[3] . "' OR schedule_date =" . "'" . $search_date[4] . "' OR schedule_date =" . "'" . $search_date[5] . "' OR schedule_date =" . "'" . $search_date[6] . "' OR schedule_date =" . "'" . $search_date[7] . "')";    
+        }elseif(sizeof($search_date) == 7){
+            $condition = "user_id =" . "'" . $user_id . "' AND (".  "schedule_date =" . "'" . $search_date[0] . "' OR schedule_date = " . "'" . $search_date[1] . "' OR schedule_date =" . "'" . $search_date[2] . "' OR schedule_date =" ."'" . $search_date[3] . "' OR schedule_date =" . "'" . $search_date[4] . "' OR schedule_date =" . "'" . $search_date[5] . "' OR schedule_date =" . "'" . $search_date[6] . "')";
+        }
+         //$condition = "user_id =" . "'" . $user_id . "' AND (".  "schedule_date =" . "'" . $search_date[0] . "' OR schedule_date = " . "'" . $search_date[1] . "' OR schedule_date =" . "'" . $search_date[2] . "' OR schedule_date =" ."'" . $search_date[3] . "' OR schedule_date =" . "'" . $search_date[4] . "' OR schedule_date =" . "'" . $search_date[5] . "' OR schedule_date =" . "'" . $search_date[6] . "')";
         $this->db->select('*');
         $this->db->from('tbl_lawyer_schedule');
         $this->db->where($condition);

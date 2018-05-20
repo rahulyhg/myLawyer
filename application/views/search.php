@@ -258,6 +258,9 @@
                         
                         </div>
                        <?php
+                       /**
+                        * show leagal professional details against search criteria
+                        */
                        if(isset($search_result) && $search_result == 'empty' ){
                         echo "<h4>No result found</h4>";
                        }elseif(isset($search_result)){
@@ -266,10 +269,8 @@
                            echo "<div class='row'>";
                            foreach($search_result as $lawyer_detail){
                                
-                            if(($i%3) == 0){
-                                                              
+                            if(($i%3) == 0){                                   
                                     $i == 1;
-                                   
                             }
                                 echo "<div class='col-md-6'>";
                                 echo "<div class='card'>";
@@ -279,35 +280,23 @@
                                 echo 'Legal professional: ' . str_replace("-"," ",$lawyer_detail->legal_professional);
                                 echo "<br>";
                                 if($lawyer_detail->legal_professional == 'lawyer' || $lawyer_detail->legal_professional == 'lawyer-sworn-translator'){
-                                   
                                     echo 'Admitted bar: ' . str_replace("-"," ",$lawyer_detail->admitted_bar);
-                                    echo "<br>";
-                                    
+                                    echo "<br>"; 
                                     echo 'Specialty: ' . str_replace("-"," ",$lawyer_detail->specialty);
-                                }
-                                
+                                }                               
                                 echo 'Provincial area: ' . str_replace("-"," ",$lawyer_detail->provincial_area);
-                                
-                                
                                 echo "<br>";
                                 echo 'Practice Location:' . $lawyer_detail->location;
                                 echo "<br>";
                                 echo "<a id='appointment' href='". base_url('/user/lawyerDashBoardClientView/'. $lawyer_detail->user_id) ."' type='button' class='btn btn-danger pull-right '>Book Now</a>";
                                 echo "<div class='clearfix'></div>";
                                 echo "</div>";
-
                                 echo "</div>";
-                                
                                 $i++;
-                            
-
-
                            }
                            echo "</div>";
                            echo "</container>";
-                                
-                            
-                          // print_r($search_result);
+
                        }
                        
                        ?>

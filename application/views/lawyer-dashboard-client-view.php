@@ -246,7 +246,7 @@
                     echo "<div id='accordion' role='tablist' aria-multiselectable='true'>";
                     $i=1;
                   foreach($result_unique_dates as $unique_date){
-                   // print_r($unique_date->schedule_date);
+                    //print_r($unique_date->schedule_date);
 
 
                   

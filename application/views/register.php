@@ -446,23 +446,23 @@
 
 <?php $this->load->view('footer'); ?>
    <script>
-   
+        $(document).ready(function(){
 
-$(document).ready(function(){
-
-    $('.legal-professional').change(function(){
-        
-        if(this.value == 'lawyer' || this.value == 'lawyer-sworn-translator'){
+            $('.legal-professional').change(function(){
+                /**
+                    if profession is lawyer or lawyer sworn translator we need to show the admitted bar and sepcialty input in the registration form
+                */
+                if(this.value == 'lawyer' || this.value == 'lawyer-sworn-translator'){
+                    
+                    $('.admitted-bar').show();
+                    $('.specialty').show();
+                }
+                else{
+                    $('.admitted-bar').hide();
+                    $('.specialty').hide(); 
+                }
             
-            $('.admitted-bar').show();
-            $('.specialty').show();
-        }
-        else{
-            $('.admitted-bar').hide();
-            $('.specialty').hide(); 
-        }
-       
-    })
-});
+            })
+        });
 
    </script>

@@ -47,7 +47,10 @@ Class User extends CI_Controller {
 		
 	
 	}
-	// Show login page for client and lawyer
+	/**
+	 * Show login page for client and lawyer
+	 */
+	
 	public function login() {
 		if(isset($this->session->userdata['lawyer_detail'])){
 				//if session is already set
@@ -57,9 +60,6 @@ Class User extends CI_Controller {
 				$this->load->view('login');
 				
 			}
-		
-		
-		
 	}
 
 	//client registration process
@@ -88,21 +88,19 @@ Class User extends CI_Controller {
 				
 				);
 			$result = $this->user_model->client_registration($data);
+				/**if register sucess direct user to the login page */
 			if ($result == TRUE) {
-				//$data['success_message_display'] = 'Registration Successfully!.';
+				
 				$data['user_type'] = 'client';
 				$schedule_id =$this->input->post('schedule-id');
 				$consultant_id =$this->input->post('consultant-id');
 				if($schedule_id > 0 && $consultant_id>0 ){
-
-
-
-
 					$data = array(
 						'email' => $this->input->post('email'),
 						'password' => sha1($this->input->post('password'))
 						);
 					$result = $this->user_model->user_login($data,'client');
+				
 					if ($result == TRUE) {
 						echo "success";
 						$result = $this->user_model->read_user_information($this->input->post('email'),'client');
@@ -118,7 +116,7 @@ Class User extends CI_Controller {
 							'type' => 'client'
 		
 							);
-							//print_r($client_session_data);
+							
 							$this->session->set_userdata('client_detail', $client_session_data);
 							/**
 							 * once registration done call for booking fucttion
@@ -212,7 +210,10 @@ Class User extends CI_Controller {
 
 	}
 
-	//client login process
+	
+	/**
+	 *client login process 
+	 */
 	public function clientLogin(){
 		$this->form_validation->set_rules('email', 'Email', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
@@ -236,7 +237,6 @@ Class User extends CI_Controller {
 			if ($result == TRUE) {
 				echo "success";
 				$result = $this->user_model->read_user_information($this->input->post('email'),'client');
-				//print_r($result);
 				$client_session_data = array(
 					'user_id' => $result[0]->client_id,
 					'fname' => $result[0]->first_name,
@@ -246,14 +246,9 @@ Class User extends CI_Controller {
 					'register-date' => $result[0]->register_date,
 					'login' => TRUE,
 					'type' => 'client'
-
 					);
-					//print_r($client_session_data);
 					$this->session->set_userdata('client_detail', $client_session_data);
-					
-					//print_r($_SESSION);
 					redirect('/user/clientDashBoard');
-					//$this->load->view('dashboard');
 			}
 			else{
 				$data = array(
@@ -264,7 +259,10 @@ Class User extends CI_Controller {
 			}
 		}
 	}
-	//lawyer login process
+	
+	/**
+	 * lawyer login process 
+	 */
 	public function lawyerLogin(){
 
 		$this->form_validation->set_rules('email', 'Email', 'trim|required');
@@ -277,8 +275,7 @@ Class User extends CI_Controller {
 			}
 			else{
 				$data['user_type'] = 'lawyer';
-				$this->load->view('login',$data);
-				
+				$this->load->view('login',$data);	
 			}
 		} 
 		else {
@@ -287,11 +284,10 @@ Class User extends CI_Controller {
 			'email' => $this->input->post('email'),
 			'password' => sha1($this->input->post('password'))
 			);
-			//print_r($data);
+
 			$result = $this->user_model->user_login($data,'lawyer');
 			if ($result == TRUE) {
-				//echo "success";
-				
+			
 				$result = $this->user_model->read_user_information($this->input->post('email'),'lawyer');
 				if ($result != false) {
 					if($result[0]->legal_professional == 'lawyer' || $result[0]->legal_professional == 'lawyer-sworn-translator'){
@@ -326,17 +322,9 @@ Class User extends CI_Controller {
 							'type' => 'lawyer'
 							
 							);
-					}
-					
-					//print_r($lawyer_session_data);
-					// Add user data in session
-					//$this->session->set_userdata('userinfo', $session_data);
-					
+					}				
 					$this->session->set_userdata('lawyer_detail', $lawyer_session_data);
-					
-					//print_r($_SESSION);
-					redirect('/user/lawyerDashBoard');
-					//$this->load->view('dashboard');
+					redirect('/user/lawyerDashBoard');			
 				}
 				else{
 					$data = array(
@@ -358,9 +346,11 @@ Class User extends CI_Controller {
 
 	}
 
-	// Logout from user page
+	/**
+	 * Logout module 
+	 */
+	 
 	public function logout($user) {
-
 		// Removing session data
 		if($user == 'lawyer'){
 				$this->session->unset_userdata('lawyer_detail');
@@ -373,12 +363,8 @@ Class User extends CI_Controller {
 				$data['success_message_display'] = 'Log out sucessfully';
 				$data['user_type'] = 'client';
 				$this->load->view('login', $data);
-		}
-		
-
-		
-		
-		}
+		}		
+	}
 
 	// Show lawyer profle and dashboard page
 	public function lawyerDashBoard() {
@@ -454,7 +440,10 @@ Class User extends CI_Controller {
 		
 		
 	}
-	// Show client profle and dashboard page
+	
+	/**
+	 * Show client profle and dashboard page
+	 */
 	public function clientDashBoard() {
 		$success = $this->session->flashdata('success_message_display');
 		 $error = $this->session->flashdata('error_message_display');
@@ -474,18 +463,14 @@ Class User extends CI_Controller {
 			$this->load->view('client-dashboard',$data);
 		}
 		else if($result == FALSE){
-			//error handeling
-
+	
 		}
 		else{
 			
-			//print_r($result);
+	
 			foreach($result as $key=>$book_value){
-				//print_r($book_value);
-				
-				
+	
 				$result_lawyer_detail= $this->user_model->get_lawyer_detail($book_value->user_id);
-				//print_r($result_lawyer_detail[0]->first_name);
 				$book_value->lawyer = $result_lawyer_detail[0]->first_name . ' '. $result_lawyer_detail[0]->last_name;
 				$book_value->legal_professional = $result_lawyer_detail[0]->legal_professional;
 				$result_booking_history[] = $book_value;
@@ -494,11 +479,8 @@ Class User extends CI_Controller {
 			
 			$data['booking_history'] = $result_booking_history;
 			$this->load->view('client-dashboard',$data);
-			//print_r($book_value);
 		}
-		
-		
-		
+	
 	}
 	//
 	public function showLawyerSchedule() {
@@ -703,7 +685,7 @@ Class User extends CI_Controller {
 	}
 	
 	/**
-	 * client view of lawyer profile
+	 * client view of legal professional profile
 	 */
 
 	public function lawyerDashBoardClientView($user_id) {
@@ -717,15 +699,13 @@ Class User extends CI_Controller {
 		}
 
 		$lawyer_detail = $this->session->userdata('lawyer_detail'); 
-		
-		//print_r($lawyer_detail);
+	
 		$search_date = array();
 		$current_date = Date('Y-m-d');
 		$tomorrow_date = date('Y-m-d', strtotime($current_date . ' +1 day'));
 		$search_date[] = $current_date;
 		$search_date[] = date('Y-m-d', strtotime($current_date . ' +1 day'));
-		
-		//$schedule_time =array("5",5,"5");
+
 		
 		for($i=1;$i<7;$i++){
 			$search_date[] = date('Y-m-d', strtotime($tomorrow_date . ' +1 day'));
@@ -733,13 +713,11 @@ Class User extends CI_Controller {
 
 		} 
 		//print_r($search_date);
-
+	
 		$result_unique_dates = $this->user_model->show_upcomming_schedule_dates_dashboard($search_date,$user_id);
 		$result_all_scheules = $this->user_model->show_upcomming_schedule($search_date,$user_id);
+		//print_r($result_all_scheules);
 		$result_lawyer_detail = $this->user_model->get_lawyer_detail($user_id);
-		
-		
-		//print_r($result_unique_dates);
 		if($result_unique_dates == FALSE AND $result_all_scheules == FALSE){
 			$data['result_unique_dates'] = 'empty';
 			$data['result_all_scheules'] = 'empty';
@@ -768,6 +746,9 @@ Class User extends CI_Controller {
 		$this->load->view('search');
 	}
 	
+	/**
+	 * by collecting search form post data this method will handle the search functionality
+	 */
 	public function showSearchResult() {
 		
 		$this->form_validation->set_rules('provincial-area', 'Provincial Area', 'trim|required');
@@ -784,17 +765,11 @@ Class User extends CI_Controller {
 
 
 		if ($this->form_validation->run() == FALSE) {
-			// $data = array(
-			// 	'user_type' => 'lawyer'
-			// );
-			$this->load->view('search');
-			//print_r($_POST);
-			
-			
+			$this->load->view('search');	
 		}
 		else {
 			if($this->input->post('legal-professional') == 'lawyer' || $this->input->post('legal-professional') == 'lawyer-sworn-translator'){
-				//print_r($_POST);
+				
 				$data = array(
 					'provincial_area' => $this->input->post('provincial-area'),
 					
@@ -808,14 +783,14 @@ Class User extends CI_Controller {
 						$data['search_result'] = 'empty';
 						$this->load->view('search',$data);
 					}else{
-						//print_r($result);
+						
 						$data['search_result'] = $result;
 						$this->load->view('search',$data);
 					}
 					
 			}
 			else{
-				//print_r($_POST);
+				
 				$data = array(
 					'provincial_area' => $this->input->post('provincial-area'),
 					'legal_professional' => $this->input->post('legal-professional')			
@@ -825,17 +800,13 @@ Class User extends CI_Controller {
 						$data['search_result'] = 'empty';
 						$this->load->view('search',$data);
 					}else{
-						//print_r($result);
+						
 						$data['search_result'] = $result;
 						$this->load->view('search',$data);
-					}
-					//print_r($result);
+					}		
 			}
-
 		}
-
-
-		
+	
 	}
 
 	public function bookConsultant($schedule_id,$consultant_id){
@@ -888,7 +859,7 @@ Class User extends CI_Controller {
 	}
 	
 	/**
-	 * lawyer submited previous case details he attended
+	 * register user can submit legal question for leagal professional reference
 	 */
 	public function createQuestion(){
 		$this->form_validation->set_rules('question-title', 'question title', 'trim|required');
@@ -916,16 +887,12 @@ Class User extends CI_Controller {
 					'forum_added_date' => Date('Y-m-d H:i:s'),
 					'user_type' => $user_type
 					);
-					//print_r($data);
 					$result = $this->user_model->create_question($data);
-					 if($result == TRUE){
-						
-						
+					 if($result == TRUE){	
 					 	$this->session->set_flashdata('success_message_display','Question added sucessfully');
 					 	redirect('/user/showForum');
 					 }
-					else{
-						
+					else{	
 						$this->session->set_flashdata('error_message_display','Error or processing your request. Please try again');
 						redirect('/user/createQuestion');						
 					}
@@ -1024,16 +991,16 @@ Class User extends CI_Controller {
 		
 		$this->load->view('answer-forum',$data);	
 	}
+	/**
+	 * legal professonal can submited their ideas for questions
+	 */
 	public function answerQuestion(){
 		$this->form_validation->set_rules('answer', 'answer', 'trim|required');
 		$forum_id = $this->input->post('forum-id');
 		if ($this->form_validation->run() == FALSE) {
 			
-			//$this->load->view('create-question');	
-			
 			$this->session->set_flashdata('error_message_display','The answer field cannot empty');
 			redirect('/user/showSingleQuestion/'.$forum_id);
-			//showSingleQuestion/3			
 		}
 		else {
 			if($this->session->userdata('client_detail') == FALSE && $this->session->userdata('lawyer_detail') == FALSE){
@@ -1061,12 +1028,9 @@ Class User extends CI_Controller {
 				$this->session->set_flashdata('erro_message_display','Error when prcessing your request, try aganing');
 				redirect('/user/showSingleQuestion/'.$forum_id);
 			}
-
 		}
-
-		
-		
 	}
+	
 	/**
 		 * how faq page this is a static page
 		 */
